@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 export default function FirstForm() {
   const navigate = useNavigate()  
-  
+
   const handlePinballInit = () => {
     navigate('pinball-game')
   }
@@ -15,7 +15,8 @@ export default function FirstForm() {
   return (
   <>
     <StyledLayoutContent>
-      <h1>Vite + React</h1>
+      <h2>{APP_DATA.APP_FIRST_FORM.TITLE}</h2>
+      <p>{APP_DATA.APP_FIRST_FORM.SUBTITLE}</p>
       <h1>Vite + React</h1>
       <h1>Vite + React</h1>
       <h1>Vite + React</h1>
