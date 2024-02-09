@@ -42,7 +42,8 @@ export const APP_DATA = {
     },
     APP_PINBALL: {
         TITLE: 'Juega al pinball',
-        POINTS: 'Puntos del juego',
-        BALLS: 'Te quedan ${quantity} bolas'
+        POINTS: 'Puntos del juego:',
+        BALLS: 'Te quedan ${quantity} bolas',
+        END_GAME_BUTTON: 'Terminar partida'
     }
 }
