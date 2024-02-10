@@ -12,8 +12,7 @@ export default function GameComponent({
     <h1>{APP_DATA.APP_GAME.TITLE}</h1>
     <StyledLayoutContent>
         <WordCatcher
-        
-        
+          wordCatcherConfig={APP_DATA.APP_GAME.GAME_CONFIGURATION}
         />
     </StyledLayoutContent>
     <Button

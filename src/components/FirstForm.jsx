@@ -33,7 +33,7 @@ export default function FirstForm() {
 
   const handlePinballInit = () => {
     console.log(answers)
-    navigate('pinball-game')
+    navigate('game')
   }
   
   const handleAnswers = (index, subIndex) => {

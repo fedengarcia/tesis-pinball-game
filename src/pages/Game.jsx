@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { StyledAppLayout } from '../styled-components/containers'
-import PinballGameComponent from '../components/GameComponent/GameComponent'
 import LastForm from '../components/LastForm'
+import GameComponent from '../components/GameComponent/GameComponent'
 
 export default function Game() {
   const [isGameEnd, setIsGameEnd] = useState(false)
@@ -9,7 +9,7 @@ export default function Game() {
   return (
     <StyledAppLayout>
       {!isGameEnd 
-      ? <PinballGameComponent setIsGameEnd={setIsGameEnd}/>
+      ? <GameComponent setIsGameEnd={setIsGameEnd}/>
       : <LastForm/>
       }
     </StyledAppLayout>
