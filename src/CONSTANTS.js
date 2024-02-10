@@ -8,15 +8,15 @@ export const APP_DATA = {
         SUBTITLE: 'Subtitlo de primer formulario',
         QUESTIONS:[
         {
-            QUESTION: "Ejemplo de pregunta",
+            QUESTION: "Ejemplo de pregunta 1",
             POSSIBLE_ANSWERS: ['Option 1', 'Option 2', 'Option 3']
         },
         {
-            QUESTION: "Ejemplo de pregunta",
+            QUESTION: "Ejemplo de pregunta 2",
             POSSIBLE_ANSWERS: ['Option 1', 'Option 2', 'Option 3']
         },
         {
-            QUESTION: "Ejemplo de pregunta",
+            QUESTION: "Ejemplo de pregunta 3",
             POSSIBLE_ANSWERS: ['Option 1', 'Option 2', 'Option 3']
         },
         // You can add here all the questions that you need
@@ -27,15 +27,15 @@ export const APP_DATA = {
         SUBTITLE: 'Subtitlo de ultimo formulario',
         QUESTIONS:[
         {
-            QUESTION: "Ejemplo de pregunta",
+            QUESTION: "Ejemplo de pregunta 1",
             POSSIBLE_ANSWERS: ['Option 1', 'Option 2', 'Option 3']
         },
         {
-            QUESTION: "Ejemplo de pregunta",
+            QUESTION: "Ejemplo de pregunta 2",
             POSSIBLE_ANSWERS: ['Option 1', 'Option 2', 'Option 3']
         },
         {
-            QUESTION: "Ejemplo de pregunta",
+            QUESTION: "Ejemplo de pregunta 3",
             POSSIBLE_ANSWERS: ['Option 1', 'Option 2', 'Option 3']
         },
         // You can add here all the questions that you need

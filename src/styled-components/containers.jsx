@@ -37,3 +37,17 @@ export const StyledAppLayout = styled('div')`
     flex-direction: column;
     width: 600px;
 `
+
+
+export const StyledFlexCenter = styled('div')`
+      width: 100%;
+      box-sizing: border-box;
+      padding: 1em;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: ${props => props.direction ?? 'column'};
+
+
+
+`
