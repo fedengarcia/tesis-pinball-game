@@ -10,10 +10,8 @@ export default function PinballGame() {
     <StyledAppLayout>
       {!isGameEnd 
       ? <PinballGameComponent setIsGameEnd={setIsGameEnd}/>
-      
       : <LastForm/>
       }
-
     </StyledAppLayout>
   )
 }
