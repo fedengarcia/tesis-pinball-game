@@ -43,8 +43,8 @@ export const APP_DATA = {
         // You can add here all the questions that you need
         ]
     },
-    APP_PINBALL: {
-        TITLE: 'Juega al pinball',
+    APP_GAME: {
+        TITLE: 'Recoge las marcas, pero ten cuidado !',
         POINTS: 'Puntos del juego:',
         BALLS: 'Te quedan ${quantity} bolas',
         END_GAME_BUTTON: 'Terminar partida'

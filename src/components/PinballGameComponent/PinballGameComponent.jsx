@@ -8,7 +8,7 @@ export default function PinballGameComponent({
 }) {
 
   return (<>
-    <h1>{APP_DATA.APP_PINBALL.TITLE}</h1>
+    <h1>{APP_DATA.APP_GAME.TITLE}</h1>
     <StyledLayoutContent>
         <div>PinballGameComponent</div>
     </StyledLayoutContent>
@@ -16,7 +16,7 @@ export default function PinballGameComponent({
       variant='contained'
       onClick={() => setIsGameEnd(true)}
     >
-        {APP_DATA.APP_PINBALL.END_GAME_BUTTON}
+        {APP_DATA.APP_GAME.END_GAME_BUTTON}
     </Button>
   </>
   )
