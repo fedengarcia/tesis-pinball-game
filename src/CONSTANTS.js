@@ -1,6 +1,8 @@
 export const APP_DATA = {
     APP_TITLE: "Bienvenido a mi tesis",
     APP_SUBTITLE: "Espero que lo disfruten y se diviertan mientras aprendemos",
+    APP_SHOW_LABEL_INPUT: true,
+    APP_NAME_LABEL: "Nombre",
     APP_BUTTON_PLAY: 'Responder y a jugar !',
     APP_BUTTON_END: 'Responder y ver resultados',
     APP_FIRST_FORM: {
