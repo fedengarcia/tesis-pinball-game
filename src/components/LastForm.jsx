@@ -19,8 +19,12 @@ export default function LastForm() {
   const navigate = useNavigate()  
 
   useEffect(() => {
-    let isCompleted = true
-    answers.forEach(answer => answer.answer_selected === '' ? isCompleted = true : isCompleted = false)
+    let isCompleted = false
+    answers.forEach(answer => {
+      if(answer.answer_selected === ''){
+        isCompleted = true
+      }
+    })
     setButtonDisabled(isCompleted)
   }, [answers]);
 
