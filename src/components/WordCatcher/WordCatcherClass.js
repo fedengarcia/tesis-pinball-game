@@ -1,11 +1,7 @@
 import basket from './assets/images/basket/basket.png';
 import basketDamage from './assets/images/basket/basket-damage.png';
 import basketGood from './assets/images/basket/basket-good.png';
-import backgroundSandyBeach from './assets/images/word-catcher/sunset-in-sandy-beach-standard-theme.png';
-import backgroundRelaxedSunnyBeach from'./assets/images/word-catcher/relaxed-sunny-beach-standard-theme.png';
-import backgroundClearBlueWater from'./assets/images/word-catcher/clear-blue-water-standard-theme.png';
-import backgroundBeachHouseDecor from'./assets/images/word-catcher/beach-house-decor-standard-theme.png';
-import { MEDIA_PREVIEW } from '../../../CONSTANT';
+import backgroundImage from './assets/images/word-catcher/background.png'
 
 const wordsColors = [
     "#FF0000",
@@ -26,12 +22,6 @@ const wordsColors = [
     "#078BC0"
 ];
 
-const backgroundImages = [
-    backgroundSandyBeach,
-    backgroundRelaxedSunnyBeach,
-    backgroundClearBlueWater,
-    backgroundBeachHouseDecor
-]
 
 class WordCatcherClass {
     ctx;
@@ -103,31 +93,7 @@ class WordCatcherClass {
 
         let numberImage = undefined
         this.imageBackground = new Image()
-
-        if(config.background_image?.startsWith('@@@') && !config?.is_external){
-            this.imageBackground.src = MEDIA_PREVIEW + config.background_image;
-        }else if(config.background_image?.startsWith('http') && config?.is_external) {
-            // external image
-            this.imageBackground.src = config.background_image
-        } else if (typeof config.background_image === 'number') {
-            // xEval v1 activityInfo or xEval v2 with no image saved
-            if (config.background_image == 0 || !config.background_image ) {
-                numberImage = Math.floor(Math.random() * (backgroundImages.length)) + 0
-            } else {
-                numberImage = config.background_image - 1
-            }
-            this.imageBackground.src = backgroundImages[numberImage ?? 0]
-        } else if (config.background_image?.endsWith('-standard-theme.png') && !config?.is_external) {
-            // predefined theme background image
-            const imageTheme = config.background_image.split(/[/.]+/)[4]
-            const imageThemeIndex = backgroundImages?.findIndex(img => img.includes(imageTheme))
-           
-            this.imageBackground.src =  backgroundImages[imageThemeIndex ?? 0]
-        } else {
-            // faulty or no data... pick image at random from predefined theme background images
-            numberImage = Math.floor(Math.random() * (backgroundImages.length)) + 0         
-            this.imageBackground.src = backgroundImages[numberImage]
-        }
+        this.imageBackground.src = backgroundImage
 
         this.imageBackground.onerror = () => {
             // faulty or no data... pick image at random from predefined theme background images
