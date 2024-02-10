@@ -20,13 +20,13 @@ export const StyledLayoutContent = styled('div')`
       
     /* Track */
     ::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 4px #214f61;
+        box-shadow: inset 0 0 4px #1565c0;
         border-radius: 0px;
     }
       
     /* Handle #43a1a2 or #214F61 or #ADADAD */
     ::-webkit-scrollbar-thumb {
-        box-shadow: inset 4px 2px 12px 2px #214f61;
+        box-shadow: inset 4px 2px 12px 2px #1565c0;
         border-radius: 4px;
       }
 `
