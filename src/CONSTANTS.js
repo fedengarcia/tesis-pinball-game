@@ -45,8 +45,23 @@ export const APP_DATA = {
     },
     APP_GAME: {
         TITLE: 'Recoge las marcas, pero ten cuidado !',
-        POINTS: 'Puntos del juego:',
-        BALLS: 'Te quedan ${quantity} bolas',
-        END_GAME_BUTTON: 'Terminar partida'
+        END_GAME_BUTTON: 'Terminar partida',
+        GAME_CONFIGURATION:{
+            POINTS: 'Puntos del juego:',
+            TIMER: 120,
+            /* 
+                Bonifications must be same length of images/words 
+                The only functionality of points are x2, x1, +1 
+                Black points will rest points
+            */
+            BONIFICATIONS: ['x2', 'x1', '+1'],
+            /* 
+                if you want use only images, keep brand_words empty
+                If you want use only words, just keep brand_images empty
+                If you want both, keep two with values
+            */
+            BRANDS_IMAGES: [], // 
+            BRANDS_WORDS: [], // 
+        }
     }
 }
