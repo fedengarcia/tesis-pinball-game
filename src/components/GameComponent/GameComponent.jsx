@@ -3,7 +3,7 @@ import { APP_DATA } from '../../CONSTANTS'
 import { Button } from '@mui/material'
 import { StyledLayoutContent } from '../../styled-components/containers'
 
-export default function PinballGameComponent({
+export default function GameComponent({
     setIsGameEnd
 }) {
 

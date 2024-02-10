@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { StyledAppLayout } from '../styled-components/containers'
-import PinballGameComponent from '../components/PinballGameComponent/PinballGameComponent'
+import PinballGameComponent from '../components/GameComponent/GameComponent'
 import LastForm from '../components/LastForm'
 
-export default function PinballGame() {
+export default function Game() {
   const [isGameEnd, setIsGameEnd] = useState(false)
 
   return (

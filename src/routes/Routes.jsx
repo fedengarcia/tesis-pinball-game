@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes as ReactRoutes, Route } from 'react-router-dom';
 import App from '../App'
-import PinballGame from '../pages/PinballGame';
+import Game from '../pages/Game';
 import EndGame from '../pages/EndGame';
 
 export default function Routes () {
@@ -11,8 +11,8 @@ export default function Routes () {
                 exact path={'/'}
                 element={<App/>} />
             <Route
-                exact path={'/pinball-game'}
-                element={<PinballGame/>} />
+                exact path={'/game'}
+                element={<Game/>} />
             <Route
                 exact path={'/end-game'}
                 element={<EndGame/>} />
