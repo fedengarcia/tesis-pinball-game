@@ -22,6 +22,10 @@ export default function LastForm() {
   const {userInfo, setUserInfo} = useContext(UserContext)
 
   useEffect(() => {
+    if(userInfo?.finalForm.isCompleted) navigate('/end-game')
+  }, [userInfo]);
+
+  useEffect(() => {
     let isCompleted = false
     answers.forEach(answer => {
       if(answer.answer_selected === ''){
@@ -39,7 +43,6 @@ export default function LastForm() {
 
   const handleSeeResults = async () => {
     let userInfoCopy = {...userInfo}
-    console.log(userInfoCopy)
     userInfoCopy.finalForm.isCompleted = true
     userInfoCopy.finalForm.answers = [...answers]
     const userUpdated = await editUser(userInfoCopy.email, userInfoCopy)
