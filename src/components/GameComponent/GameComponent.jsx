@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { APP_DATA } from '../../CONSTANTS'
 import { Button } from '@mui/material'
 import { StyledLayoutContent } from '../../styled-components/containers'
-import WordCatcher from '../WordCatcher/WordCatcher'
+import Pinball from '../Pinball/Pinball'
 
 export default function GameComponent({
     setIsGameEnd,
@@ -12,13 +12,14 @@ export default function GameComponent({
     const [buttonDisabled, setButtonDisabled] = useState(true)
 
     useEffect(() => {
-      if(gameResult) setButtonDisabled(false)
+      console.log("GAME RESULT", gameResult)
+      if(gameResult.points !== null) setButtonDisabled(false)
     }, [gameResult]);
 
   return (<>
     <h1>{APP_DATA.APP_GAME.TITLE}</h1>
-    <StyledLayoutContent style={{padding: 0}}>
-        <WordCatcher
+    <StyledLayoutContent style={{padding: 0, overflow:'hidden'}}>
+        <Pinball
           config={APP_DATA.APP_GAME.GAME_CONFIGURATION}
           setGameResult={setGameResult}
         />
