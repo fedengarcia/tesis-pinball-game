@@ -77,6 +77,11 @@ export const APP_DATA = {
         // You can add here all the questions that you need
         ]
     },
+    APP_END:{
+        TITLE: 'FIN DE TESIS',
+        SUB_TITLE: 'RESULTADOS',
+        RESTART_BUTTON: 'Volver a jugar'
+    },
     APP_GAME: {
         TITLE: 'Pinball',
         END_GAME_BUTTON: 'Terminar partida',
