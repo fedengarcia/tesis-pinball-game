@@ -11,7 +11,7 @@ export default function Game() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if(userInfo?.finalForm?.isCompleted && userInfo?.gameCompleted) navigate('/end-game')
+    if(userInfo?.gameCompleted) setIsGameEnd(true)
   }, [userInfo]);
 
   return (
