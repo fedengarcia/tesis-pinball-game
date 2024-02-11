@@ -169,7 +169,6 @@ class WordCatcherClass {
     generateWords = () => {
         if (this.gameEnd === true) return;
         let number = Math.floor(Math.random() * 150);
-
         if (number < 150) {
             let isGoodWord = Math.floor(Math.random() * 100);
 
@@ -248,7 +247,7 @@ class WordCatcherClass {
 
 
             this.elementsToFalling.push({
-                word: newWordString,
+                name: newWordString,
                 speed: velocity,
                 y: 0,
                 x: position,
@@ -261,38 +260,38 @@ class WordCatcherClass {
     moveWords() {
         for (let i = 0; i < this.elementsToFalling.length; i++) {
             this.elementsToFalling[i].y += this.elementsToFalling[i].speed;
-            let word = this.elementsToFalling[i];
+            let elementFalling = this.elementsToFalling[i];
 
-            if (word.y >= this.positionBasket.y && word.y <= this.positionBasket.y + this.sizeBasket.height) {
+            if (elementFalling.y >= this.positionBasket.y && elementFalling.y <= this.positionBasket.y + this.sizeBasket.height) {
                 let posBasket = {
                     init: this.positionBasket.x - (this.sizeBasket.width / 2),
                     end: this.positionBasket.x + (this.sizeBasket.width / 2)
                 }
 
                 if (
-                    (word.x.init > posBasket.init && word.x.init < posBasket.end) ||
-                    (word.x.center > posBasket.init && word.x.center < posBasket.end) ||
-                    (word.x.end > posBasket.init && word.x.end < posBasket.end)
+                    (elementFalling.x.init > posBasket.init && elementFalling.x.init < posBasket.end) ||
+                    (elementFalling.x.center > posBasket.init && elementFalling.x.center < posBasket.end) ||
+                    (elementFalling.x.end > posBasket.init && elementFalling.x.end < posBasket.end)
                 ) {
-
-                    if (this.elements.damageElements.includes(word.word)) {
+                    let index = this.elements.damageElements.findIndex(element => element.name === elementFalling.name)
+                    if (index !== -1) {
                         this.basketOnDamage()
-                        let alreadyHunted = this.incorrectHuntedWords.includes(word.word);
+                        let alreadyHunted = this.incorrectHuntedWords.includes(elementFalling.name);
                         if(!alreadyHunted){
-                            this.incorrectHuntedWords.push(word.word)
+                            this.incorrectHuntedWords.push(elementFalling.name)
                             this.huterWordFuction(this.elements.elementsToCatch, this.correctHuntedWords, this.incorrectHuntedWords)
                         }
                     } else {
 
-                        let isGoodWord = this.elements.elementsToCatch.includes(word.word);
-                        let alreadyHunted = this.correctHuntedWords.includes(word.word);
+                        let isGoodWord = this.elements.elementsToCatch.includes(elementFalling.name);
+                        let alreadyHunted = this.correctHuntedWords.includes(elementFalling.name);
 
                         if (isGoodWord === true && alreadyHunted === false) {
-                            this.correctHuntedWords.push(word.word);
+                            this.correctHuntedWords.push(elementFalling.name);
 
                             this.huterWordFuction(this.elements.elementsToCatch, this.correctHuntedWords, this.incorrectHuntedWords)
 
-                            let allHunted = this.elements.elementsToCatch.filter(goodWord => !this.correctHuntedWords.includes(goodWord));
+                            let allHunted = this.elements.elementsToCatch.filter(goodWord => !this.correctHuntedWords.includes(goodWord.name));
                             this.opacityBasketGood = 0.8;
 
                             if (allHunted.length === 0) this.onEndGame();
@@ -302,7 +301,7 @@ class WordCatcherClass {
                 }
             }
 
-            if (word.y > (this.config.height + 40)) {
+            if (elementFalling.y > (this.config.height + 40)) {
                 this.elementsToFalling.splice(i, 1);
             }
         }
@@ -348,9 +347,9 @@ class WordCatcherClass {
         this.ctx.textBaseline = 'middle';
         //this.ctx.textAlign = "center";
         for (let i = 0; i < this.elementsToFalling.length; i++) {
-            let word = this.elementsToFalling[i];
-            this.ctx.fillStyle = word.color;
-            this.ctx.fillText(word.word, word.x.init, word.y)
+            let elementFalling = this.elementsToFalling[i];
+            this.ctx.fillStyle = elementFalling.color;
+            this.ctx.fillText(elementFalling.name, elementFalling.x.init, elementFalling.y)
         }
     }
 
