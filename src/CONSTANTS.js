@@ -1,3 +1,5 @@
+import appleSVG from './components/WordCatcher/assets/images/react.svg'
+
 export const APP_DATA = {
     APP_TITLE: "Bienvenido a mi tesis",
     APP_SUBTITLE: "Espero que lo disfruten y se diviertan mientras aprendemos",
@@ -73,15 +75,15 @@ export const APP_DATA = {
             ],
             elementsToDrop: [{
                 name: 'Samsung',
-                src: '/assets/react.svg'
+                src: appleSVG
             },
             {
                 name: 'Apple',
-                src: '/assets/react.svg'
+                src: appleSVG
             },
             {
                 name: 'Xiaomi',
-                src: '/assets/react.svg'
+                src: appleSVG
             },
             ], 
         }

@@ -3,25 +3,6 @@ import basketDamage from './assets/images/basket/basket-damage.png';
 import basketGood from './assets/images/basket/basket-good.png';
 import backgroundImage from './assets/images/word-catcher/background.png'
 
-const wordsColors = [
-    "#FF0000",
-    "#00FF00",
-    "#0000FF",
-    "#4FF33E",
-    "#2EF5CE",
-    "#FA6E45",
-    "#00FFEC",
-    "#08FF00",
-    "#70FF00",
-    "#FF7400",
-    "#FF4D00",
-    "#FFB900",
-    "#F3FF00",
-    "#00D1FF",
-    "#15ADFF",
-    "#078BC0"
-];
-
 
 class WordCatcherClass {
     ctx;
@@ -77,12 +58,8 @@ class WordCatcherClass {
     elementsToFalling = [];
     points = 0
 
-    intervalGenerateWords;
+    intervalGenerateElements;
 
-    userErrors = 0;
-
-    correctHuntedWords = [];
-    incorrectHuntedWords = [];
 
     constructor(ctx, config = { width: 500, height: 500, size: 10 }, elements = { elementsToCatch: [], damageElements: [] }, gameEndFunction, huterWordFuction) {
         this.ctx = ctx;
@@ -113,7 +90,7 @@ class WordCatcherClass {
         }
 
         this.huterWordFuction(this.points)
-        this.intervalGenerateWords = setInterval(this.generateWords, 1000);
+        this.intervalGenerateElements = setInterval(this.generateElements, 1000);
     }
 
     clearCanvas() {
@@ -159,14 +136,14 @@ class WordCatcherClass {
         }
 
         this.updatePositionBasket();
-        this.moveWords()
+        this.moveElements()
     }
 
     updatePositionBasket() {
         this.positionBasket.x = this.mouse.x
     }
 
-    generateWords = () => {
+    generateElements = () => {
         if (this.gameEnd === true) return;
         let number = Math.floor(Math.random() * 150);
         if (number < 150) {
@@ -174,6 +151,7 @@ class WordCatcherClass {
 
             let name = "";
             let bonification = '';
+            let image_src = ''
 
             if (isGoodWord < 40) {
                 let wordAttempts = 0;
@@ -182,6 +160,7 @@ class WordCatcherClass {
                     let element = this.elements.elementsToCatch[Math.floor(Math.random() * this.elements.elementsToCatch.length)];
                     name = element.name;
                     bonification = element.bonification
+                    image_src = element.src
                 } while (name === "");
             } else {
                 name = this.elements.damageElements[Math.floor(Math.random() * this.elements.damageElements.length)].name;
@@ -243,6 +222,7 @@ class WordCatcherClass {
             this.elementsToFalling.push({
                 name: name,
                 bonification: bonification,
+                src: image_src,
                 speed: velocity,
                 y: 0,
                 x: position,
@@ -252,7 +232,7 @@ class WordCatcherClass {
         }
     }
 
-    moveWords() {
+    moveElements() {
         for (let i = 0; i < this.elementsToFalling.length; i++) {
             this.elementsToFalling[i].y += this.elementsToFalling[i].speed;
             let elementFalling = this.elementsToFalling[i];
@@ -324,16 +304,24 @@ class WordCatcherClass {
         this.ctx.globalAlpha = 1;
     }
 
-    drawelEmentsToFalling() {
+    async drawelEmentsToFalling() {
         this.ctx.font = "bold 50px Comic-Sans";
         this.ctx.textBaseline = 'middle';
-        //this.ctx.textAlign = "center";
+      
         for (let i = 0; i < this.elementsToFalling.length; i++) {
-            let elementFalling = this.elementsToFalling[i];
+          let elementFalling = this.elementsToFalling[i];
+          if (elementFalling.src) {
+            // Si hay una propiedad src, dibujar la imagen
+            const img = new Image();
+            img.src = elementFalling.src;
+            this.ctx.drawImage(img, elementFalling.x.init, elementFalling.y, 100, 100);
+        } else {
+            // Si no hay src, dibujar el texto
             this.ctx.fillStyle = elementFalling.color;
-            this.ctx.fillText(elementFalling.name, elementFalling.x.init, elementFalling.y)
+            this.ctx.fillText(elementFalling.name, elementFalling.x.init, elementFalling.y);
+          }
         }
-    }
+      }
 
     basketOnDamage() {
         this.opacityBasketDamage = 0.8;
