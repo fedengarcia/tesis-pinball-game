@@ -16,7 +16,6 @@ export default function GameComponent({
     })
 
     useEffect(() => {
-      console.log("GAME RESULT", gameResult)
       if(gameResult.points !== null) setButtonDisabled(false)
     }, [gameResult]);
 

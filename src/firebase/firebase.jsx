@@ -7,7 +7,6 @@ import { collection, doc, getDoc, getDocs, getFirestore, query, setDoc, updateDo
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-console.log(import.meta.env.VITE_API_KEY)
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
   authDomain: "tesis-pinball-game.firebaseapp.com",
@@ -27,13 +26,11 @@ export const  firebaseDB = getFirestore(firebaseApp);
 
 // CREATE USER 
 export const createUserDocument =  async (userData) => {
-    console.log("user document ====>", userData)
     const usuariosCollection = collection(firebaseDB, "usuarios");
     const nuevoUsuarioRef = doc(usuariosCollection);
     try {
         // Utilizar setDoc para agregar el nuevo documento con los datos del usuario
         await setDoc(nuevoUsuarioRef, userData);
-        console.log("Nuevo usuario agregado con éxito");
     } catch (error) {
         console.error("Error al agregar nuevo usuario:", error.message);
     }
