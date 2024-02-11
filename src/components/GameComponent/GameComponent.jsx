@@ -12,7 +12,7 @@ export default function GameComponent({
 
   return (<>
     <h1>{APP_DATA.APP_GAME.TITLE}</h1>
-    <StyledLayoutContent>
+    <StyledLayoutContent style={{padding: 0}}>
         <WordCatcher
           config={APP_DATA.APP_GAME.GAME_CONFIGURATION}
           setGameResult={setGameResult}

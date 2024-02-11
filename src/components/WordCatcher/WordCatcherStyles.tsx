@@ -1,56 +1,32 @@
 import styled from "styled-components";
 
 
+
 export const StyledWordCatcherTableGame = styled('div')`
-    width: 100%;
-    height: fit-content !important;
-    margin-top: 15px;
-    display:flex; 
-    align-items: center; 
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-
-    @media (max-width: 992px) {
-        margin-top: 09px;
-    }
-
-
-`
-
-export const StyledGame = styled('div')`
     width: 100%;
     display: flex;
     justify-content: center; 
     align-items: center; 
-    flex-direction: row;
-    width:80%;
-    
-    @media (max-width: 992px) {
-        flex-direction: column;
-        width: 100%;
-    }
+    flex-direction: column;
+    background: url('/assets/images/word-catcher/background.png');      
     
     .gameCanvas {
         display: flex;
         align-items: center; 
         justify-content: center; 
-        width: 100%;
+
         
         canvas {
-            width: 85% !important;
-            @media (min-width: 992px) {
-                width: 90% !important;
-            }
+            width: 100% !important;
         }
     }
 `
 
 export const StyledGameInfoContainer = styled('div')`
     display: flex;
-    flex-direction: column;
-    width: 90%;
-    align-items: center;            
+    flex-direction: row;
+    width: 100%;
+    align-items: center;     
 
     @media (max-width: 992px) {
         width: 100%;
@@ -62,20 +38,31 @@ export const StyledGameInfoContainer = styled('div')`
 
 
     .timer {
+        top: 160px;
+        padding: 0.2em 0.5em;
+        position: absolute;
+        display: flex; 
+        align-items: center;
+        justify-content: center;
         margin: 20px;
-        background-color: grey;
+        background-color: lightgrey;
         color: black;
-        font-size: 1em;
+        font-size: 1.2em;
         border-radius: 8px;
         text-align: center;
-        width: 90%;
-        display: inline;
+    }
 
-        @media (max-width: 992px) {
-            width: 60%;
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
+    .points{
+        top: 160px;
+        right: 560px;
+        padding: 0.5em;
+        position: absolute;
+        margin: 20px;
+        background-color: lightgrey;
+        color: black;
+        font-size: 1.2em;
+        border-radius: 8px;
+        text-align: center;
     }
 
 }

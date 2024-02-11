@@ -1,6 +1,6 @@
 import React from "react";
 import WordCatcherClass from "./WordCatcherClass";
-import { StyledGame, StyledGameInfoContainer, StyledWordCatcherTableGame } from "./WordCatcherStyles";
+import { StyledGameInfoContainer, StyledWordCatcherTableGame } from "./WordCatcherStyles";
 
 
 class WordCatcher extends React.Component {
@@ -36,7 +36,7 @@ class WordCatcher extends React.Component {
 
 		this.config = {
 			width: 1000,
-			height: 1000,
+			height: 900,
 		};
 
 		this.renderCanvas = this.renderCanvas.bind(this);
@@ -48,8 +48,8 @@ class WordCatcher extends React.Component {
 		
 		// If existe time : set timer
 		if(props.config.time){
-			minutes = Math.floor(props.config.time.time / 60);
-			seconds = props.config.time?.time - minutes * 60;
+			minutes = Math.floor(props.config.time / 60);
+			seconds = props.config.time - minutes * 60;
 		}
 
 		this.state = {
@@ -64,6 +64,7 @@ class WordCatcher extends React.Component {
 			start: false,
 			gameEnd: false
 		};
+		console.log(this.state)
 	}
 
 	startGame = () => {
@@ -230,8 +231,7 @@ class WordCatcher extends React.Component {
 		});
 
 		return (
-		<StyledWordCatcherTableGame onScroll={this.scroll}>
-			<StyledGame>
+			<StyledWordCatcherTableGame onScroll={this.scroll}>
 				<div className='gameCanvas'>
 					<canvas
 						ref={this.canvasRef}
@@ -248,29 +248,27 @@ class WordCatcher extends React.Component {
 						className='canvasRef'
 					></canvas>
 				</div>
-				{this.props?.data?.props?.time > 0 ? 
 					<StyledGameInfoContainer>
-						<div className='timer'>
-							{parseInt(this.state.timer.seconds) === 0 && parseInt(this.state.timer.minutes) === 0
-								?
-									<samp>"Time's up"</samp>
-								:
-								<>
-									<samp className='mitutes'>{this.state.timer.minutes}</samp>:<samp className='seconds'>{this.state.timer.seconds}</samp>
-								</>
-							}
+						{this.props.config.time > 0 ? 
+								<div className='timer'>
+									{parseInt(this.state.timer.seconds) === 0 && parseInt(this.state.timer.minutes) === 0
+										?
+											<samp>"Time's up"</samp>
+										:
+										<>
+											<samp className='mitutes'>{this.state.timer.minutes}</samp>:<samp className='seconds'>{this.state.timer.seconds}</samp>
+										</>
+									}
+								</div>
+							: <></> 
+						}
+						<div className='points'>
+							<div className='marker'>{pointsWords}</div>
 						</div>
 					</StyledGameInfoContainer>
-				: <></> 
-				}
-				<StyledGameInfoContainer>
-					<div className='words'>
-						<div className='marker'>{pointsWords}</div>
-					</div>
-				</StyledGameInfoContainer>
+
 				
-			</StyledGame>
-		</StyledWordCatcherTableGame>
+			</StyledWordCatcherTableGame>
 		);
 	}
 }
