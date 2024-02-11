@@ -57,10 +57,7 @@ class WordCatcher extends React.Component {
 				minutes: minutes === "00" ? "00" : `0${minutes}`,
 				seconds: seconds === "00" ? "00" : seconds < 10 ? `0${seconds}` : seconds,
 			},
-			words: {
-				wordsToSearch: [],
-				wordsSearched: []
-			},
+			points: 0,
 			start: false,
 			gameEnd: false
 		};
@@ -71,10 +68,13 @@ class WordCatcher extends React.Component {
 		this.setState({ start: true });
 		this.canvas = this.canvasRef.current;
 		this.context = this.canvasRef.current.getContext("2d");
+
+		let elementsToDrop = this.setBonifications(this.props.config.elementsToDrop,this.props.config.bonifications)
 		let elements = {
 			damageElements: this.props.config.damageElements,
-			elementsToCatch: this.props.config.elementsToDrop,
+			elementsToCatch: elementsToDrop
 		}
+		console.log(elements)
 		if (this.context) {
 			this.gameClass = new WordCatcherClass(this.context, this.config, elements, this.gameEnd, this.toHuntWord);
 			this.renderCanvas();
@@ -151,14 +151,8 @@ class WordCatcher extends React.Component {
 		this.animationFrameId = window.requestAnimationFrame(this.renderCanvas);
 	}
 
-	toHuntWord = (wordsToSearch = [], correctWordsSearched = [], incorrectWordsSearched = []) => {
-		this.setState({
-			words: {
-				wordsToSearch,
-				correctWordsSearched,
-				incorrectWordsSearched
-			}
-		});
+	toHuntWord = (points) => {
+		this.state.points = points
 	};
 
 	handleMouseDown = (event) => {
@@ -184,7 +178,7 @@ class WordCatcher extends React.Component {
 		this.setState({ gameEnd: true });
 		if (this.intervalTimer) clearInterval(this.intervalTimer);
 		this.props.setGameResult({
-			points: this.points
+			points: this.state.points
 		})
 	};
 
@@ -221,8 +215,16 @@ class WordCatcher extends React.Component {
 		if (this.mouse.enter) e.preventDefault();
 	};
 
-	setPoints = () => {
-
+	setBonifications = (elements, bonifications) => {
+		const elementsWithBonification = []
+		const bonificationsCopy = [...bonifications];
+		// Recorrer cada elemento y asignar una bonificación aleatoria
+		elements.forEach(element => {
+			const randomIndex = Math.floor(Math.random() * bonificationsCopy.length);
+			element.bonification = bonificationsCopy.splice(randomIndex, 1)[0];
+			elementsWithBonification.push(element)
+		});
+		return elementsWithBonification
 	};
 
 	render() {
@@ -247,7 +249,6 @@ class WordCatcher extends React.Component {
 					></canvas>
 				</div>
 					<StyledGameInfoContainer>
-						{console.log(this.state.timer)}
 						{this.props.config.time > 0 ? 
 								<div className='timer'>
 									{parseInt(this.state.timer.seconds) === 0 && parseInt(this.state.timer.minutes) === 0

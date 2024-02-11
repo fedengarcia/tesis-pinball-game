@@ -75,6 +75,7 @@ class WordCatcherClass {
     }
 
     elementsToFalling = [];
+    points = 0
 
     intervalGenerateWords;
 
@@ -89,7 +90,6 @@ class WordCatcherClass {
         this.elements = elements;
         this.gameEndFunction = gameEndFunction;
         this.huterWordFuction = huterWordFuction;
-
         // Set image background
         this.imageBackground = new Image()
         this.imageBackground.src = backgroundImage
@@ -112,7 +112,7 @@ class WordCatcherClass {
             }
         }
 
-        this.huterWordFuction(this.elements.elementsToCatch, this.correctHuntedWords, this.incorrectHuntedWords)
+        this.huterWordFuction(this.points)
         this.intervalGenerateWords = setInterval(this.generateWords, 1000);
     }
 
@@ -172,28 +172,22 @@ class WordCatcherClass {
         if (number < 150) {
             let isGoodWord = Math.floor(Math.random() * 100);
 
-            let newWordString = "";
+            let name = "";
+            let bonification = '';
 
             if (isGoodWord < 40) {
                 let wordAttempts = 0;
                 do {
                     wordAttempts += 1;
-
-                    newWordString = this.elements.elementsToCatch[Math.floor(Math.random() * this.elements.elementsToCatch.length)].name;
-
-                    let wordAlreadyFalling = this.elementsToFalling.filter(word => word.word === newWordString);
-
-                    if (wordAlreadyFalling.length > 0 || this.correctHuntedWords.includes(newWordString)) {
-                        newWordString = "";
-                    }
-                    if (wordAttempts > 100) return;
-
-                } while (newWordString === "");
+                    let element = this.elements.elementsToCatch[Math.floor(Math.random() * this.elements.elementsToCatch.length)];
+                    name = element.name;
+                    bonification = element.bonification
+                } while (name === "");
             } else {
-                newWordString = this.elements.damageElements[Math.floor(Math.random() * this.elements.damageElements.length)].name;
+                name = this.elements.damageElements[Math.floor(Math.random() * this.elements.damageElements.length)].name;
             }
 
-            let wordWidth = this.ctx.measureText(newWordString).width;
+            let wordWidth = this.ctx.measureText(name).width;
             let velocity = Math.random() * (1.5) + 0.5;
 
             let position = {
@@ -213,19 +207,19 @@ class WordCatcherClass {
                     end: positionInit + wordWidth
                 }
 
-                let positionsAlreadyTaken = this.elementsToFalling.filter(word => {
+                let positionsAlreadyTaken = this.elementsToFalling.filter(elementFalling => {
 
                     if (
-                        (word.x.init <= position.init && word.x.end >= position.init) ||
-                        (word.x.init <= position.end && word.x.end >= position.end) ||
-                        (position.init <= word.x.init && position.end >= word.x.end) ||
-                        (position.init >= word.x.init && position.end <= word.x.end)
+                        (elementFalling.x.init <= position.init && elementFalling.x.end >= position.init) ||
+                        (elementFalling.x.init <= position.end && elementFalling.x.end >= position.end) ||
+                        (position.init <= elementFalling.x.init && position.end >= elementFalling.x.end) ||
+                        (position.init >= elementFalling.x.init && position.end <= elementFalling.x.end)
                     ) {
 
                         let counter = 0;
                         while (true) {
-                            if ((counter * velocity) < this.config.height && ((counter * word.speed) + word.y) < this.config.height) {
-                                if ((counter * velocity) + 400 >= ((counter * word.speed) + word.y)) {
+                            if ((counter * velocity) < this.config.height && ((counter * elementFalling.speed) + elementFalling.y) < this.config.height) {
+                                if ((counter * velocity) + 400 >= ((counter * elementFalling.speed) + elementFalling.y)) {
                                     return true;
                                 }
                             } else {
@@ -247,7 +241,8 @@ class WordCatcherClass {
 
 
             this.elementsToFalling.push({
-                name: newWordString,
+                name: name,
+                bonification: bonification,
                 speed: velocity,
                 y: 0,
                 x: position,
@@ -276,16 +271,14 @@ class WordCatcherClass {
                     let index = this.elements.damageElements.findIndex(element => element.name === elementFalling.name)
                     if (index !== -1) {
                         this.basketOnDamage()
-                        let alreadyHunted = this.incorrectHuntedWords.includes(elementFalling.name);
-                        if(!alreadyHunted){
-                            this.incorrectHuntedWords.push(elementFalling.name)
-                            this.huterWordFuction(this.elements.elementsToCatch, this.correctHuntedWords, this.incorrectHuntedWords)
-                        }
-                    } else {                        
-                        this.correctHuntedWords.push(elementFalling.name);
-                        this.huterWordFuction(this.elements.elementsToCatch, this.correctHuntedWords, this.incorrectHuntedWords)
+                        if(this.points > 0) this.points = this.points - 1
+                    } else {               
+                        if(elementFalling.bonification === '+1') this.points = this.points + 1 
+                        if(elementFalling.bonification === 'x1') this.points = this.points 
+                        if(elementFalling.bonification === 'x2') this.points = this.points * 2 
                         this.opacityBasketGood = 0.8;
                     }
+                    this.huterWordFuction(this.points)
                     this.elementsToFalling.splice(i, 1);
                 }
             }
@@ -304,7 +297,7 @@ class WordCatcherClass {
         this.ctx.globalAlpha = 1;
 
         if (!this.basketImgCharge) return;
-        this.drawelementsToFalling()
+        this.drawelEmentsToFalling()
         let distanceCenter = this.sizeBasket.width / 2;
         this.ctx.strokeStyle = "#ff0000";
 
@@ -331,7 +324,7 @@ class WordCatcherClass {
         this.ctx.globalAlpha = 1;
     }
 
-    drawelementsToFalling() {
+    drawelEmentsToFalling() {
         this.ctx.font = "bold 50px Comic-Sans";
         this.ctx.textBaseline = 'middle';
         //this.ctx.textAlign = "center";
@@ -349,7 +342,7 @@ class WordCatcherClass {
 
     onEndGame() {
         this.gameEnd = true;
-        this.gameEndFunction();
+        this.gameEndFunction(this.points);
     }
 }
 

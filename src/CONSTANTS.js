@@ -49,11 +49,11 @@ export const APP_DATA = {
         GAME_CONFIGURATION:{
             times_up: 'Se acabo el tiempo!',
             points: 'Puntos del juego:',
-            time: 60,
+            time: 30,
             /* 
                 Bonifications must be same length of images/words 
-                The only functionality of points are x2, x1, +1 
-                Black points will rest points
+                The only functionality of points available are x2, x1, +1 
+                Ball will rest -1 point
             */
             bonifications: ['x2', 'x1', '+1'],
             /* 
