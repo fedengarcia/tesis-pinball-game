@@ -1,24 +1,18 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { APP_DATA } from '../CONSTANTS'
 import { StyledLayoutContent } from '../styled-components/containers'
 import { Box } from '@mui/system'
 import { AccountCircle } from '@mui/icons-material'
 import { Button, TextField } from '@mui/material'
+import UserContext from '../UserProvider/UserContext'
 
-export default function Login({handleLogin}) {
-    const [userInfo, setUserInfo] = useState({
-        email: ''
-    })
+export default function Login() {
+  const {userInfo, setUserInfo, validateEmail, handleLogin } = useContext(UserContext)
 
     const handleEmailInput = (e) =>{
         setUserInfo((prevState) => ({...prevState, email: e.target.value}))
     }
-    
-    const validateEmail = (email) => {
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-        const validation = regex.test(email);
-        return validation
-    }   
+  
 
   return (
         <>
