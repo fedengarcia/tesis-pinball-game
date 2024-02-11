@@ -68,3 +68,22 @@ export const StyledGameInfoContainer = styled('div')`
 }
 `
 
+export const StyledRules = styled('div')`
+        top: 180px;
+        right: 460px;
+        position: absolute;
+        border-radius: 8px;
+
+        .rule-element-container{
+            display: flex;
+            align-items: center;
+            img{
+                margin-right: 10px;
+                width: 40px;
+                height: 40px;
+            }
+            h3{
+                margin: 10px 0;
+            }
+        }
+`

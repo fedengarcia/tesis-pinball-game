@@ -1,6 +1,6 @@
 import React from "react";
 import WordCatcherClass from "./WordCatcherClass";
-import { StyledGameInfoContainer, StyledWordCatcherTableGame } from "./WordCatcherStyles";
+import { StyledGameInfoContainer, StyledRules, StyledWordCatcherTableGame } from "./WordCatcherStyles";
 
 
 class WordCatcher extends React.Component {
@@ -73,7 +73,7 @@ class WordCatcher extends React.Component {
 			damageElements: this.props.config.damageElements,
 			elementsToCatch: elementsToDrop
 		}
-		console.log(elements)
+		this.elements = elements
 		if (this.context) {
 			this.gameClass = new WordCatcherClass(this.context, this.config, elements, this.gameEnd, this.toHuntWord);
 			this.renderCanvas();
@@ -249,25 +249,36 @@ class WordCatcher extends React.Component {
 						className='canvasRef'
 					></canvas>
 				</div>
-					<StyledGameInfoContainer>
-						{this.props.config.time > 0 ? 
-								<div className='timer'>
-									{parseInt(this.state.timer.seconds) === 0 && parseInt(this.state.timer.minutes) === 0
-										?
-											<samp>{this.props.config.times_up}</samp>
-										:
-										<>
-											<samp className='mitutes'>{this.state.timer.minutes}</samp>:<samp className='seconds'>{this.state.timer.seconds}</samp>
-										</>
-									}
-								</div>
-							: <></> 
-						}
-						<div className='points'>
-							{`${this.props.config.pointsLabel} ${this.state.points}`}
-						</div>
-					</StyledGameInfoContainer>
-
+				<StyledGameInfoContainer>
+					{this.props.config.time > 0 ? 
+							<div className='timer'>
+								{parseInt(this.state.timer.seconds) === 0 && parseInt(this.state.timer.minutes) === 0
+									?
+										<samp>{this.props.config.times_up}</samp>
+									:
+									<>
+										<samp className='mitutes'>{this.state.timer.minutes}</samp>:<samp className='seconds'>{this.state.timer.seconds}</samp>
+									</>
+								}
+							</div>
+						: <></> 
+					}
+					<div className='points'>
+						{`${this.props.config.pointsLabel} ${this.state.points}`}
+					</div>
+				</StyledGameInfoContainer>
+				{this.props.config.showBonifications &&
+				<StyledRules>
+					{this.elements?.elementsToCatch.map((element, index) => 
+					<div key={index} className="rule-element-container">
+						<img src={element.src}/>
+						<h3>{`${element.bonification}`}</h3>
+					</div>)}
+					<div className="rule-element-container">
+						<img src={this?.elements?.damageElements[0]?.src}/>
+						<h3>-1</h3>
+					</div>
+				</StyledRules>}
 				
 			</StyledWordCatcherTableGame>
 		);

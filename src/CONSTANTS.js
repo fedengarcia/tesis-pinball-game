@@ -60,6 +60,7 @@ export const APP_DATA = {
                 The only functionality of points available are x2, x1, +1 
                 Ball will rest -1 point
             */
+            showBonifications: true,
             bonifications: ['x2', 'x1', '+1'],
             /* 
                 if you want use only images, keep brand_words empty
