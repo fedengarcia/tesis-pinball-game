@@ -1,8 +1,6 @@
 import appleSVG from './assets/apple-logo.svg'
 import samsungSVG from './assets/samsung-logo.svg'
 import xiaomiSVG from './assets/xiaomi-logo.svg'
-import ballSVG from './assets/ball.svg'
-
 
 const generate_tables = () => {
     let tables = [];
@@ -84,7 +82,9 @@ export const APP_DATA = {
         END_GAME_BUTTON: 'Terminar partida',
         GAME_CONFIGURATION:{
             times_up: 'Se acabo el tiempo!',
+            time: 120,
             pointsLabel: 'Puntos:',
+            brands: ['samsung', 'apple', 'xiaomi'],
             /* 
                 Bonifications must be same length of images/words 
                 The only functionality of points available are x2, x1, +1 
@@ -96,180 +96,207 @@ export const APP_DATA = {
                     {
                         "table": 1,
                         "name": "Samsung",
-                        "src": "/src/assets/samsung-logo.svg",
-                        "bonification": "nula"
+                        "src": samsungSVG,
+                        "bonification": "nula",
+                        "ballHits": 0
                     },
                     {
                         "table": 1,
                         "name": "Apple",
-                        "src": "/src/assets/apple-logo.svg",
-                        "bonification": "mediadora"
+                        "src": appleSVG,
+                        "bonification": "mediadora",
+                        "ballHits": 0
                     },
                     {
                         "table": 1,
                         "name": "Xiaomi",
-                        "src": "/src/assets/xiaomi-logo.svg",
-                        "bonification": "premio"
+                        "src": xiaomiSVG,
+                        "bonification": "premio",
+                        "ballHits": 0
                     }
                 ],
                 [
                     {
                         "table": 2,
                         "name": "Samsung",
-                        "src": "/src/assets/samsung-logo.svg",
-                        "bonification": "mediadora"
+                        "src": samsungSVG,
+                        "bonification": "mediadora",
+                        "ballHits": 0
                     },
                     {
                         "table": 2,
                         "name": "Apple",
-                        "src": "/src/assets/apple-logo.svg",
-                        "bonification": "mediadora"
+                        "src": appleSVG,
+                        "bonification": "mediadora",
+                        "ballHits": 0
                     },
                     {
                         "table": 2,
                         "name": "Xiaomi",
-                        "src": "/src/assets/xiaomi-logo.svg",
-                        "bonification": "mediadora"
+                        "src": xiaomiSVG,
+                        "bonification": "mediadora",
+                        "ballHits": 0
                     }
                 ],
                 [
                     {
                         "table": 3,
                         "name": "Samsung",
-                        "src": "/src/assets/samsung-logo.svg",
-                        "bonification": "nula"
+                        "src": samsungSVG,
+                        "bonification": "nula",
+                        "ballHits": 0
                     },
                     {
                         "table": 3,
                         "name": "Apple",
-                        "src": "/src/assets/apple-logo.svg",
-                        "bonification": "nula"
+                        "src": appleSVG,
+                        "bonification": "nula",
+                        "ballHits": 0
                     },
                     {
                         "table": 3,
                         "name": "Xiaomi",
-                        "src": "/src/assets/xiaomi-logo.svg",
-                        "bonification": "premio"
+                        "src": xiaomiSVG,
+                        "bonification": "premio",
+                        "ballHits": 0
                     }
                 ],
                 [
                     {
                         "table": 4,
                         "name": "Samsung",
-                        "src": "/src/assets/samsung-logo.svg",
-                        "bonification": "nula"
+                        "src": samsungSVG,
+                        "bonification": "nula",
+                        "ballHits": 0
                     },
                     {
                         "table": 4,
                         "name": "Apple",
-                        "src": "/src/assets/apple-logo.svg",
-                        "bonification": "mediadora"
+                        "src": appleSVG,
+                        "bonification": "mediadora",
+                        "ballHits": 0
                     },
                     {
                         "table": 4,
                         "name": "Xiaomi",
-                        "src": "/src/assets/xiaomi-logo.svg",
-                        "bonification": "premio"
+                        "src": xiaomiSVG,
+                        "bonification": "premio",
+                        "ballHits": 0
                     }
                 ],
                 [
                     {
                         "table": 5,
                         "name": "Samsung",
-                        "src": "/src/assets/samsung-logo.svg",
-                        "bonification": "premio"
+                        "src": samsungSVG,
+                        "bonification": "premio",
+                        "ballHits": 0
                     },
                     {
                         "table": 5,
                         "name": "Apple",
-                        "src": "/src/assets/apple-logo.svg",
-                        "bonification": "premio"
+                        "src": appleSVG,
+                        "bonification": "premio",
+                        "ballHits": 0
                     },
                     {
                         "table": 5,
                         "name": "Xiaomi",
-                        "src": "/src/assets/xiaomi-logo.svg",
-                        "bonification": "mediadora"
+                        "src": xiaomiSVG,
+                        "bonification": "mediadora",
+                        "ballHits": 0
                     }
                 ],
                 [
                     {
                         "table": 6,
                         "name": "Samsung",
-                        "src": "/src/assets/samsung-logo.svg",
-                        "bonification": "nula"
+                        "src": samsungSVG,
+                        "bonification": "nula",
+                        "ballHits": 0
                     },
                     {
                         "table": 6,
                         "name": "Apple",
-                        "src": "/src/assets/apple-logo.svg",
-                        "bonification": "mediadora"
+                        "src": appleSVG,
+                        "bonification": "mediadora",
+                        "ballHits": 0
                     },
                     {
                         "table": 6,
                         "name": "Xiaomi",
-                        "src": "/src/assets/xiaomi-logo.svg",
-                        "bonification": "mediadora"
+                        "src": xiaomiSVG,
+                        "bonification": "mediadora",
+                        "ballHits": 0
                     }
                 ],
                 [
                     {
                         "table": 7,
                         "name": "Samsung",
-                        "src": "/src/assets/samsung-logo.svg",
-                        "bonification": "nula"
+                        "src": samsungSVG,
+                        "bonification": "nula",
+                        "ballHits": 0
                     },
                     {
                         "table": 7,
                         "name": "Apple",
-                        "src": "/src/assets/apple-logo.svg",
-                        "bonification": "premio"
+                        "src": appleSVG,
+                        "bonification": "premio",
+                        "ballHits": 0
                     },
                     {
                         "table": 7,
                         "name": "Xiaomi",
-                        "src": "/src/assets/xiaomi-logo.svg",
-                        "bonification": "premio"
+                        "src": xiaomiSVG,
+                        "bonification": "premio",
+                        "ballHits": 0
                     }
                 ],
                 [
                     {
                         "table": 8,
                         "name": "Samsung",
-                        "src": "/src/assets/samsung-logo.svg",
-                        "bonification": "nula"
+                        "src": samsungSVG,
+                        "bonification": "nula",
+                        "ballHits": 0
                     },
                     {
                         "table": 8,
                         "name": "Apple",
-                        "src": "/src/assets/apple-logo.svg",
-                        "bonification": "premio"
+                        "src": appleSVG,
+                        "bonification": "premio",
+                        "ballHits": 0
                     },
                     {
                         "table": 8,
                         "name": "Xiaomi",
-                        "src": "/src/assets/xiaomi-logo.svg",
-                        "bonification": "premio"
+                        "src": xiaomiSVG,
+                        "bonification": "premio",
+                        "ballHits": 0
                     }
                 ],
                 [
                     {
                         "table": 9,
                         "name": "Samsung",
-                        "src": "/src/assets/samsung-logo.svg",
-                        "bonification": "mediadora"
+                        "src": samsungSVG,
+                        "bonification": "mediadora",
+                        "ballHits": 0
                     },
                     {
                         "table": 9,
                         "name": "Apple",
-                        "src": "/src/assets/apple-logo.svg",
-                        "bonification": "premio"
+                        "src": appleSVG,
+                        "bonification": "premio",
+                        "ballHits": 0
                     },
                     {
                         "table": 9,
                         "name": "Xiaomi",
-                        "src": "/src/assets/xiaomi-logo.svg",
-                        "bonification": "mediadora"
+                        "src": xiaomiSVG,
+                        "bonification": "mediadora",
+                        "ballHits": 0
                     }
                 ]
             ]
