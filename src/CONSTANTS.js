@@ -1,4 +1,7 @@
-import appleSVG from './components/WordCatcher/assets/images/react.svg'
+import appleSVG from './assets/apple-logo.svg'
+import samsungSVG from './assets/samsung-logo.svg'
+import xiaomiSVG from './assets/xiaomi-logo.svg'
+import ballSVG from './assets/ball.svg'
 
 export const APP_DATA = {
     APP_TITLE: "Bienvenido a mi tesis",
@@ -46,11 +49,11 @@ export const APP_DATA = {
         ]
     },
     APP_GAME: {
-        TITLE: 'Recoge las marcas, pero ten cuidado !',
+        TITLE: 'Recoge las marcas, pero ten cuidado con las bolas !',
         END_GAME_BUTTON: 'Terminar partida',
         GAME_CONFIGURATION:{
             times_up: 'Se acabo el tiempo!',
-            points: 'Puntos del juego:',
+            pointsLabel: 'Puntos:',
             time: 30,
             /* 
                 Bonifications must be same length of images/words 
@@ -66,16 +69,16 @@ export const APP_DATA = {
             damageElements: [
                 {
                     name: 'ball',
-                    src: '/assets/react.svg'
+                    src: ballSVG
                 },
                 {
                     name: 'ball',
-                    src: '/assets/react.svg'
+                    src: ballSVG
                 }
             ],
             elementsToDrop: [{
                 name: 'Samsung',
-                src: appleSVG
+                src: samsungSVG
             },
             {
                 name: 'Apple',
@@ -83,7 +86,7 @@ export const APP_DATA = {
             },
             {
                 name: 'Xiaomi',
-                src: appleSVG
+                src: xiaomiSVG
             },
             ], 
         }
