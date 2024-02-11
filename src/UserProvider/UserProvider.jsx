@@ -2,13 +2,18 @@ import React, {useEffect, useState} from 'react';
 import UserContext from './UserContext';
 import { APP_DATA } from '../CONSTANTS';
 import { createUserDocument, getUserByEmail } from '../firebase/firebase';
+import { useNavigate } from 'react-router-dom';
 
 export const UserProvider = ({children}) => {
     const [isLogged, setIsLogged]= useState(false);
     const [userInfo, setUserInfo] = useState({
         email: ''
     })
+    const navigate = useNavigate()
 
+    useEffect(() => {
+        if(userInfo.email === '') navigate('/')
+      }, [userInfo]);
 
     const validateEmail = (email) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
