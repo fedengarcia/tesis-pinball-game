@@ -1,20 +1,23 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { StyledAppLayout } from '../styled-components/containers'
 import LastForm from '../components/LastForm'
 import GameComponent from '../components/GameComponent/GameComponent'
+import UserContext from '../UserProvider/UserContext'
+import { useNavigate } from 'react-router-dom'
 
 export default function Game() {
   const [isGameEnd, setIsGameEnd] = useState(false)
-  const [gameResult, setGameResult] = useState({
-    points: null
-  })
+  const {userInfo} = useContext(UserContext)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(userInfo?.finalForm?.isCompleted && userInfo?.gameCompleted) navigate('/end-game')
+  }, [userInfo]);
 
   return (
     <StyledAppLayout>
       {!isGameEnd 
       ? <GameComponent 
-          gameResult={gameResult}
-          setGameResult={setGameResult}
           setIsGameEnd={setIsGameEnd}
         />
       : <LastForm/>
