@@ -22,6 +22,10 @@ export default function FirstForm() {
   const {userInfo, setUserInfo} = useContext(UserContext)
 
   useEffect(() => {
+    if(userInfo?.firstForm?.isCompleted) navigate('/game')
+  }, [userInfo]);
+
+  useEffect(() => {
     let isCompleted = false
     answers.forEach(answer => {
       if(answer.answer_selected === ''){
@@ -30,6 +34,8 @@ export default function FirstForm() {
     })
     setButtonDisabled(isCompleted)
   }, [answers]);
+
+
 
   const handlePinballInit = async () => {
     let userInfoCopy = {...userInfo}
