@@ -1,4 +1,4 @@
-
+import backgroundImage from '../../assets/background.png'
 
 class PinballClass {
     ctx;
@@ -32,61 +32,23 @@ class PinballClass {
     frameCount = 0;
 
     gameEnd = false;
-
     //Images
-    imgBasket = null;
-    imgBasketDamage = null;
-    imgBasketGood = null;
     imageBackground = null;
-
-    opacityBasketDamage = 0;
-    opacityBasketGood = 0;
-    basketImgCharge = false;
-
     gameEndFunction = null;
-    huterWordFuction = null;
-
-    elements = {
-        damageElements: [],
-        elementsToCatch: []
-    }
-
-    elementsToFalling = [];
     points = 0
 
     intervalGenerateElements;
 
-
-    constructor(ctx, config = { width: 500, height: 500, size: 10 }, elements = { elementsToCatch: [], damageElements: [] }, gameEndFunction, huterWordFuction) {
+    constructor(ctx, config = { width: 500, height: 500, size: 10 }, gameEndFunction) {
         this.ctx = ctx;
         this.config = config;
-        this.elements = elements;
         this.gameEndFunction = gameEndFunction;
-        this.huterWordFuction = huterWordFuction;
+        // this.huterWordFuction = huterWordFuction;
         // Set image background
         this.imageBackground = new Image()
         this.imageBackground.src = backgroundImage
-        this.imageBackground.onload = () => {
-
-            this.imgBasket = new Image();
-            this.imgBasket.src = basket;
-            this.imgBasket.onload = () => {
-
-                this.imgBasketDamage = new Image();
-                this.imgBasketDamage.src = basketDamage;
-                this.imgBasketDamage.onload = () => {
-
-                    this.imgBasketGood = new Image();
-                    this.imgBasketGood.src = basketGood;
-                    this.imgBasketGood.onload = () => {
-                        this.basketImgCharge = true;
-                    }
-                }
-            }
-        }
-
-        this.huterWordFuction(this.points)
-        this.intervalGenerateElements = setInterval(this.generateElements, 1000);
+      
+        // this.intervalGenerateElements = setInterval(this.generateElements, 1000);
     }
 
     clearCanvas() {
@@ -102,133 +64,133 @@ class PinballClass {
         this.config.width *= scaleRatio.xRatio;
         this.config.height *= scaleRatio.yRatio;
 
-        this.mouse = mouse;
+        // this.mouse = mouse;
 
-        this.mouse.x *= scaleRatio.xRatio;
-        this.mouse.y *= scaleRatio.yRatio;
+        // this.mouse.x *= scaleRatio.xRatio;
+        // this.mouse.y *= scaleRatio.yRatio;
 
-        //Save last Variables
-        this.isLastClicked = this.mouse.click;
+        // //Save last Variables
+        // this.isLastClicked = this.mouse.click;
 
-        if (this.opacityBasketGood > 0 || (this.opacityBasketGood - 0.09) > 0) {
-            this.opacityBasketGood -= 0.09;
-        } else {
-            this.opacityBasketGood = 0;
-        }
+        // if (this.opacityBasketGood > 0 || (this.opacityBasketGood - 0.09) > 0) {
+        //     this.opacityBasketGood -= 0.09;
+        // } else {
+        //     this.opacityBasketGood = 0;
+        // }
 
-        if (this.opacityBasketDamage > 0 || (this.opacityBasketDamage - 0.09) > 0) {
-            this.opacityBasketDamage -= 0.09;
-            let desplace = 10;
-            this.positionBasket.desplace = {
-                x: Math.floor(Math.random() * (desplace - -desplace + 1) + -desplace),
-                y: Math.floor(Math.random() * (desplace - -desplace + 1) + -desplace)
-            }
-        } else {
-            this.opacityBasketDamage = 0;
-            this.positionBasket.desplace = {
-                x: 0,
-                y: 0
-            }
-        }
+        // if (this.opacityBasketDamage > 0 || (this.opacityBasketDamage - 0.09) > 0) {
+        //     this.opacityBasketDamage -= 0.09;
+        //     let desplace = 10;
+        //     this.positionBasket.desplace = {
+        //         x: Math.floor(Math.random() * (desplace - -desplace + 1) + -desplace),
+        //         y: Math.floor(Math.random() * (desplace - -desplace + 1) + -desplace)
+        //     }
+        // } else {
+        //     this.opacityBasketDamage = 0;
+        //     this.positionBasket.desplace = {
+        //         x: 0,
+        //         y: 0
+        //     }
+        // }
 
-        this.updatePositionBasket();
-        this.moveElements()
+        this.updatePositionBall();
+        // this.moveElements()
     }
 
-    updatePositionBasket() {
-        this.positionBasket.x = this.mouse.x
+    updatePositionBall() {
+
     }
 
     generateElements = () => {
-        if (this.gameEnd === true) return;
-        let number = Math.floor(Math.random() * 150);
-        if (number < 150) {
-            let isGoodWord = Math.floor(Math.random() * 100);
+        // if (this.gameEnd === true) return;
+        // let number = Math.floor(Math.random() * 150);
+        // if (number < 150) {
+        //     let isGoodWord = Math.floor(Math.random() * 100);
 
-            let name = "";
-            let bonification = '';
-            let image_src = ''
+        //     let name = "";
+        //     let bonification = '';
+        //     let image_src = ''
 
-            if (isGoodWord < 40) {
-                let wordAttempts = 0;
-                do {
-                    wordAttempts += 1;
-                    let element = this.elements.elementsToCatch[Math.floor(Math.random() * this.elements.elementsToCatch.length)];
-                    name = element.name;
-                    bonification = element.bonification
-                    image_src = element.src
-                } while (name === "");
-            } else {
-                let element = this.elements.damageElements[Math.floor(Math.random() * this.elements.damageElements.length)];
-                name = element.name;
-                bonification = element.bonification
-                image_src = element.src
-            }
+        //     if (isGoodWord < 40) {
+        //         let wordAttempts = 0;
+        //         do {
+        //             wordAttempts += 1;
+        //             let element = this.elements.elementsToCatch[Math.floor(Math.random() * this.elements.elementsToCatch.length)];
+        //             name = element.name;
+        //             bonification = element.bonification
+        //             image_src = element.src
+        //         } while (name === "");
+        //     } else {
+        //         let element = this.elements.damageElements[Math.floor(Math.random() * this.elements.damageElements.length)];
+        //         name = element.name;
+        //         bonification = element.bonification
+        //         image_src = element.src
+        //     }
 
-            let wordWidth = this.ctx.measureText(name).width;
-            let velocity = Math.random() * (1.5) + 0.5;
+        //     let wordWidth = this.ctx.measureText(name).width;
+        //     let velocity = Math.random() * (1.5) + 0.5;
 
-            let position = {
-                init: -1,
-                center: -1,
-                end: -1
-            };
-            let positionAttempts = 0;
+        //     let position = {
+        //         init: -1,
+        //         center: -1,
+        //         end: -1
+        //     };
+        //     let positionAttempts = 0;
 
-            do {
-                positionAttempts += 1;
+        //     do {
+        //         positionAttempts += 1;
 
-                let positionInit = Math.floor(Math.random() * ((this.config.width - wordWidth) - (this.marginX * 2))) + this.marginX;
-                position = {
-                    init: positionInit,
-                    center: positionInit + (wordWidth / 2),
-                    end: positionInit + wordWidth
-                }
+        //         let positionInit = Math.floor(Math.random() * ((this.config.width - wordWidth) - (this.marginX * 2))) + this.marginX;
+        //         position = {
+        //             init: positionInit,
+        //             center: positionInit + (wordWidth / 2),
+        //             end: positionInit + wordWidth
+        //         }
 
-                let positionsAlreadyTaken = this.elementsToFalling.filter(elementFalling => {
+        //         let positionsAlreadyTaken = this.elementsToFalling.filter(elementFalling => {
 
-                    if (
-                        (elementFalling.x.init <= position.init && elementFalling.x.end >= position.init) ||
-                        (elementFalling.x.init <= position.end && elementFalling.x.end >= position.end) ||
-                        (position.init <= elementFalling.x.init && position.end >= elementFalling.x.end) ||
-                        (position.init >= elementFalling.x.init && position.end <= elementFalling.x.end)
-                    ) {
+        //             if (
+        //                 (elementFalling.x.init <= position.init && elementFalling.x.end >= position.init) ||
+        //                 (elementFalling.x.init <= position.end && elementFalling.x.end >= position.end) ||
+        //                 (position.init <= elementFalling.x.init && position.end >= elementFalling.x.end) ||
+        //                 (position.init >= elementFalling.x.init && position.end <= elementFalling.x.end)
+        //             ) {
 
-                        let counter = 0;
-                        while (true) {
-                            if ((counter * velocity) < this.config.height && ((counter * elementFalling.speed) + elementFalling.y) < this.config.height) {
-                                if ((counter * velocity) + 400 >= ((counter * elementFalling.speed) + elementFalling.y)) {
-                                    return true;
-                                }
-                            } else {
-                                return false;
-                            }
-                            counter++;
-                        }
-                    }
+        //                 let counter = 0;
+        //                 while (true) {
+        //                     if ((counter * velocity) < this.config.height && ((counter * elementFalling.speed) + elementFalling.y) < this.config.height) {
+        //                         if ((counter * velocity) + 400 >= ((counter * elementFalling.speed) + elementFalling.y)) {
+        //                             return true;
+        //                         }
+        //                     } else {
+        //                         return false;
+        //                     }
+        //                     counter++;
+        //                 }
+        //             }
 
-                    return false;
-                });
+        //             return false;
+        //         });
 
-                if (positionsAlreadyTaken.length > 0) {
-                    position.init = -1;
-                }
+        //         if (positionsAlreadyTaken.length > 0) {
+        //             position.init = -1;
+        //         }
 
-                if (positionAttempts > 200) return;
-            } while (position.init === -1);
+        //         if (positionAttempts > 200) return;
+        //     } while (position.init === -1);
 
 
-            this.elementsToFalling.push({
-                name: name,
-                bonification: bonification,
-                src: image_src,
-                speed: velocity,
-                y: 0,
-                x: position,
-                color: 'red',
-                width: wordWidth
-            })
-        }
+        //     this.elementsToFalling.push({
+        //         name: name,
+        //         bonification: bonification,
+        //         src: image_src,
+        //         speed: velocity,
+        //         y: 0,
+        //         x: position,
+        //         color: 'red',
+        //         width: wordWidth
+        //     })
+        // }
     }
 
     moveElements() {
@@ -275,32 +237,32 @@ class PinballClass {
         this.ctx.drawImage(this.imageBackground, 0, 0, this.config.width, this.config.height)
         this.ctx.globalAlpha = 1;
 
-        if (!this.basketImgCharge) return;
-        this.drawelEmentsToFalling()
-        let distanceCenter = this.sizeBasket.width / 2;
-        this.ctx.strokeStyle = "#ff0000";
+        // if (!this.basketImgCharge) return;
+        // this.drawelEmentsToFalling()
+        // let distanceCenter = this.sizeBasket.width / 2;
+        // this.ctx.strokeStyle = "#ff0000";
 
-        this.ctx.drawImage(this.imgBasket, this.positionBasket.x - distanceCenter, this.positionBasket.y, this.sizeBasket.width, 50);
+        // this.ctx.drawImage(this.imgBasket, this.positionBasket.x - distanceCenter, this.positionBasket.y, this.sizeBasket.width, 50);
 
-        //Bascket Damage Draw
-        this.ctx.globalAlpha = this.opacityBasketDamage;
-        this.ctx.drawImage(
-            this.imgBasketDamage,
-            (this.positionBasket.x - distanceCenter) - this.positionBasket.desplace.x,
-            this.positionBasket.y - this.positionBasket.desplace.y,
-            this.sizeBasket.width, 50
-        );
+        // //Bascket Damage Draw
+        // this.ctx.globalAlpha = this.opacityBasketDamage;
+        // this.ctx.drawImage(
+        //     this.imgBasketDamage,
+        //     (this.positionBasket.x - distanceCenter) - this.positionBasket.desplace.x,
+        //     this.positionBasket.y - this.positionBasket.desplace.y,
+        //     this.sizeBasket.width, 50
+        // );
 
-        //Bascket Good Draw
-        this.ctx.globalAlpha = this.opacityBasketGood;
-        this.ctx.drawImage(
-            this.imgBasketGood,
-            this.positionBasket.x - distanceCenter,
-            this.positionBasket.y,
-            this.sizeBasket.width, 50
-        );
+        // //Bascket Good Draw
+        // this.ctx.globalAlpha = this.opacityBasketGood;
+        // this.ctx.drawImage(
+        //     this.imgBasketGood,
+        //     this.positionBasket.x - distanceCenter,
+        //     this.positionBasket.y,
+        //     this.sizeBasket.width, 50
+        // );
 
-        this.ctx.globalAlpha = 1;
+        // this.ctx.globalAlpha = 1;
     }
 
     async drawelEmentsToFalling() {
@@ -323,13 +285,13 @@ class PinballClass {
       }
 
     basketOnDamage() {
-        this.opacityBasketDamage = 0.8;
-        this.userErrors++;
+        // this.opacityBasketDamage = 0.8;
+        // this.userErrors++;
     }
 
     onEndGame() {
-        this.gameEnd = true;
-        this.gameEndFunction(this.points);
+        // this.gameEnd = true;
+        // this.gameEndFunction(this.points);
     }
 }
 

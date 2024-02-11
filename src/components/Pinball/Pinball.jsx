@@ -68,14 +68,8 @@ class Pinball extends React.Component {
 		this.canvas = this.canvasRef.current;
 		this.context = this.canvasRef.current.getContext("2d");
 
-		let elementsToDrop = this.setBonifications(this.props.config.elementsToDrop,this.props.config.bonifications)
-		let elements = {
-			damageElements: this.props.config.damageElements,
-			elementsToCatch: elementsToDrop
-		}
-		this.elements = elements
 		if (this.context) {
-			this.gameClass = new PinballClass(this.context, this.config, elements, this.gameEnd, this.toHuntWord);
+			this.gameClass = new PinballClass(this.context, this.config, this.gameEnd);
 			this.renderCanvas();
 			this.initTimer();
 		}
@@ -216,21 +210,8 @@ class Pinball extends React.Component {
 		if (this.mouse.enter) e.preventDefault();
 	};
 
-	setBonifications = (elements, bonifications) => {
-		const elementsWithBonification = []
-		const bonificationsCopy = [...bonifications];
-		// Recorrer cada elemento y asignar una bonificación aleatoria
-		elements.forEach(element => {
-			const randomIndex = Math.floor(Math.random() * bonificationsCopy.length);
-			element.bonification = bonificationsCopy.splice(randomIndex, 1)[0];
-			elementsWithBonification.push(element)
-		});
-		return elementsWithBonification
-	};
 
 	render() {
-
-
 		return (
 			<StyledPinballTableGame onScroll={this.scroll}>
 				<div className='gameCanvas'>
@@ -269,7 +250,7 @@ class Pinball extends React.Component {
 				</StyledGameInfoContainer>
 				{this.props.config.showBonifications &&
 				<StyledRules>
-					{this.elements?.elementsToCatch.map((element, index) => 
+					{this.table?.map((element, index) => 
 					<div key={index} className="rule-element-container">
 						<img src={element.src}/>
 						<h3>{`${element.bonification}`}</h3>

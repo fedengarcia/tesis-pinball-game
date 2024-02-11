@@ -11,9 +11,16 @@ export default function GameComponent({
   }) {
     const {userInfo, setUserInfo} = useContext(UserContext)
     const [buttonDisabled, setButtonDisabled] = useState(true)
+    const [gameConfiguration, setGameConfiguration] = useState([])
     const [gameResult, setGameResult] = useState({
       points: null
     })
+
+    useEffect(() => {
+        let configCopy = APP_DATA.APP_GAME.GAME_CONFIGURATION
+        configCopy.tables = userInfo.tableAssigned;
+        setGameConfiguration(configCopy)
+      }, []);
 
     useEffect(() => {
       if(gameResult.points !== null) setButtonDisabled(false)
@@ -34,10 +41,10 @@ export default function GameComponent({
   return (<>
     <h1>{APP_DATA.APP_GAME.TITLE}</h1>
     <StyledLayoutContent style={{padding: 0, overflow:'hidden'}}>
-        {/* <Pinball
-          config={APP_DATA.APP_GAME.GAME_CONFIGURATION}
+        <Pinball
+          config={gameConfiguration}
           setGameResult={setGameResult}
-        /> */}
+        />
     </StyledLayoutContent>
     <Button
       variant='contained'
