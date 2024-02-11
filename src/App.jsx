@@ -10,9 +10,7 @@ export default function App() {
  const {isLogged, userInfo} = useContext(UserContext)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    if(userInfo?.firstForm?.isCompleted) navigate('/game')
-  }, [userInfo]);
+
 
   return (
     <StyledAppLayout>
