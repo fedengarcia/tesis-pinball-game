@@ -163,7 +163,10 @@ class WordCatcherClass {
                     image_src = element.src
                 } while (name === "");
             } else {
-                name = this.elements.damageElements[Math.floor(Math.random() * this.elements.damageElements.length)].name;
+                let element = this.elements.damageElements[Math.floor(Math.random() * this.elements.damageElements.length)];
+                name = element.name;
+                bonification = element.bonification
+                image_src = element.src
             }
 
             let wordWidth = this.ctx.measureText(name).width;

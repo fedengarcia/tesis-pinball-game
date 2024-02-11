@@ -55,7 +55,7 @@ export const StyledGameInfoContainer = styled('div')`
     .points{
         top: 160px;
         right: 560px;
-        padding: 0.5em;
+        padding: 0.2em 0.5em;
         position: absolute;
         margin: 20px;
         background-color: lightgrey;

@@ -61,7 +61,6 @@ class WordCatcher extends React.Component {
 			start: false,
 			gameEnd: false
 		};
-		console.log(this.state)
 	}
 
 	startGame = () => {
@@ -152,7 +151,9 @@ class WordCatcher extends React.Component {
 	}
 
 	toHuntWord = (points) => {
-		this.state.points = points
+		this.setState({
+			points: points
+		})
 	};
 
 	handleMouseDown = (event) => {
@@ -263,7 +264,7 @@ class WordCatcher extends React.Component {
 							: <></> 
 						}
 						<div className='points'>
-							<div className='marker'>{this.points}</div>
+							{`${this.props.config.pointsLabel} ${this.state.points}`}
 						</div>
 					</StyledGameInfoContainer>
 
