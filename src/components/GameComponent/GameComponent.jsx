@@ -19,10 +19,10 @@ export default function GameComponent({
   return (<>
     <h1>{APP_DATA.APP_GAME.TITLE}</h1>
     <StyledLayoutContent style={{padding: 0, overflow:'hidden'}}>
-        <Pinball
+        {/* <Pinball
           config={APP_DATA.APP_GAME.GAME_CONFIGURATION}
           setGameResult={setGameResult}
-        />
+        /> */}
     </StyledLayoutContent>
     <Button
       variant='contained'
