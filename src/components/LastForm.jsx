@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { StyledFlexCenter, StyledLayoutContent } from '../styled-components/containers'
 import { Button } from '@mui/material'
 import { APP_DATA } from '../CONSTANTS'
 import { useNavigate } from 'react-router-dom'
+import UserContext from '../UserProvider/UserContext'
+import { editUser } from '../firebase/firebase'
 
 export default function LastForm() {
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -17,6 +19,7 @@ export default function LastForm() {
     return answerArray;
   })
   const navigate = useNavigate()  
+  const {userInfo, setUserInfo} = useContext(UserContext)
 
   useEffect(() => {
     let isCompleted = false
@@ -34,9 +37,20 @@ export default function LastForm() {
     setAnswers(answersCopy)
   }
 
-  const handleSeeResults = () => {
-    console.log(answers)
-    navigate('/end-game')
+  const handleSeeResults = async () => {
+    let userInfoCopy = {...userInfo}
+    console.log(userInfoCopy)
+    userInfoCopy.finalForm.isCompleted = true
+    userInfoCopy.finalForm.answers = [...answers]
+    const userUpdated = await editUser(userInfoCopy.email, userInfoCopy)
+
+    if(userUpdated){
+      setUserInfo(userInfoCopy)
+      navigate('/end-game')
+    }else{
+      alert("Error, try again")
+    }
+
   }
   
   return (
