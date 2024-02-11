@@ -1,7 +1,6 @@
 import React from "react";
-import WordCatcherClass from "./WordCatcherClass";
-import { StyledGameInfoContainer, StyledRules, StyledWordCatcherTableGame } from "./WordCatcherStyles";
-import { StyledPinballTableGame } from "./StyledPinball";
+import PinballClass from "./PinballClass";
+import { StyledGameInfoContainer, StyledRules, StyledPinballTableGame } from "./StyledPinball";
 
 
 class Pinball extends React.Component {
@@ -76,7 +75,7 @@ class Pinball extends React.Component {
 		}
 		this.elements = elements
 		if (this.context) {
-			this.gameClass = new WordCatcherClass(this.context, this.config, elements, this.gameEnd, this.toHuntWord);
+			this.gameClass = new PinballClass(this.context, this.config, elements, this.gameEnd, this.toHuntWord);
 			this.renderCanvas();
 			this.initTimer();
 		}
