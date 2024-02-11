@@ -24,11 +24,9 @@ export const UserProvider = ({children}) => {
     const handleLogin = async () => {
         let userInfoCopy = {...userInfo}
         const userResponse = await getUserByEmail(userInfo.email)
-        console.log(userResponse)
         // Check email in firebase
         if(userResponse){
             userInfoCopy = {...userResponse}
-            console.log("Ya existe, toma ==>", userInfoCopy)
         }else{
             let tables = APP_DATA.APP_GAME.GAME_CONFIGURATION.tables
             userInfoCopy.tableAssigned = tables[Math.floor(Math.random() * tables.length)]
@@ -41,7 +39,6 @@ export const UserProvider = ({children}) => {
             userInfoCopy.finalForm = {
                 isCompleted: false
             }
-            console.log("Creado !!!", userInfoCopy)
             await createUserDocument(userInfoCopy)
         }
         setUserInfo(userInfoCopy)
