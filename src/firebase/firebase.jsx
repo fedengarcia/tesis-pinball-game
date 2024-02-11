@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import React from "react";
 import { initializeApp } from "firebase/app";
-import { collection, doc, getDoc, getDocs, getFirestore, query, setDoc, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, getFirestore, query, setDoc, updateDoc, where } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -84,13 +84,14 @@ export const getUserByEmail = async (email) => {
   
         // Obtener la referencia al documento y actualizar los datos
         await updateDoc(doc(usuariosCollection, usuarioDoc.id), userDataUpdated);
-  
-        console.log("Usuario actualizado con éxito");
+        return userDataUpdated
       } else {
         console.log("No se encontró ningún usuario con ese correo electrónico.");
-      }
+        return false
+        }
     } catch (error) {
       console.error("Error al editar usuario por correo electrónico:", error.message);
+        return false
     }
   }
   

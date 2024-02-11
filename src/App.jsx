@@ -2,12 +2,17 @@ import { StyledAppLayout } from './styled-components/containers'
 import { APP_DATA } from './CONSTANTS'
 import FirstForm from './components/FirstForm'
 import Login from './components/Login';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import UserContext from './UserProvider/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function App() {
- const {isLogged} = useContext(UserContext)
+ const {isLogged, userInfo} = useContext(UserContext)
+  const navigate = useNavigate()
 
+  useEffect(() => {
+    if(userInfo?.firstForm?.isCompleted) navigate('/game')
+  }, [userInfo]);
 
   return (
     <StyledAppLayout>

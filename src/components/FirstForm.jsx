@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { StyledFlexCenter, StyledLayoutContent } from '../styled-components/containers'
 import { Button } from '@mui/material'
 import { APP_DATA } from '../CONSTANTS'
 import { useNavigate } from 'react-router-dom'
+import UserContext from '../UserProvider/UserContext'
+import { editUser } from '../firebase/firebase'
 
 export default function FirstForm() {
+  const navigate = useNavigate()  
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [answers, setAnswers] = useState(() => {
     let answerArray = []
@@ -16,7 +19,7 @@ export default function FirstForm() {
     })
     return answerArray;
   })
-  const navigate = useNavigate()  
+  const {userInfo, setUserInfo} = useContext(UserContext)
 
   useEffect(() => {
     let isCompleted = false
@@ -28,9 +31,17 @@ export default function FirstForm() {
     setButtonDisabled(isCompleted)
   }, [answers]);
 
-  const handlePinballInit = () => {
-    console.log(answers)
-    navigate('game')
+  const handlePinballInit = async () => {
+    let userInfoCopy = {...userInfo}
+    userInfoCopy.firstForm.isCompleted = true
+    userInfoCopy.firstForm.answers = [...answers]
+    const userUpdated = await editUser(userInfoCopy.email, userInfoCopy)
+    if(userUpdated){
+      setUserInfo(userInfoCopy)
+      navigate('game')
+    }else{
+      alert("Error, try again")
+    }
   }
   
   const handleAnswers = (index, subIndex) => {
