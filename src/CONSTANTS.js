@@ -47,21 +47,33 @@ export const APP_DATA = {
         TITLE: 'Recoge las marcas, pero ten cuidado !',
         END_GAME_BUTTON: 'Terminar partida',
         GAME_CONFIGURATION:{
-            POINTS: 'Puntos del juego:',
-            TIMER: 120,
+            points: 'Puntos del juego:',
+            time: 120,
             /* 
                 Bonifications must be same length of images/words 
                 The only functionality of points are x2, x1, +1 
                 Black points will rest points
             */
-            BONIFICATIONS: ['x2', 'x1', '+1'],
+            bonifications: ['x2', 'x1', '+1'],
             /* 
                 if you want use only images, keep brand_words empty
                 If you want use only words, just keep brand_images empty
                 If you want both, keep two with values
             */
-            BRANDS_IMAGES: [], // 
-            BRANDS_WORDS: [], // 
+            damageElements: [
+                {
+                    name: 'ball',
+                    src: '/assets/react.svg'
+                },
+                {
+                    name: 'ball',
+                    src: '/assets/react.svg'
+                }
+            ],
+            elementsToDrop: [{
+                name: 'Samsung',
+                src: '/assets/react.svg'
+            }], 
         }
     }
 }

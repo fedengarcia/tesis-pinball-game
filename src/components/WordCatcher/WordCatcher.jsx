@@ -31,28 +31,25 @@ class WordCatcher extends React.Component {
 
 	constructor(props) {
 		super(props);
-
+		console.log(props)
 		this.canvasRef = React.createRef();
-		//let testData =' props.testData[props.currentStep - 1]';
-		const data = this.props.data;
 
 		this.config = {
 			width: 1000,
 			height: 1000,
-			background_image: data.props.background_image?.image ?? data.props.background_image,
-			is_external: data.props.background_image?.is_external || false,
-			word_color: data.props?.word_color || undefined,
 		};
 
 		this.renderCanvas = this.renderCanvas.bind(this);
 
+
+		// CONFIG TIMER
 		var minutes = "00"
 		var seconds = "00"
 		
 		// If existe time : set timer
-		if(props.data.props.time){
-			minutes = Math.floor(props.data.props?.time / 60);
-			seconds = props.data.props?.time - minutes * 60;
+		if(props.config.time){
+			minutes = Math.floor(props.config.time.time / 60);
+			seconds = props.config.time?.time - minutes * 60;
 		}
 
 		this.state = {
@@ -73,12 +70,12 @@ class WordCatcher extends React.Component {
 		this.setState({ start: true });
 		this.canvas = this.canvasRef.current;
 		this.context = this.canvasRef.current.getContext("2d");
-		let words = {
-			kindWords: (this.props.data?.accepted_words ?? this.props.data?.targets?.[0]?.accepted_values ?? [])?.map(word => word.toUpperCase()),
-			badWords: (this.props.data?.unaccepted_words ?? this.props.data?.targets?.[0]?.unaccepted_values ?? [])?.map(word => word.toUpperCase())
+		let elements = {
+			damageElements: this.props.config.damageElements,
+			elementsToCatch: this.props.config.elementsToDrop,
 		}
 		if (this.context) {
-			this.gameClass = new WordCatcherClass(this.context, this.config, words, this.gameEnd, this.toHuntWord);
+			this.gameClass = new WordCatcherClass(this.context, this.config, elements, this.gameEnd, this.toHuntWord);
 			this.renderCanvas();
 			this.initTimer();
 		}
@@ -91,7 +88,7 @@ class WordCatcher extends React.Component {
 	initTimer() {
 		this.intervalTimer = setInterval(() => {
 			const { timer } = this.state;
-			if (this.props?.data?.props?.time) {
+			if (this.props.config.time) {
 				if (parseInt(timer.minutes) !== 0 || parseInt(timer.seconds) !== 0) {
 					var minutes = parseInt(timer.seconds) === 0 ? parseInt(timer.minutes) - 1 : parseInt(timer.minutes)
 					var seconds = parseInt(timer.minutes) !== 0 && parseInt(timer.seconds) === 0 ? 59 : (parseInt(timer.seconds) - 1);
@@ -133,7 +130,7 @@ class WordCatcher extends React.Component {
 		//this.clearCanvas(this.context);
 
 		// check if time is over
-		if(this.props.data.props.time){
+		if(this.props.config.time){
 			if(parseInt(this.state.timer.seconds) === 0 && parseInt(this.state.timer.minutes) === 0){
 				return
 			}

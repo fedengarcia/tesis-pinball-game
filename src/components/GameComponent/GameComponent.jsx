@@ -5,14 +5,17 @@ import { StyledLayoutContent } from '../../styled-components/containers'
 import WordCatcher from '../WordCatcher/WordCatcher'
 
 export default function GameComponent({
-    setIsGameEnd
-}) {
+    setIsGameEnd,
+    setGameResult
+  }) {
+
 
   return (<>
     <h1>{APP_DATA.APP_GAME.TITLE}</h1>
     <StyledLayoutContent>
         <WordCatcher
-          wordCatcherConfig={APP_DATA.APP_GAME.GAME_CONFIGURATION}
+          config={APP_DATA.APP_GAME.GAME_CONFIGURATION}
+          setGameResult={setGameResult}
         />
     </StyledLayoutContent>
     <Button

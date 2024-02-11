@@ -5,11 +5,15 @@ import GameComponent from '../components/GameComponent/GameComponent'
 
 export default function Game() {
   const [isGameEnd, setIsGameEnd] = useState(false)
+  const [gameResult, setGameResult] = useState({})
 
   return (
     <StyledAppLayout>
       {!isGameEnd 
-      ? <GameComponent setIsGameEnd={setIsGameEnd}/>
+      ? <GameComponent 
+          setGameResult={setGameResult}
+          setIsGameEnd={setIsGameEnd}
+        />
       : <LastForm/>
       }
     </StyledAppLayout>

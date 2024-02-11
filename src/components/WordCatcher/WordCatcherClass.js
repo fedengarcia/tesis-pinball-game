@@ -69,12 +69,12 @@ class WordCatcherClass {
     gameEndFunction = null;
     huterWordFuction = null;
 
-    words = {
-        kindWords: [],
-        badWords: []
+    elements = {
+        damageElements: [],
+        elementsToCatch: []
     }
 
-    wordsToFalling = [];
+    elementsToFalling = [];
 
     intervalGenerateWords;
 
@@ -83,24 +83,16 @@ class WordCatcherClass {
     correctHuntedWords = [];
     incorrectHuntedWords = [];
 
-    constructor(ctx, config = { width: 500, height: 500, size: 15 }, words = { kindWords: [], badWords: [] }, gameEndFunction, huterWordFuction) {
+    constructor(ctx, config = { width: 500, height: 500, size: 10 }, elements = { elementsToCatch: [], damageElements: [] }, gameEndFunction, huterWordFuction) {
         this.ctx = ctx;
         this.config = config;
-        this.words = words;
-
+        this.elements = elements;
         this.gameEndFunction = gameEndFunction;
         this.huterWordFuction = huterWordFuction;
 
-        let numberImage = undefined
+        // Set image background
         this.imageBackground = new Image()
         this.imageBackground.src = backgroundImage
-
-        this.imageBackground.onerror = () => {
-            // faulty or no data... pick image at random from predefined theme background images
-            numberImage = Math.floor(Math.random() * (backgroundImages.length)) + 0         
-            this.imageBackground.src = backgroundImages[numberImage]
-        }
-
         this.imageBackground.onload = () => {
 
             this.imgBasket = new Image();
@@ -120,7 +112,7 @@ class WordCatcherClass {
             }
         }
 
-        this.huterWordFuction(this.words.kindWords, this.correctHuntedWords, this.incorrectHuntedWords)
+        this.huterWordFuction(this.elements.elementsToCatch, this.correctHuntedWords, this.incorrectHuntedWords)
         this.intervalGenerateWords = setInterval(this.generateWords, 1000);
     }
 
@@ -188,9 +180,9 @@ class WordCatcherClass {
                 do {
                     wordAttempts += 1;
 
-                    newWordString = this.words.kindWords[Math.floor(Math.random() * this.words.kindWords.length)];
+                    newWordString = this.elements.elementsToCatch[Math.floor(Math.random() * this.elements.elementsToCatch.length)].name;
 
-                    let wordAlreadyFalling = this.wordsToFalling.filter(word => word.word === newWordString);
+                    let wordAlreadyFalling = this.elementsToFalling.filter(word => word.word === newWordString);
 
                     if (wordAlreadyFalling.length > 0 || this.correctHuntedWords.includes(newWordString)) {
                         newWordString = "";
@@ -199,7 +191,7 @@ class WordCatcherClass {
 
                 } while (newWordString === "");
             } else {
-                newWordString = this.words.badWords[Math.floor(Math.random() * this.words.badWords.length)];
+                newWordString = this.elements.damageElements[Math.floor(Math.random() * this.elements.damageElements.length)].name;
             }
 
             let wordWidth = this.ctx.measureText(newWordString).width;
@@ -222,7 +214,7 @@ class WordCatcherClass {
                     end: positionInit + wordWidth
                 }
 
-                let positionsAlreadyTaken = this.wordsToFalling.filter(word => {
+                let positionsAlreadyTaken = this.elementsToFalling.filter(word => {
 
                     if (
                         (word.x.init <= position.init && word.x.end >= position.init) ||
@@ -254,23 +246,22 @@ class WordCatcherClass {
                 if (positionAttempts > 200) return;
             } while (position.init === -1);
 
-            let colorRandom = this.config?.word_color || wordsColors[Math.floor(Math.random() * wordsColors.length)]
 
-            this.wordsToFalling.push({
+            this.elementsToFalling.push({
                 word: newWordString,
                 speed: velocity,
                 y: 0,
                 x: position,
-                color: colorRandom,
+                color: 'red',
                 width: wordWidth
             })
         }
     }
 
     moveWords() {
-        for (let i = 0; i < this.wordsToFalling.length; i++) {
-            this.wordsToFalling[i].y += this.wordsToFalling[i].speed;
-            let word = this.wordsToFalling[i];
+        for (let i = 0; i < this.elementsToFalling.length; i++) {
+            this.elementsToFalling[i].y += this.elementsToFalling[i].speed;
+            let word = this.elementsToFalling[i];
 
             if (word.y >= this.positionBasket.y && word.y <= this.positionBasket.y + this.sizeBasket.height) {
                 let posBasket = {
@@ -284,35 +275,35 @@ class WordCatcherClass {
                     (word.x.end > posBasket.init && word.x.end < posBasket.end)
                 ) {
 
-                    if (this.words.badWords.includes(word.word)) {
+                    if (this.elements.damageElements.includes(word.word)) {
                         this.basketOnDamage()
                         let alreadyHunted = this.incorrectHuntedWords.includes(word.word);
                         if(!alreadyHunted){
                             this.incorrectHuntedWords.push(word.word)
-                            this.huterWordFuction(this.words.kindWords, this.correctHuntedWords, this.incorrectHuntedWords)
+                            this.huterWordFuction(this.elements.elementsToCatch, this.correctHuntedWords, this.incorrectHuntedWords)
                         }
                     } else {
 
-                        let isGoodWord = this.words.kindWords.includes(word.word);
+                        let isGoodWord = this.elements.elementsToCatch.includes(word.word);
                         let alreadyHunted = this.correctHuntedWords.includes(word.word);
 
                         if (isGoodWord === true && alreadyHunted === false) {
                             this.correctHuntedWords.push(word.word);
 
-                            this.huterWordFuction(this.words.kindWords, this.correctHuntedWords, this.incorrectHuntedWords)
+                            this.huterWordFuction(this.elements.elementsToCatch, this.correctHuntedWords, this.incorrectHuntedWords)
 
-                            let allHunted = this.words.kindWords.filter(goodWord => !this.correctHuntedWords.includes(goodWord));
+                            let allHunted = this.elements.elementsToCatch.filter(goodWord => !this.correctHuntedWords.includes(goodWord));
                             this.opacityBasketGood = 0.8;
 
                             if (allHunted.length === 0) this.onEndGame();
                         }
                     }
-                    this.wordsToFalling.splice(i, 1);
+                    this.elementsToFalling.splice(i, 1);
                 }
             }
 
             if (word.y > (this.config.height + 40)) {
-                this.wordsToFalling.splice(i, 1);
+                this.elementsToFalling.splice(i, 1);
             }
         }
     }
@@ -325,7 +316,7 @@ class WordCatcherClass {
         this.ctx.globalAlpha = 1;
 
         if (!this.basketImgCharge) return;
-        this.drawWordsToFalling()
+        this.drawelementsToFalling()
         let distanceCenter = this.sizeBasket.width / 2;
         this.ctx.strokeStyle = "#ff0000";
 
@@ -352,12 +343,12 @@ class WordCatcherClass {
         this.ctx.globalAlpha = 1;
     }
 
-    drawWordsToFalling() {
+    drawelementsToFalling() {
         this.ctx.font = "bold 50px Comic-Sans";
         this.ctx.textBaseline = 'middle';
         //this.ctx.textAlign = "center";
-        for (let i = 0; i < this.wordsToFalling.length; i++) {
-            let word = this.wordsToFalling[i];
+        for (let i = 0; i < this.elementsToFalling.length; i++) {
+            let word = this.elementsToFalling[i];
             this.ctx.fillStyle = word.color;
             this.ctx.fillText(word.word, word.x.init, word.y)
         }
