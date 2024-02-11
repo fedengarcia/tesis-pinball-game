@@ -1,19 +1,12 @@
-import { StyledAppLayout, StyledLayoutContent } from './styled-components/containers'
+import { StyledAppLayout } from './styled-components/containers'
 import { APP_DATA } from './CONSTANTS'
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import { Button, Input, TextField, InputAdornment, Box } from '@mui/material'
-
 import FirstForm from './components/FirstForm'
-import { useEffect, useState } from 'react';
 import Login from './components/Login';
+import { useContext } from 'react';
+import UserContext from './UserProvider/UserContext';
 
 export default function App() {
-  const [isLogged, setIsLogged]= useState(false);
-
-  const handleLogin = () => {
-    setIsLogged(true)
-  }
-
+ const {isLogged} = useContext(UserContext)
 
 
   return (
@@ -21,7 +14,7 @@ export default function App() {
       <h1>{APP_DATA.APP_TITLE}</h1>
 
       {!isLogged ? 
-        <Login handleLogin={handleLogin}/>
+        <Login />
       :
         <FirstForm/>
       }
