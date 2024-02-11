@@ -49,12 +49,11 @@ export const APP_DATA = {
         ]
     },
     APP_GAME: {
-        TITLE: 'Recoge las marcas, pero ten cuidado con las bolas !',
+        TITLE: 'Pinball',
         END_GAME_BUTTON: 'Terminar partida',
         GAME_CONFIGURATION:{
             times_up: 'Se acabo el tiempo!',
             pointsLabel: 'Puntos:',
-            time: 30,
             /* 
                 Bonifications must be same length of images/words 
                 The only functionality of points available are x2, x1, +1 
@@ -67,17 +66,7 @@ export const APP_DATA = {
                 If you want use only words, just keep brand_images empty
                 If you want both, keep two with values
             */
-            damageElements: [
-                {
-                    name: 'ball',
-                    src: ballSVG
-                },
-                {
-                    name: 'ball',
-                    src: ballSVG
-                }
-            ],
-            elementsToDrop: [{
+            elements: [{
                 name: 'Samsung',
                 src: samsungSVG
             },
