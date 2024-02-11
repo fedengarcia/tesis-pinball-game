@@ -115,13 +115,14 @@ class WordCatcher extends React.Component {
 
 			if (seconds < 10) seconds = "0" + seconds;
 			if (minutes < 10) minutes = "0" + minutes;
-
-			this.setState({
-				timer: {
-					seconds: seconds,
-					minutes: minutes
-				}
-			});
+			if(seconds && seconds){
+				this.setState({
+					timer: {
+						seconds: seconds,
+						minutes: minutes
+					}
+				});
+			}
 
 		}, 1000);
 	}
@@ -182,10 +183,9 @@ class WordCatcher extends React.Component {
 	gameEnd = () => {
 		this.setState({ gameEnd: true });
 		if (this.intervalTimer) clearInterval(this.intervalTimer);
-		this.props.setStateMicrogame([{
-			accepted_values: this.state.words.correctWordsSearched,
-			unaccepted_values:this.state.words.incorrectWordsSearched
-		}])
+		this.props.setGameResult({
+			points: this.points
+		})
 	};
 
 	mouseOnEnter = () => {
@@ -221,14 +221,12 @@ class WordCatcher extends React.Component {
 		if (this.mouse.enter) e.preventDefault();
 	};
 
+	setPoints = () => {
+
+	};
+
 	render() {
-		let pointsWords = this.state.words.wordsToSearch.map((word, index) => {
-			if (this.state.words.correctWordsSearched.includes(word)) {
-				return <p key={index} className='finded'>⬤</p>;
-			} else {
-				return <p key={index} className='not-finded'>⬤</p>;
-			}
-		});
+
 
 		return (
 			<StyledWordCatcherTableGame onScroll={this.scroll}>
@@ -249,11 +247,12 @@ class WordCatcher extends React.Component {
 					></canvas>
 				</div>
 					<StyledGameInfoContainer>
+						{console.log(this.state.timer)}
 						{this.props.config.time > 0 ? 
 								<div className='timer'>
 									{parseInt(this.state.timer.seconds) === 0 && parseInt(this.state.timer.minutes) === 0
 										?
-											<samp>"Time's up"</samp>
+											<samp>{this.props.config.times_up}</samp>
 										:
 										<>
 											<samp className='mitutes'>{this.state.timer.minutes}</samp>:<samp className='seconds'>{this.state.timer.seconds}</samp>
@@ -263,7 +262,7 @@ class WordCatcher extends React.Component {
 							: <></> 
 						}
 						<div className='points'>
-							<div className='marker'>{pointsWords}</div>
+							<div className='marker'>{this.points}</div>
 						</div>
 					</StyledGameInfoContainer>
 

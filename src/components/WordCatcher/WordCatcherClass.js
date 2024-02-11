@@ -281,21 +281,10 @@ class WordCatcherClass {
                             this.incorrectHuntedWords.push(elementFalling.name)
                             this.huterWordFuction(this.elements.elementsToCatch, this.correctHuntedWords, this.incorrectHuntedWords)
                         }
-                    } else {
-
-                        let isGoodWord = this.elements.elementsToCatch.includes(elementFalling.name);
-                        let alreadyHunted = this.correctHuntedWords.includes(elementFalling.name);
-
-                        if (isGoodWord === true && alreadyHunted === false) {
-                            this.correctHuntedWords.push(elementFalling.name);
-
-                            this.huterWordFuction(this.elements.elementsToCatch, this.correctHuntedWords, this.incorrectHuntedWords)
-
-                            let allHunted = this.elements.elementsToCatch.filter(goodWord => !this.correctHuntedWords.includes(goodWord.name));
-                            this.opacityBasketGood = 0.8;
-
-                            if (allHunted.length === 0) this.onEndGame();
-                        }
+                    } else {                        
+                        this.correctHuntedWords.push(elementFalling.name);
+                        this.huterWordFuction(this.elements.elementsToCatch, this.correctHuntedWords, this.incorrectHuntedWords)
+                        this.opacityBasketGood = 0.8;
                     }
                     this.elementsToFalling.splice(i, 1);
                 }

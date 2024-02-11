@@ -47,8 +47,9 @@ export const APP_DATA = {
         TITLE: 'Recoge las marcas, pero ten cuidado !',
         END_GAME_BUTTON: 'Terminar partida',
         GAME_CONFIGURATION:{
+            times_up: 'Se acabo el tiempo!',
             points: 'Puntos del juego:',
-            time: 120,
+            time: 60,
             /* 
                 Bonifications must be same length of images/words 
                 The only functionality of points are x2, x1, +1 
@@ -73,7 +74,16 @@ export const APP_DATA = {
             elementsToDrop: [{
                 name: 'Samsung',
                 src: '/assets/react.svg'
-            }], 
+            },
+            {
+                name: 'Apple',
+                src: '/assets/react.svg'
+            },
+            {
+                name: 'Xiaomi',
+                src: '/assets/react.svg'
+            },
+            ], 
         }
     }
 }
