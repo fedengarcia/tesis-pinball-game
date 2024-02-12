@@ -33,6 +33,7 @@ export const UserProvider = ({children}) => {
             userInfoCopy.date = new Date();
             userInfoCopy.totalPoints = 0
             userInfoCopy.timePlayed = 0
+            userInfoCopy.gameCompleted = false
             userInfoCopy.firstForm = {
                 isCompleted: false
             }
