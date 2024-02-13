@@ -1,8 +1,8 @@
 import { styled } from "@mui/system";
 
 export const StyledLayoutContent = styled('div')`
-    width: 500px;
-    height: 450px;
+    width: 900px;
+    height: 750px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -35,8 +35,8 @@ export const StyledAppLayout = styled('div')`
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    width: 100%;
     flex-direction: column;
-    width: 600px;
 `
 
 
