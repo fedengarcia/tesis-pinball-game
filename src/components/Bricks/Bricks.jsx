@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useRef } from "react"
-
 import apple from "../../assets/apple-logo.svg"
 import samsung from "../../assets/samsung-logo.svg"
 import xiaomi from "../../assets/xiaomi-logo.svg"
 import { StyledGameInfoContainer, StyledRules, StyledTableGame } from "./StyledBricks"
 import { APP_DATA } from "../../CONSTANTS"
 
-export const paddleFunction = ()=>{
+const paddleFunction = ()=>{
   const canvas = document.getElementById('canvas')
   return(
       {
@@ -21,7 +20,7 @@ export const paddleFunction = ()=>{
   )
 }
 
-export const ballFunction = ()=>{
+const ballFunction = ()=>{
   const canvas = document.getElementById('canvas')
   return(
       {
@@ -36,14 +35,14 @@ export const ballFunction = ()=>{
   )
 }
 
-export const brickInfoFunction = ()=>{
+const brickInfoFunction = ()=>{
   return(
       {
-          w: 70,
+          w: 80,
           h: 20,
-          padding: 10,
-          offsetX: 45,
-          offsetY: 60,
+          padding: 12,
+          offsetX: 40,
+          offsetY: 80,
           visible: true
       }
   )
@@ -110,6 +109,7 @@ export default function Bricks({typeTableGame}){
 
 
   useEffect(() => {
+    console.log(canvas)
     if(canvas===""){
       setCanvas(document.getElementById('canvas'))
       setCanvasContext(document.getElementById('canvas').getContext("2d"))
@@ -148,17 +148,14 @@ export default function Bricks({typeTableGame}){
 
   useEffect(() => {
     if(bricks.length!==0){
-      if(window.location.pathname==="/project17"){
         update();
-      }
     }
-  }, [bricks]);
+  }, [bricks,canvas]);
 
   function update() {
     movePaddle();
     moveBall();
     updateFallingFruits();
-  
     draw();
   
     requestAnimationFrame(update);
@@ -288,14 +285,8 @@ export default function Bricks({typeTableGame}){
 
     // Hit bottom wall - Lose
     if (ball.y + ball.size > canvas.height) {
-      if(window.location.pathname==="/project17"){
-        // alert("PERDISTE")
         showAllBricks();
         score=0
-      }else{
-        alert("VAMOS A RECARGAR LA PAGINA PARA MEJORAR SU USO")
-        window.location.reload()
-      }
     }
   }
 
@@ -427,15 +418,10 @@ export default function Bricks({typeTableGame}){
 
   return(
     <StyledTableGame>
-      <div className="gameCanvas">
-        <canvas 
-          id="canvas"
-          width="500"
-          height="450"
-        
-        ></canvas>
-      </div>
-      <StyledGameInfoContainer>
+    <div className="gameCanvas">
+      <canvas id="canvas" width="900" height="750"></canvas>
+    </div>
+     <StyledGameInfoContainer>
 					{initialTime > 0 ? 
 							<div className='timer'>
 								{parseInt(timer.seconds) === 0 && parseInt(timer.minutes) === 0
@@ -460,8 +446,9 @@ export default function Bricks({typeTableGame}){
 						<img src={element?.src}/>
 						<h3>{`${element?.bonification}`}</h3>
 					</div>)}
-				</StyledRules>}
+				</StyledRules>} 
     </StyledTableGame>
   )}
 
 
+ 
