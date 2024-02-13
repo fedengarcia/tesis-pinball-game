@@ -17,7 +17,9 @@ export const StyledTableGame = styled('div')`
 
         
         canvas {
-            width: 100% !important;
+            background: #f0f0f0;
+            display: block;
+            border-radius: 5px;
         }
     }
 `
