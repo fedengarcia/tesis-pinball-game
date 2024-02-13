@@ -3,6 +3,7 @@ import UserContext from './UserContext';
 import { APP_DATA } from '../CONSTANTS';
 import { createUserDocument, getUserByEmail } from '../firebase/firebase';
 import { useNavigate } from 'react-router-dom';
+console.log(APP_DATA)
 
 export const UserProvider = ({children}) => {
     const [isLogged, setIsLogged]= useState(false);
@@ -28,9 +29,7 @@ export const UserProvider = ({children}) => {
         if(userResponse){
             userInfoCopy = {...userResponse}
         }else{
-            console.log(APP_DATA)
             let tables = APP_DATA.APP_GAME.GAME_CONFIGURATION.tables
-            console.log(tables)
             userInfoCopy.tableAssigned = tables[Math.floor(Math.random() * tables?.length)]
             userInfoCopy.date = new Date();
             userInfoCopy.totalPoints = 0

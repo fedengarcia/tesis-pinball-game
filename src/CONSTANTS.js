@@ -103,21 +103,18 @@ export const APP_DATA = {
                         "name": "Samsung",
                         "src": samsungSVG,
                         "bonification": "nula",
-                        "ballHits": 0
                     },
                     {
                         "table": 1,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "mediadora",
-                        "ballHits": 0
                     },
                     {
                         "table": 1,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
                         "bonification": "premio",
-                        "ballHits": 0
                     }
                 ],
                 [
@@ -126,21 +123,18 @@ export const APP_DATA = {
                         "name": "Samsung",
                         "src": samsungSVG,
                         "bonification": "mediadora",
-                        "ballHits": 0
                     },
                     {
                         "table": 2,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "mediadora",
-                        "ballHits": 0
                     },
                     {
                         "table": 2,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
                         "bonification": "mediadora",
-                        "ballHits": 0
                     }
                 ],
                 [
@@ -149,21 +143,18 @@ export const APP_DATA = {
                         "name": "Samsung",
                         "src": samsungSVG,
                         "bonification": "nula",
-                        "ballHits": 0
                     },
                     {
                         "table": 3,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "nula",
-                        "ballHits": 0
                     },
                     {
                         "table": 3,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
                         "bonification": "premio",
-                        "ballHits": 0
                     }
                 ],
                 [
@@ -172,21 +163,18 @@ export const APP_DATA = {
                         "name": "Samsung",
                         "src": samsungSVG,
                         "bonification": "nula",
-                        "ballHits": 0
                     },
                     {
                         "table": 4,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "mediadora",
-                        "ballHits": 0
                     },
                     {
                         "table": 4,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
                         "bonification": "premio",
-                        "ballHits": 0
                     }
                 ],
                 [
@@ -195,21 +183,18 @@ export const APP_DATA = {
                         "name": "Samsung",
                         "src": samsungSVG,
                         "bonification": "premio",
-                        "ballHits": 0
                     },
                     {
                         "table": 5,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "premio",
-                        "ballHits": 0
                     },
                     {
                         "table": 5,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
                         "bonification": "mediadora",
-                        "ballHits": 0
                     }
                 ],
                 [
@@ -218,21 +203,18 @@ export const APP_DATA = {
                         "name": "Samsung",
                         "src": samsungSVG,
                         "bonification": "nula",
-                        "ballHits": 0
                     },
                     {
                         "table": 6,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "mediadora",
-                        "ballHits": 0
                     },
                     {
                         "table": 6,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
                         "bonification": "mediadora",
-                        "ballHits": 0
                     }
                 ],
                 [
@@ -241,21 +223,18 @@ export const APP_DATA = {
                         "name": "Samsung",
                         "src": samsungSVG,
                         "bonification": "nula",
-                        "ballHits": 0
                     },
                     {
                         "table": 7,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "premio",
-                        "ballHits": 0
                     },
                     {
                         "table": 7,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
                         "bonification": "premio",
-                        "ballHits": 0
                     }
                 ],
                 [
@@ -264,21 +243,18 @@ export const APP_DATA = {
                         "name": "Samsung",
                         "src": samsungSVG,
                         "bonification": "nula",
-                        "ballHits": 0
                     },
                     {
                         "table": 8,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "premio",
-                        "ballHits": 0
                     },
                     {
                         "table": 8,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
                         "bonification": "premio",
-                        "ballHits": 0
                     }
                 ],
                 [
@@ -287,24 +263,21 @@ export const APP_DATA = {
                         "name": "Samsung",
                         "src": samsungSVG,
                         "bonification": "mediadora",
-                        "ballHits": 0
                     },
                     {
                         "table": 9,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "premio",
-                        "ballHits": 0
                     },
                     {
                         "table": 9,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
                         "bonification": "mediadora",
-                        "ballHits": 0
                     }
                 ]
-            ]
+            ],
         }
     }
 }
