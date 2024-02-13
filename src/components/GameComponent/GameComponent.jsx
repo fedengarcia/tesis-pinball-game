@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import { APP_DATA } from '../../CONSTANTS'
 import { Button } from '@mui/material'
 import { StyledLayoutContent } from '../../styled-components/containers'
-import Pinball from '../Pinball/Pinball'
 import { editUser } from '../../firebase/firebase'
 import UserContext from '../../UserProvider/UserContext'
+import Bricks from '../Bricks/Bricks'
 
 export default function GameComponent({
     setIsGameEnd,
@@ -41,9 +41,9 @@ export default function GameComponent({
   return (<>
     <h1>{APP_DATA.APP_GAME.TITLE}</h1>
     <StyledLayoutContent style={{padding: 0, overflow:'hidden'}}>
-        <Pinball
-          config={gameConfiguration}
-          setGameResult={setGameResult}
+        <Bricks
+          // config={gameConfiguration}
+          // setGameResult={setGameResult}
         />
     </StyledLayoutContent>
     <Button
