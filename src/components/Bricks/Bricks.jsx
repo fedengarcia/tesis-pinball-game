@@ -150,7 +150,7 @@ export default function Bricks({typeTableGame}){
     if(bricks.length!==0){
         update();
     }
-  }, [bricks,canvas]);
+  }, [bricks]);
 
   function update() {
     movePaddle();
