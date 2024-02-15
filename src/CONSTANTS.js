@@ -83,8 +83,24 @@ export const APP_DATA = {
         RESTART_BUTTON: 'Volver a jugar'
     },
     APP_GAME: {
-        TITLE: 'Pinball',
-        END_GAME_BUTTON: 'Terminar partida',
+        TITLE: 'Bricks',
+        GAME_STATUS:{
+            FIRST_TIME: {
+                TITLE: 'Esta es tu primera vez',
+                SUBTITLE: 'Desafia tus limites y haz el puntaje mas alto que puedas!',
+                BUTTON_TITLE: 'Comenzar a jugar',
+            },
+            SECOND_TIME: {
+                TITLE: 'Esta es tu segunda vez',
+                SUBTITLE: 'Desbloquea una recompensa jugando por segunda vez!',
+                BUTTON_TITLE: 'Juega y obtiene recompensa!',
+            },
+            GAME_FINISH: {
+                TITLE: 'Has hecho todos los intentos posibles',
+                SUBTITLE: 'Gracias por participar',
+                BUTTON_TITLE: 'Responde y obtiene recompensa'
+            }
+        },
         GAME_CONFIGURATION:{
             times_up: 'Se acabo el tiempo!',
             time: 120,

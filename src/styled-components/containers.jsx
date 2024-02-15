@@ -48,7 +48,4 @@ export const StyledFlexCenter = styled('div')`
       align-items: flex-start;
       justify-content: center;
       flex-direction: ${props => props.direction ?? 'column'};
-
-
-
 `
