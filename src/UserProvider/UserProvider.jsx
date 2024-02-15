@@ -49,6 +49,7 @@ export const UserProvider = ({children}) => {
         setUserInfo(userInfoCopy)
         setIsLogged(true)
         setLoadingLogin(false)
+        navigate('/first-form')
     }
 
     useEffect(() => {
