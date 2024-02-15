@@ -13,13 +13,18 @@ export default function GameComponent({
     const [buttonDisabled, setButtonDisabled] = useState(true)
     const [gameConfiguration, setGameConfiguration] = useState([])
     const [gameResult, setGameResult] = useState({
-      points: null
+      timePlayed: 0,
+      points: null,
+      date: new Date()
     })
 
     useEffect(() => {
         let configCopy = APP_DATA.APP_GAME.GAME_CONFIGURATION
         configCopy.tables = userInfo.tableAssigned;
         setGameConfiguration(configCopy)
+
+
+
       }, []);
 
     useEffect(() => {
@@ -28,7 +33,6 @@ export default function GameComponent({
 
     const handleEndGame = async () => {
       let userInfoCopy = {...userInfo}
-      userInfoCopy.gameCompleted = true
       const userUpdated = await editUser(userInfo.email, userInfoCopy)
       if(userUpdated){
         setUserInfo(userInfoCopy)
