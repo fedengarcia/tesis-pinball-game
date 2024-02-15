@@ -48,6 +48,7 @@ export default function Game() {
     }else{
       alert("Err updating data")
     }
+    setPlayingGame(true)
   }
 
   return (
