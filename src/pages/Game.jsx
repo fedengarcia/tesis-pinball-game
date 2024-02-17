@@ -58,7 +58,7 @@ export default function Game() {
                 {playingGame && 
                     <Bricks
                       setPlayingGame={setPlayingGame}
-                      config={gameConfiguration}
+                      gameConfiguration={gameConfiguration}
                       setGameResult={setGameResult}
                     />
                   }
