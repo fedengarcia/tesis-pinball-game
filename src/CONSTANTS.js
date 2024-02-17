@@ -34,8 +34,8 @@ const generate_tables = () => {
 }
 
 export const APP_DATA = {
-    APP_TITLE: "Bienvenido a mi tesis",
-    APP_LOGIN_SUBTITLE: "Espero que lo disfruten y se diviertan mientras aprendemos",
+    APP_TITLE: "APP TITLE",
+    APP_LOGIN_SUBTITLE: "SUBTITLE LOGIN",
     APP_EMAIL_LABEL: "Email",
     APP_BUTTON_PLAY: 'Responder y a jugar !',
     APP_BUTTON_END: 'Responder y ver resultados',

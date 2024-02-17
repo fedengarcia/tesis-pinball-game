@@ -15,11 +15,7 @@ export default function Game() {
   const {userInfo, setUserInfo, loadingLogin} = useContext(UserContext)
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const [gameConfiguration, setGameConfiguration] = useState([])
-  const [gameResult, setGameResult] = useState({
-    timePlayed: 0,
-    points: null,
-    date: new Date(),
-  })
+  const [gameResult, setGameResult] = useState(undefined)
   const [playingGame, setPlayingGame] = useState(false)
   const [gameStatus, setGameStatus] = useState('FIRST_TIME')
 
@@ -36,7 +32,8 @@ export default function Game() {
     }, []);
 
   useEffect(() => {
-    if(gameResult.points !== null) setButtonDisabled(false)
+    console.log("GAME RESULT", gameResult)
+    if(gameResult?.points !== null) setButtonDisabled(false)
   }, [gameResult]);
 
   const handleEndGame = async () => {

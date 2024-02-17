@@ -48,7 +48,7 @@ const brickInfoFunction = ()=>{
   )
 }
 
-export default function Bricks({typeTableGame}){  
+export default function Bricks({setPlayingGame, gameConfiguration, setGameResult}){  
   
   const brickRowCount = 9;
   const brickColumnCount = 5;
@@ -78,10 +78,12 @@ export default function Bricks({typeTableGame}){
     setPaddleWidth(paddle.w)
   }, [paddle])
 
+  // Brands falling
   useEffect(() => {
     fallingFruitsRef.current = fallingFruits;
   }, [fallingFruits]);
 
+  // Time
   useEffect(() => {
     
     const intervalId = setInterval(() => {
@@ -441,7 +443,7 @@ export default function Bricks({typeTableGame}){
 				</StyledGameInfoContainer>
 				{APP_DATA.APP_GAME.GAME_CONFIGURATION.showBonifications &&
 				<StyledRules>
-					{typeTableGame?.map((element, index) => 
+					{gameConfiguration?.tableAssiged?.map((element, index) => 
 					<div key={index} className="rule-element-container">
 						<img src={element?.src}/>
 						<h3>{`${element?.bonification}`}</h3>
