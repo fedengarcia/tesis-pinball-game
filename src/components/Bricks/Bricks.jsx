@@ -1,7 +1,4 @@
 import React, { useEffect, useState, useRef } from "react"
-import apple from "../../assets/apple-logo.svg"
-import samsung from "../../assets/samsung-logo.svg"
-import xiaomi from "../../assets/xiaomi-logo.svg"
 import { StyledGameInfoContainer, StyledRules, StyledTableGame } from "./StyledBricks"
 import { APP_DATA } from "../../CONSTANTS"
 
@@ -11,8 +8,8 @@ const paddleFunction = ()=>{
       {
           x: canvas.width / 2 - 40,
           y: canvas.height - 20,
-          w: 80,
-          h: 10,
+          w: 130,
+          h: 20,
           speed: 8,
           dx: 0,
           visible: true    
@@ -48,8 +45,8 @@ const brickInfoFunction = ()=>{
   )
 }
 
+
 export default function Bricks({setPlayingGame, gameConfiguration, setGameResult}){  
-  
   const brickRowCount = 9;
   const brickColumnCount = 5;
   const delay = 500; //delay to reset the game
@@ -60,11 +57,13 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   const [ball,setBall]=useState({})
   const [paddle,setPaddle]=useState({})
   const [brickInfo,setBrickInfo]=useState({})
-  const [fallingFruits, setFallingFruits] = useState([]);
-  const fallingFruitsRef = useRef(fallingFruits);
+  const [elementsToFall, setElementsToFall] = useState([]);
+  const elementsToFallRef = useRef(elementsToFall);
 
   const [lives, setLives] = useState(2);
   const [paddleWidth, setPaddleWidth] = useState(paddle.w);
+
+  // Timer
   const [timer, setTimer] = useState({ minutes: "00", seconds: "00" });
   const initialTime = APP_DATA.APP_GAME.GAME_CONFIGURATION.time;
   const [timeRemaining, setTimeRemaining] = useState(initialTime);
@@ -80,8 +79,8 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
 
   // Brands falling
   useEffect(() => {
-    fallingFruitsRef.current = fallingFruits;
-  }, [fallingFruits]);
+    elementsToFallRef.current = elementsToFall;
+  }, [elementsToFall]);
 
   // Time
   useEffect(() => {
@@ -136,16 +135,17 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
         for (let j = 0; j < brickColumnCount; j++) {
           const x = i * (brickInfo.w + brickInfo.padding) + brickInfo.offsetX;
           const y = j * (brickInfo.h + brickInfo.padding) + brickInfo.offsetY;
-          let fruit = null;
-          const randomFruit = Math.random() * 100;
-          if (randomFruit < 33) fruit = "apple";
-          else if (randomFruit < 66) fruit = "orange";
-          else fruit = "strawberry";
-          newArray[i][j] = { x, y, fruit, ...brickInfo };
+          let element = null;
+          const randomElement = Math.random() * 100;
+          if (randomElement < 33) element = gameConfiguration.tables[0];
+          else if (randomElement < 66) element =  gameConfiguration.tables[1];
+          else element = gameConfiguration.tables[2];
+          newArray[i][j] = { x, y, element, ...brickInfo };
         }
       }
       setBricks(newArray)
     }
+
   }, [brickInfo]);
 
   useEffect(() => {
@@ -157,18 +157,11 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   function update() {
     movePaddle();
     moveBall();
-    updateFallingFruits();
+    updateElementsToFall();
     draw();
   
     requestAnimationFrame(update);
   }
-
-  const assignFruitBenefits = () => {
-    const benefits = ["points", "life", "expand"];
-    const shuffled = benefits.sort(() => 0.5 - Math.random());
-    return { apple: shuffled[0], orange: shuffled[1], strawberry: shuffled[2] };
-  };
-  const [fruitBenefits, setFruitBenefits] = useState(assignFruitBenefits());
 
 // Draw ball on canvas
   function drawBall() {
@@ -272,9 +265,9 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
           ) {
             ball.dy *= -1;
 
-            if (brick.fruit && brick.visible) {
-              setFallingFruits(fruits => {
-                return [...fruits, { x: brick.x, y: brick.y, vy: 2, fruit: brick.fruit, w: brick.w, h: brick.h }];
+            if (brick.element && brick.visible) {
+              setElementsToFall(elementsToFall => {
+                return [...elementsToFall, { x: brick.x, y: brick.y, vy: 2, element: brick.element, w: brick.w, h: brick.h }];
               });
               brick.visible = false;
             }
@@ -305,6 +298,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
 
   function handleGameOver() {
     console.log("Game Over");
+    alert('game over')
   }
 
   // Increase score
@@ -338,43 +332,42 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
     });
   }
 
-  function drawFallingFruits() {
-    fallingFruitsRef.current.forEach(fruit => {
-      const fruitImage = new Image();
-      if (fruit.fruit === "apple") fruitImage.src = apple;
-      else if (fruit.fruit === "samsung") fruitImage.src = samsung;
-      else if (fruit.fruit === "xiaomi") fruitImage.src = xiaomi;
-  
-      canvasContext.drawImage(fruitImage, fruit.x, fruit.y);
+  function drawElementsToFall() {
+    elementsToFallRef.current.forEach(elementToFall => {
+      const elementImage = new Image();
+      elementImage.className  = "image-falling";
+      elementImage.src = elementToFall.element.src
+      canvasContext.drawImage(elementImage, elementToFall.x, elementToFall.y, 60, 60);
     });
   }
 
-  function updateFallingFruits() {
-    setFallingFruits(fruits => fruits.filter(fruit => {
-      fruit.y += fruit.vy;
   
+  function updateElementsToFall() {
+    setElementsToFall(elementsToFall => elementsToFall.filter(elementToFall => {
+
+      elementToFall.y += elementToFall.vy;
       // Colisión con el paddle
       if (
-        fruit.x < paddle.x + paddle.w &&
-        fruit.x + fruit.w > paddle.x &&
-        fruit.y < paddle.y + paddle.h &&
-        fruit.y + fruit.h > paddle.y
+        elementToFall.x < paddle.x + paddle.w &&
+        elementToFall.x + elementToFall.w > paddle.x &&
+        elementToFall.y < paddle.y + paddle.h &&
+        elementToFall.y + elementToFall.h > paddle.y
       ) {
-        const benefit = fruitBenefits[fruit.fruit];
-        if (benefit === "points") {
+
+        if (elementToFall.bonification === "premio") {
           score += 3;
-          console.log(fruit.fruit, " +3 puntos");
-        } else if (benefit === "life") {
+          console.log(elementToFall.name, " +3 puntos");
+        } else if (elementToFall.bonification === "mediadora") {
           setLives(prevLives => prevLives + 1);
-          console.log(fruit.fruit, " +1 vida");
-        } else if (benefit === "expand") {
+          console.log(elementToFall.name, " +1 vida");
+        } else if (elementToFall.bonification === "nula") {
           setPaddleWidth(prevWidth => prevWidth + 20);
-          console.log(fruit.fruit, " +20px al paddle");
+          console.log(elementToFall.name, " +20px al paddle");
         }
         return false; 
       }
   
-      if (fruit.y > canvas.height) {
+      if (elementToFall.y > canvas.height) {
         return false;
       }
   
@@ -386,7 +379,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   function draw() {
     canvasContext.clearRect(0, 0, canvas.width, canvas.height);
     
-    drawFallingFruits();
+    drawElementsToFall();
     drawBall();
     drawPaddle();
     drawScore();
