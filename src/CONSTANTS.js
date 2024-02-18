@@ -106,6 +106,7 @@ export const APP_DATA = {
             time: 120,
             pointsLabel: 'Puntos:',
             lifesLabel: 'Vidas:',
+            elementsNames: ['Samsung', 'Apple', 'Xiaomi'],
             /* 
                 Bonifications must be same length of images/words 
                 The only functionality of points available are x2, x1, +1 
