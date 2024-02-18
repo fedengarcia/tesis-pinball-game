@@ -58,6 +58,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   const [ball,setBall]=useState({})
   const [paddle,setPaddle]=useState({})
   const [brickInfo,setBrickInfo]=useState({})
+
   const [elementsToFall, setElementsToFall] = useState([]);
   const elementsToFallRef = useRef(elementsToFall);
 
@@ -151,7 +152,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
     if(bricks.length!==0){
         update();
     }
-  }, [bricks]);
+  }, [bricks, lives]);
 
   const update = () => {
     movePaddle();
@@ -159,7 +160,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
     updateElementsToFall();
     draw();
   
-    requestAnimationFrame(update);
+    if(lives > 0) requestAnimationFrame(update);
   }
 
 // Draw ball on canvas
