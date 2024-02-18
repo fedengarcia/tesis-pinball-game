@@ -3,7 +3,6 @@ class BricksClass {
     canvas;
     canvasContext;
     gameConfig;
-    paddle;
     ball;
     brickInfo;
     bricks;
@@ -16,7 +15,7 @@ class BricksClass {
     interactions
 
 
-    constructor(canvas, canvasContext, gameConfig) {
+    constructor(canvas, canvasContext, gameConfig, setGameEndResult, gameEnd) {
         this.canvas = canvas;
         this.canvasContext = canvasContext;
         this.gameConfig = gameConfig
@@ -26,16 +25,15 @@ class BricksClass {
             y: this.canvas.height - 20,
             w: 130,
             h: 20,
-            speed: 8,
+            speed: 4,
             dx: 0,
             visible: true  
         }
-
         this.ball = {
             x: this.canvas.width / 2,
             y: this.canvas.height / 2,
             size: 10,
-            speed: 4,
+            speed: 2,
             dx: 4,
             dy: -4,
             visible: true     
@@ -50,12 +48,17 @@ class BricksClass {
             visible: true
         }
 
+        this.createBricks()
+
         // Keyboard event handlers
-        document.addEventListener('keydown', keyDown);
-        document.addEventListener('keyup', keyUp);
+        this.keyDown = this.keyDown.bind(this);  // Agregar esta línea
+        this.keyUp = this.keyUp.bind(this);  // Agregar esta línea
+        document.addEventListener('keydown', this.keyDown);
+        document.addEventListener('keyup', this.keyUp);
     }
 
     createBricks () {
+
         if(this.brickInfo.visible!==undefined){
             let newArray=[]
             for (let i = 0; i < this.brickRowCount; i++) {
@@ -66,9 +69,9 @@ class BricksClass {
 
                 let element = null;
                 const randomElement = Math.random() * 100;
-                if (randomElement < 33) element = this.gameConfiguration.tables[0];
-                else if (randomElement < 66) element =  this.gameConfiguration.tables[1];
-                else element = this.gameConfiguration.tables[2];
+                if (randomElement < 33) element = this.gameConfig.tables[0];
+                else if (randomElement < 66) element =  this.gameConfig.tables[1];
+                else element = this.gameConfig.tables[2];
                 newArray[i][j] = { x, y, element, ...this.brickInfo };
               }
             }
@@ -98,17 +101,18 @@ class BricksClass {
     }
 
     clearCanvas () {
-        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
-        this.ctx.fillStyle = '#000000'
-        this.ctx.beginPath()
-        this.ctx.fill()
+        this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height)
+        this.canvasContext.fillStyle = '#000000'
+        this.canvasContext.beginPath()
+        this.canvasContext.fill()
+        this.canvasContext.closePath();
     }
 
     // Draw ball on canvas
     drawBall () {
         this.canvasContext.beginPath();
-        this.canvasContext.arc(ball.x, ball.y, ball.size, 0, Math.PI * 2);
-        this.canvasContext.fillStyle = ball.visible ? '#0095dd' : 'transparent';
+        this.canvasContext.arc(this.ball.x, this.ball.y, this.ball.size, 0, Math.PI * 2);
+        this.canvasContext.fillStyle = this.ball.visible ? '#0095dd' : 'transparent';
         this.canvasContext.fill();
         this.canvasContext.closePath();
     }
@@ -116,15 +120,15 @@ class BricksClass {
      // Draw paddle on canvas
     drawPaddle  () {
         this.canvasContext.beginPath();
-        this.canvasContext.rect(this.paddle.x, this.paddle.y, this.paddleWidth, this.paddleHeight);
-        this.canvasContext.fillStyle = paddle.visible ? '#0095dd' : 'transparent';
+        this.canvasContext.rect(this.paddle.x, this.paddle.y, this.paddle.w, this.paddle.h);
+        this.canvasContext.fillStyle = this.paddle.visible ? '#0095dd' : 'transparent';
         this.canvasContext.fill();
         this.canvasContext.closePath();
     }
 
     // Draw bricks on canvas
     drawBricks () {
-        bricks.forEach(column => {
+        this.bricks?.forEach(column => {
             column.forEach(brick => {
                 this.canvasContext.beginPath();
                 this.canvasContext.rect(brick.x, brick.y, brick.w, brick.h);
@@ -137,10 +141,14 @@ class BricksClass {
 
     // Draw falling elements
     drawElementsToFall () {
-        this.elementsToFall.forEach(elementToFall => {
+        this.elementsToFall.forEach((elementToFall) => {
             let elementImage = new Image();
-            elementImage.src = elementToFall.element.src
-            this.canvasContext.drawImage(elementImage, elementToFall.x, elementToFall.y, 70, 70);
+    
+            elementImage.onload = () => {
+                this.canvasContext.drawImage(elementImage, elementToFall.x, elementToFall.y, 70, 70);
+            };
+    
+            elementImage.src = elementToFall.element.src;
         });
     }
 
@@ -157,8 +165,6 @@ class BricksClass {
 
     draw () {
         this.clearCanvas()
-        // canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-        
         this.drawElementsToFall();
         this.drawBall();
         this.drawPaddle();
@@ -167,6 +173,7 @@ class BricksClass {
 
     fallingElement () {
         this.elementsToFall = this.elementsToFall.filter(elementFalling => {
+            console.log(elementFalling)
             elementFalling.y += elementFalling.vy;
             if (
                 elementFalling.x < this.paddle.x + this.paddle.w &&
@@ -215,7 +222,7 @@ class BricksClass {
 
     checkBrickCollision () {
         // Brick collision
-        this.bricks.forEach((column, columnIndex) => {
+        this.bricks?.forEach((column, columnIndex) => {
             column.forEach((brick, brickIndex) => {
                 if (brick.visible) {
                     if (
@@ -281,7 +288,7 @@ class BricksClass {
     resetBallAndPaddle () {
         // Restablece la posición del paddle y la pelota al centro o a una posición inicial
         // Ejemplo:
-        this.paddle.x = this.canvas.width / 2 - this.paddleWidth / 2; // Asegúrate de que paddleWidth esté actualizado
+        this.paddle.x = this.canvas.width / 2 - this.paddle.w / 2; // Asegúrate de que paddleWidth esté actualizado
         this.paddle.y = this.canvas.height - 20; // O donde sea que inicialmente coloques el paddle
         this.ball.x = this.canvas.width / 2;
         this.ball.y = this.canvas.height / 2;
@@ -291,7 +298,7 @@ class BricksClass {
 
       // Make all bricks appear
     showAllBricks () {
-        this.bricks.forEach(column => {
+        this.bricks?.forEach(column => {
             column.forEach(brick => (brick.visible = true));
         });
     } 
