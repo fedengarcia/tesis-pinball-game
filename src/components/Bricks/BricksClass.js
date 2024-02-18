@@ -7,12 +7,13 @@ class BricksClass {
     ball;
     brickInfo;
     bricks;
+    brickRowCount = 9;
+    brickColumnCount = 5;
     lives = 2
     score = 0
     elementsToFall = []
     gameEnd = false;
     interactions
-
 
 
     constructor(canvas, canvasContext, gameConfig) {
@@ -49,6 +50,51 @@ class BricksClass {
             visible: true
         }
 
+        // Keyboard event handlers
+        document.addEventListener('keydown', keyDown);
+        document.addEventListener('keyup', keyUp);
+    }
+
+    createBricks () {
+        if(this.brickInfo.visible!==undefined){
+            let newArray=[]
+            for (let i = 0; i < this.brickRowCount; i++) {
+              newArray[i] = [];
+              for (let j = 0; j < this.brickColumnCount; j++) {
+                const x = i * (this.brickInfo.w + this.brickInfo.padding) + this.brickInfo.offsetX;
+                const y = j * (this.brickInfo.h + this.brickInfo.padding) + this.brickInfo.offsetY;
+
+                let element = null;
+                const randomElement = Math.random() * 100;
+                if (randomElement < 33) element = this.gameConfiguration.tables[0];
+                else if (randomElement < 66) element =  this.gameConfiguration.tables[1];
+                else element = this.gameConfiguration.tables[2];
+                newArray[i][j] = { x, y, element, ...this.brickInfo };
+              }
+            }
+            this.bricks = newArray
+          }
+    }
+
+    // Keydown event
+    keyDown (e) {
+        if (e.key === 'Right' || e.key === 'ArrowRight') {
+            this.paddle.dx = this.paddle.speed;
+        } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
+            this.paddle.dx = - this.paddle.speed;
+        }
+    }
+
+    // Keyup event
+    keyUp (e) {
+        if (
+        e.key === 'Right' ||
+        e.key === 'ArrowRight' ||
+        e.key === 'Left' ||
+        e.key === 'ArrowLeft'
+        ) {
+            this.paddle.dx = 0;
+        }
     }
 
     clearCanvas () {
@@ -98,18 +144,11 @@ class BricksClass {
         });
     }
 
-    updateStatus(mouse, scaleRatio) {
+    updateStatus(scaleRatio) {
         if (this.gameEnd === true) return;
 
         this.gameConfig.width *= scaleRatio.xRatio;
         this.gameConfig.height *= scaleRatio.yRatio;
-
-        this.mouse = mouse;
-
-        this.mouse.x *= scaleRatio.xRatio;
-        this.mouse.y *= scaleRatio.yRatio;
-
-
 
         this.movePaddle();
         this.moveBall()
@@ -117,14 +156,14 @@ class BricksClass {
     }
 
     draw () {
-        clearCanvas()
+        this.clearCanvas()
         // canvasContext.clearRect(0, 0, canvas.width, canvas.height);
         
         this.drawElementsToFall();
         this.drawBall();
         this.drawPaddle();
         this.drawBricks();
-      }
+    }
 
     fallingElement () {
         this.elementsToFall = this.elementsToFall.filter(elementFalling => {
@@ -197,7 +236,7 @@ class BricksClass {
                             })
                             brick.visible = false;
                         }
-                        increaseScore();
+                        this.score = this.score + 1;
                     }
                 }
             });
@@ -231,10 +270,10 @@ class BricksClass {
         if (this.ball.y + this.ball.size > this.canvas.height) {
             if(this.lives > 0){
                 this.lives = this.lives - 1
-                resetBallAndPaddle();
-                showAllBricks();
+                this.resetBallAndPaddle();
+                this.showAllBricks();
             }else{
-                handleGameOver();
+                this.gameOver();
             }
         }
     }
@@ -249,6 +288,13 @@ class BricksClass {
         this.ball.dx = 2; // O los valores iniciales que tengas para dx y dy
         this.ball.dy = -2;
     }
+
+      // Make all bricks appear
+    showAllBricks () {
+        this.bricks.forEach(column => {
+            column.forEach(brick => (brick.visible = true));
+        });
+    } 
 
     gameOver () { 
         this.gameEnd = true
