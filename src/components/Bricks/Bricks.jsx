@@ -48,10 +48,9 @@ const brickInfoFunction = ()=>{
 
 
 export default function Bricks({setPlayingGame, gameConfiguration, setGameResult}){  
-  const {popUp} = useSweetAlert()
+  const {popUp, modal} = useSweetAlert()
   const brickRowCount = 9;
   const brickColumnCount = 5;
-  const delay = 500; //delay to reset the game
 
   const [canvas,setCanvas]=useState("")
   const [canvasContext,setCanvasContext]=useState("")
@@ -154,7 +153,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
     }
   }, [bricks]);
 
-  function update() {
+  const update = () => {
     movePaddle();
     moveBall();
     updateElementsToFall();
@@ -164,7 +163,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   }
 
 // Draw ball on canvas
-  function drawBall() {
+  const drawBall = () => {
     canvasContext.beginPath();
     canvasContext.arc(ball.x, ball.y, ball.size, 0, Math.PI * 2);
     canvasContext.fillStyle = ball.visible ? '#0095dd' : 'transparent';
@@ -173,7 +172,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   }
 
   // Draw paddle on canvas
-  function drawPaddle() {
+  const drawPaddle = () => {
     canvasContext.beginPath();
     canvasContext.rect(paddle.x, paddle.y, paddleWidth, paddle.h);
     canvasContext.fillStyle = paddle.visible ? '#0095dd' : 'transparent';
@@ -182,7 +181,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   }
 
   // Draw bricks on canvas
-  function drawBricks() {
+  const drawBricks = () => {
     bricks.forEach(column => {
       column.forEach(brick => {
         canvasContext.beginPath();
@@ -195,7 +194,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   }
 
   // Move paddle on canvas
-  function movePaddle() {
+  const movePaddle = () => {
     paddle.x += paddle.dx;
 
     // Wall detection
@@ -209,7 +208,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   }
 
   // Move ball on canvas
-  function moveBall() {
+  const moveBall = () => {
     ball.x += ball.dx;
     ball.y += ball.dy;
     if (ball.y + ball.size > canvas.height) {
@@ -277,7 +276,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
     }
   }
 
-  function resetBallAndPaddle() {
+  const resetBallAndPaddle = () => {
     // Restablece la posición del paddle y la pelota al centro o a una posición inicial
     // Ejemplo:
     paddle.x = canvas.width / 2 - paddleWidth / 2; // Asegúrate de que paddleWidth esté actualizado
@@ -288,13 +287,24 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
     ball.dy = -2;
   }
 
-  function handleGameOver() {
+  const handleGameOver = () => {
+    modal('Perdiste !', 
+    'Puedes volver a jugar y cobrar una recompensa ! recuerda superarte para participar de premios',
+    () => {
+      setGameResult({
+        points:points,
+        timePlayed: timer,
+        tableAssigned: gameConfiguration.tables,
+        date: new Date()
+      },
+      setPlayingGame(false))
+    })
     console.log("Game Over");
     // alert('game over')
   }
 
   // Increase score
-  function increaseScore() {
+  const increaseScore = () => {
     setPoints(prevPoints => prevPoints + 1)
     // if (points % (brickRowCount * brickColumnCount) === 0 || points===45) {
     //   if(points===45){
@@ -304,7 +314,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
     //   paddle.visible = false;
 
     //   //After 0.5 sec restart the game
-    //   setTimeout(function () {
+    //   setTimeout(const  = () => {
     //       showAllBricks();
     //       // score=0
     //       paddle.x = canvas.width / 2 - 40;
@@ -318,13 +328,13 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   }
 
   // Make all bricks appear
-  function showAllBricks() {
+  const showAllBricks = () => {
     bricks.forEach(column => {
       column.forEach(brick => (brick.visible = true));
     });
   }
 
-  function drawElementsToFall() {
+  const drawElementsToFall = () => {
     elementsToFallRef.current.forEach(elementToFall => {
       const elementImage = new Image();
       elementImage.src = elementToFall.element.src
@@ -333,7 +343,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   }
 
   
-  function updateElementsToFall() {
+  const updateElementsToFall = () => {
     setElementsToFall(elementsToFall => elementsToFall.filter(elementToFall => {
       // console.log(elementToFall)
       elementToFall.y += elementToFall.vy;
@@ -367,7 +377,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   }
   
   // Draw everything
-  function draw() {
+  const draw = () => {
     canvasContext.clearRect(0, 0, canvas.width, canvas.height);
     
     drawElementsToFall();
@@ -377,7 +387,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   }
 
   // Keydown event
-  function keyDown(e) {
+  const keyDown = (e) => {
     if (e.key === 'Right' || e.key === 'ArrowRight') {
       paddle.dx = paddle.speed;
     } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
@@ -386,7 +396,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   }
 
   // Keyup event
-  function keyUp(e) {
+  const keyUp = (e) => {
     if (
       e.key === 'Right' ||
       e.key === 'ArrowRight' ||
