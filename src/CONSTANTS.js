@@ -105,6 +105,7 @@ export const APP_DATA = {
             times_up: 'Se acabo el tiempo!',
             time: 120,
             pointsLabel: 'Puntos:',
+            lifesLabel: 'Vidas:',
             /* 
                 Bonifications must be same length of images/words 
                 The only functionality of points available are x2, x1, +1 
