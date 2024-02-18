@@ -19,15 +19,14 @@ export default function GameComponent({
     })
 
     useEffect(() => {
-        let configCopy = APP_DATA.APP_GAME.GAME_CONFIGURATION
-        configCopy.tables = userInfo.tableAssigned;
-        setGameConfiguration(configCopy)
+      let configCopy = APP_DATA.APP_GAME.GAME_CONFIGURATION
+      configCopy.tables = userInfo.tableAssigned;
+      setGameConfiguration(configCopy)
+    }, []);
 
-
-
-      }, []);
 
     useEffect(() => {
+      console.log(gameResult)
       if(gameResult.points !== null) setButtonDisabled(false)
     }, [gameResult]);
 
