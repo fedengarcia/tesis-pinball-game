@@ -8,8 +8,7 @@ export const StyledTableGame = styled('div')`
     justify-content: center; 
     align-items: center; 
     flex-direction: column;
-    background: url('/assets/images/word-catcher/background.png');      
-    
+        
     .gameCanvas {
         display: flex;
         align-items: center; 
