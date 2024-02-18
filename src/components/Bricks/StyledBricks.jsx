@@ -27,8 +27,11 @@ export const StyledTableGame = styled('div')`
 export const StyledGameInfoContainer = styled('div')`
     display: flex;
     flex-direction: row;
-    width: 100%;
-    align-items: center;     
+    justify-content: space-between;
+    aling-items: center;     
+    top: 80px;
+    position: absolute;
+    width: 900px;
 
     @media (max-width: 992px) {
         width: 100%;
@@ -40,31 +43,40 @@ export const StyledGameInfoContainer = styled('div')`
 
 
     .timer {
-        top: 160px;
         padding: 0.2em 0.5em;
-        position: absolute;
         display: flex; 
         align-items: center;
         justify-content: center;
         margin: 20px;
         background-color: lightgrey;
         color: black;
-        font-size: 1.2em;
+        font-size: 1.5em;
         border-radius: 8px;
         text-align: center;
     }
 
     .points{
-        top: 160px;
-        right: 560px;
         padding: 0.2em 0.5em;
-        position: absolute;
         margin: 20px;
         background-color: lightgrey;
         color: black;
-        font-size: 1.2em;
+        font-size: 1.5em;
         border-radius: 8px;
-        text-align: center;
+        text-align: left;
+        display:flex;
+        flex-direction: column;
+    }
+
+    .lifes{
+        padding: 0.2em 0.5em;
+        margin: 20px;
+        background-color: lightgrey;
+        color: black;
+        font-size: 1.5em;
+        border-radius: 8px;
+        text-align: left;
+        display:flex;
+        flex-direction: column;
     }
 
 }
