@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react"
 import { StyledGameInfoContainer, StyledRules, StyledTableGame } from "./StyledBricks"
 import { APP_DATA } from "../../CONSTANTS"
+import useSweetAlert from "../../hooks/useSweetAlert"
 
 const paddleFunction = ()=>{
   const canvas = document.getElementById('canvas')
@@ -47,6 +48,7 @@ const brickInfoFunction = ()=>{
 
 
 export default function Bricks({setPlayingGame, gameConfiguration, setGameResult}){  
+  const {popUp} = useSweetAlert()
   const brickRowCount = 9;
   const brickColumnCount = 5;
   const delay = 500; //delay to reset the game
@@ -71,7 +73,6 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   const [points, setPoints] = useState(0)
   const [bricks,setBricks]=useState([])
 
-  let score=0
 
   useEffect(() => {
     setPaddleWidth(paddle.w)
@@ -110,7 +111,6 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
 
 
   useEffect(() => {
-    console.log(canvas)
     if(canvas===""){
       setCanvas(document.getElementById('canvas'))
       setCanvasContext(document.getElementById('canvas').getContext("2d"))
@@ -181,13 +181,6 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
     canvasContext.closePath();
   }
 
-  // Draw score on canvas
-  function drawScore() {
-    canvasContext.font = '20px Arial';
-    canvasContext.fillText(`Score: ${score}`, canvas.width - 100, 30);
-    canvasContext.fillText(`Lives: ${lives}`, canvas.width - 100, 50);
-  }
-
   // Draw bricks on canvas
   function drawBricks() {
     bricks.forEach(column => {
@@ -219,7 +212,6 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   function moveBall() {
     ball.x += ball.dx;
     ball.y += ball.dy;
-
     if (ball.y + ball.size > canvas.height) {
       setLives(lives => {
         if (lives - 1 > 0) {
@@ -281,7 +273,7 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
     // Hit bottom wall - Lose
     if (ball.y + ball.size > canvas.height) {
         showAllBricks();
-        score=0
+        setPoints(0)
     }
   }
 
@@ -298,31 +290,31 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
 
   function handleGameOver() {
     console.log("Game Over");
-    alert('game over')
+    // alert('game over')
   }
 
   // Increase score
   function increaseScore() {
-    score=score+1
-    if (score % (brickRowCount * brickColumnCount) === 0 || score===45) {
-      if(score===45){
-        alert("GANASTE!! \n PREMIO: Un besito :3")
-      }
-      ball.visible = false;
-      paddle.visible = false;
+    setPoints(prevPoints => prevPoints + 1)
+    // if (points % (brickRowCount * brickColumnCount) === 0 || points===45) {
+    //   if(points===45){
+    //     alert("GANASTE!! \n PREMIO: Un besito :3")
+    //   }
+    //   ball.visible = false;
+    //   paddle.visible = false;
 
-      //After 0.5 sec restart the game
-      setTimeout(function () {
-          showAllBricks();
-          score=0
-          paddle.x = canvas.width / 2 - 40;
-          paddle.y = canvas.height - 20;
-          ball.x = canvas.width / 2;
-          ball.y = canvas.height / 2;
-          ball.visible = true;
-          paddle.visible = true;
-      },delay)
-    }
+    //   //After 0.5 sec restart the game
+    //   setTimeout(function () {
+    //       showAllBricks();
+    //       // score=0
+    //       paddle.x = canvas.width / 2 - 40;
+    //       paddle.y = canvas.height - 20;
+    //       ball.x = canvas.width / 2;
+    //       ball.y = canvas.height / 2;
+    //       ball.visible = true;
+    //       paddle.visible = true;
+    //   },delay)
+    // }
   }
 
   // Make all bricks appear
@@ -335,17 +327,17 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
   function drawElementsToFall() {
     elementsToFallRef.current.forEach(elementToFall => {
       const elementImage = new Image();
-      elementImage.className  = "image-falling";
       elementImage.src = elementToFall.element.src
-      canvasContext.drawImage(elementImage, elementToFall.x, elementToFall.y, 60, 60);
+      canvasContext.drawImage(elementImage, elementToFall.x, elementToFall.y, 70, 70);
     });
   }
 
   
   function updateElementsToFall() {
     setElementsToFall(elementsToFall => elementsToFall.filter(elementToFall => {
-
+      // console.log(elementToFall)
       elementToFall.y += elementToFall.vy;
+      // console.log(elementToFall.element)
       // Colisión con el paddle
       if (
         elementToFall.x < paddle.x + paddle.w &&
@@ -353,16 +345,15 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
         elementToFall.y < paddle.y + paddle.h &&
         elementToFall.y + elementToFall.h > paddle.y
       ) {
-
-        if (elementToFall.bonification === "premio") {
-          score += 3;
-          console.log(elementToFall.name, " +3 puntos");
-        } else if (elementToFall.bonification === "mediadora") {
+        if (elementToFall.element.bonification === "premio") {
+          popUp({message: `+ ${points+2} PUNTOS EXTRA`})
+          setPoints(prevPoints => prevPoints + 2)
+        } else if (elementToFall.element.bonification === "mediadora") {
+          popUp({message: `+ ${prevLives + 1} VIDA EXTRA`})
           setLives(prevLives => prevLives + 1);
-          console.log(elementToFall.name, " +1 vida");
-        } else if (elementToFall.bonification === "nula") {
+        } else if (elementToFall.element.bonification === "nula") {
+          popUp({message: `PADDLE MAS GRANDE !`})
           setPaddleWidth(prevWidth => prevWidth + 20);
-          console.log(elementToFall.name, " +20px al paddle");
         }
         return false; 
       }
@@ -382,7 +373,6 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
     drawElementsToFall();
     drawBall();
     drawPaddle();
-    drawScore();
     drawBricks();
   }
 
@@ -419,29 +409,19 @@ export default function Bricks({setPlayingGame, gameConfiguration, setGameResult
      <StyledGameInfoContainer>
 					{initialTime > 0 ? 
 							<div className='timer'>
-								{parseInt(timer.seconds) === 0 && parseInt(timer.minutes) === 0
-									?
-										<samp>{APP_DATA.APP_GAME.GAME_CONFIGURATION.times_up}</samp>
-									:
 									<>
 										<samp className='mitutes'>{timer.minutes}</samp>:<samp className='seconds'>{timer.seconds}</samp>
 									</>
-								}
 							</div>
 						: <></> 
 					}
+					<div className='lifes'>
+            <p>{`${APP_DATA.APP_GAME.GAME_CONFIGURATION.lifesLabel} ${lives}`}</p>
+					</div>
 					<div className='points'>
-						{`${APP_DATA.APP_GAME.GAME_CONFIGURATION.pointsLabel} ${score}`}
+            <p>{`${APP_DATA.APP_GAME.GAME_CONFIGURATION.pointsLabel} ${points}`}</p>
 					</div>
 				</StyledGameInfoContainer>
-				{APP_DATA.APP_GAME.GAME_CONFIGURATION.showBonifications &&
-				<StyledRules>
-					{gameConfiguration?.tableAssiged?.map((element, index) => 
-					<div key={index} className="rule-element-container">
-						<img src={element?.src}/>
-						<h3>{`${element?.bonification}`}</h3>
-					</div>)}
-				</StyledRules>} 
     </StyledTableGame>
   )}
 
