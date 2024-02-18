@@ -37,6 +37,11 @@ export const StyledAppLayout = styled('div')`
     justify-content: flex-start;
     width: 100%;
     flex-direction: column;
+
+    h1{
+        text-align: center;
+        width: 900px;
+    }
 `
 
 
