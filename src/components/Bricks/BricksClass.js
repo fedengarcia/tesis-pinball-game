@@ -17,8 +17,9 @@ class BricksClass {
     setLives = null
     setScore = null
     setElementCatched = null
+    setInteractions = null
 
-    constructor(canvas, canvasContext, gameConfig, setLives, setElementCatched, setScore, setGameEndResult) {
+    constructor(canvas, canvasContext, gameConfig, setLives, setElementCatched, setScore, setInteractions, setGameEndResult) {
         this.canvas = canvas;
         this.canvasContext = canvasContext;
         this.gameConfig = gameConfig;
@@ -26,6 +27,7 @@ class BricksClass {
         this.setLives = setLives;
         this.setScore = setScore;
         this.setElementCatched = setElementCatched;
+        this.setInteractions = setInteractions
 
         this.paddle = {
             x: this.canvas.width / 2 - 40,
@@ -149,11 +151,12 @@ class BricksClass {
     // Draw falling elements
     drawElementsToFall () {
         this.elementsToFall.forEach((elementToFall) => {
+            console.log(elementToFall)
             let elementImage = new Image();
     
-            elementImage.onload = () => {
-                this.canvasContext.drawImage(elementImage, elementToFall.x, elementToFall.y, 70, 70);
-            };
+            this.canvasContext.drawImage(elementImage, elementToFall.x, elementToFall.y, 70, 70);
+            // elementImage.onload = () => {
+            // };
     
             elementImage.src = elementToFall.element.src;
         });
@@ -190,14 +193,24 @@ class BricksClass {
                 this.interactions = {
                   [elementFalling.element.name]: this.interactions[elementFalling.element.name] + 1
                 }
+                this.setInteractions(this.interactions)
                 if (elementFalling.element.bonification === "premio") {
                   this.score = this.score + 2
+                  this.setScore(this.score)
                 } else if (elementFalling.element.bonification === "mediadora") {
                     this.lives = this.lives + 1
+                    this.setLives(this.lives)
                 } else if (elementFalling.element.bonification === "nula") {
                     this.paddle.w = this.paddle.w + 20
                 }
+                return false; 
             }
+            if (elementFalling.y > this.canvas.height) {
+                return false;
+            }
+              
+            return true;
+
         })
       
     }

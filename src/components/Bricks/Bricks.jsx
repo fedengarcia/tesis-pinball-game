@@ -46,6 +46,7 @@ class Bricks extends React.Component{
 			score: 0,
 			lives: 2,
 			elementsCatched: [],
+			interactions: {},
 			start: false,
 			gameEnd: false
 		};
@@ -58,7 +59,7 @@ class Bricks extends React.Component{
 
     
 		if (this.context) {
-			this.gameClass = new BricksClass(this.canvas, this.context, this.gameConfiguration, this.setLives, this.setElementsCatched, this.setScore, this.setGameEndResult);
+			this.gameClass = new BricksClass(this.canvas, this.context, this.gameConfiguration, this.setLives, this.setElementsCatched, this.setScore, this.setInteractions, this.setGameEndResult);
 			this.renderCanvas();
 			this.initTimer();
 		}
@@ -143,6 +144,10 @@ class Bricks extends React.Component{
 
 	setScore = (score) => {
 		this.setState({score: score})
+	}
+
+	setInteractions = (interactions) => {
+		this.setState({interactions: interactions})
 	}
 
   	setGameEndResult = (tableAssigned = [], timePlayed = 0) => {
