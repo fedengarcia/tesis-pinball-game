@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { StyledAppLayout, StyledFlexCenter, StyledLayoutContent } from '../styled-components/containers'
 import LastForm from './LastForm'
-import GameComponent from '../components/GameComponent/GameComponent'
 import UserContext from '../UserProvider/UserContext'
 import { useNavigate } from 'react-router-dom'
 import { APP_DATA } from '../CONSTANTS'
 import Bricks from '../components/Bricks/Bricks'
 import { Button, CircularProgress } from '@mui/material'
 import { editUser } from '../firebase/firebase'
+import useSweetAlert from '../hooks/useSweetAlert'
 
 
 export default function Game() {
@@ -18,6 +18,7 @@ export default function Game() {
   const [gameResult, setGameResult] = useState(undefined)
   const [playingGame, setPlayingGame] = useState(false)
   const [gameStatus, setGameStatus] = useState('FIRST_TIME')
+  const {popUp, modal} = useSweetAlert()
 
   useEffect(() => {
     if(userInfo?.gamesPlayed?.length === 0) setGameStatus('FIRST_TIME')
@@ -38,14 +39,31 @@ export default function Game() {
 
   const handleEndGame = async () => {
     if(gameStatus === 'GAME_FINISH') navigate('final-form')
+   
+    setPlayingGame(true)
+  }
+
+  const showBonification = (message) =>{
+    return popUp({
+      message: message,
+      iconType:'info',
+      timer:'1000',
+      popUpPosition:'bottom',
+      iconColor: '#F6AB0E',
+    })
+  }
+
+
+  const saveGameResults = async () => {
     let userInfoCopy = {...userInfo}
+    userInfoCopy.gamesPlayed.push(gameResult)
     const userUpdated = await editUser(userInfo.email, userInfoCopy)
     if(userUpdated){
       setUserInfo(userInfoCopy)
     }else{
       alert("Err updating data")
     }
-    setPlayingGame(true)
+    setPlayingGame(false)
   }
 
   return (
@@ -57,9 +75,11 @@ export default function Game() {
               <>
                 {playingGame && 
                     <Bricks
-                      setPlayingGame={setPlayingGame}
+                      saveGameResults={saveGameResults}
                       gameConfiguration={gameConfiguration}
                       setGameResult={setGameResult}
+                      showBonification={showBonification}
+                      endGameModal = {modal}
                     />
                   }
                   {!playingGame && 
