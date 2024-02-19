@@ -1,4 +1,4 @@
-
+import apple from '../../assets/apple-logo.svg'
 class BricksClass {
     canvas;
     canvasContext;
@@ -11,7 +11,7 @@ class BricksClass {
     lives = 2
     score = 0
     elementsToFall = []
-    interactions
+    interactions = {}
 
     setGameEndResult = null
     setLives = null
@@ -151,14 +151,9 @@ class BricksClass {
     // Draw falling elements
     drawElementsToFall () {
         this.elementsToFall.forEach((elementToFall) => {
-            console.log(elementToFall)
             let elementImage = new Image();
-    
-            this.canvasContext.drawImage(elementImage, elementToFall.x, elementToFall.y, 70, 70);
-            // elementImage.onload = () => {
-            // };
-    
             elementImage.src = elementToFall.element.src;
+            this.canvasContext.drawImage(elementImage, elementToFall.x, elementToFall.y, 70, 70);
         });
     }
 
@@ -180,8 +175,7 @@ class BricksClass {
     }
 
     fallingElement () {
-        this.elementsToFall = this.elementsToFall.filter(elementFalling => {
-            console.log(elementFalling)
+        this.elementsToFall.filter(elementFalling => {
             elementFalling.y += elementFalling.vy;
             if (
                 elementFalling.x < this.paddle.x + this.paddle.w &&
@@ -190,9 +184,8 @@ class BricksClass {
                 elementFalling.y + elementFalling.h > this.paddle.y
               ) {
                 // save interaction with element
-                this.interactions = {
-                  [elementFalling.element.name]: this.interactions[elementFalling.element.name] + 1
-                }
+                this.interactions[elementFalling.element.name] = this.interactions[elementFalling.element.name] + 1
+                
                 this.setInteractions(this.interactions)
                 if (elementFalling.element.bonification === "premio") {
                   this.score = this.score + 2
@@ -201,18 +194,15 @@ class BricksClass {
                     this.lives = this.lives + 1
                     this.setLives(this.lives)
                 } else if (elementFalling.element.bonification === "nula") {
-                    this.paddle.w = this.paddle.w + 20
+                    this.paddle.w = this.paddle.w + 0.25
                 }
-                return false; 
+                return false
             }
             if (elementFalling.y > this.canvas.height) {
                 return false;
             }
-              
             return true;
-
         })
-      
     }
 
     movePaddle() {

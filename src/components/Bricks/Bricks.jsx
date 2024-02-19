@@ -69,44 +69,44 @@ class Bricks extends React.Component{
 		this.startGame();
 	}
 
-  initTimer() {
-		this.intervalTimer = setInterval(() => {
-			const { timer } = this.state;
-			if (this.props?.gameConfiguration?.time) {
-				if (parseInt(timer.minutes) !== 0 || parseInt(timer.seconds) !== 0) {
-					var minutes = parseInt(timer.seconds) === 0 ? parseInt(timer.minutes) - 1 : parseInt(timer.minutes)
-					var seconds = parseInt(timer.minutes) !== 0 && parseInt(timer.seconds) === 0 ? 59 : (parseInt(timer.seconds) - 1);
+	initTimer() {
+			this.intervalTimer = setInterval(() => {
+				const { timer } = this.state;
+				if (this.props?.gameConfiguration?.time) {
+					if (parseInt(timer.minutes) !== 0 || parseInt(timer.seconds) !== 0) {
+						var minutes = parseInt(timer.seconds) === 0 ? parseInt(timer.minutes) - 1 : parseInt(timer.minutes)
+						var seconds = parseInt(timer.minutes) !== 0 && parseInt(timer.seconds) === 0 ? 59 : (parseInt(timer.seconds) - 1);
 
-					if (seconds === 0 && minutes === 1) {
-						minutes = 1
+						if (seconds === 0 && minutes === 1) {
+							minutes = 1
+						}
+						
+						if(seconds === 0 && minutes === 0){
+							this.setState({
+								timer: {
+									seconds: seconds,
+									minutes: minutes
+								}
+							})
+							this.gameEnd()
+						}
 					}
-					
-					if(seconds === 0 && minutes === 0){
-						this.setState({
-							timer: {
-								seconds: seconds,
-								minutes: minutes
-							}
-						})
-						this.gameEnd()
+				} else {
+					var seconds = (parseInt(timer.seconds) + 1) % 60;
+					var minutes = seconds === 0 ? parseInt(timer.minutes) + 1 : parseInt(timer.minutes);
+				}
+
+				if (seconds < 10) seconds = "0" + seconds;
+				if (minutes < 10) minutes = "0" + minutes;
+
+				this.setState({
+					timer: {
+						seconds: seconds,
+						minutes: minutes
 					}
-				}
-			} else {
-				var seconds = (parseInt(timer.seconds) + 1) % 60;
-				var minutes = seconds === 0 ? parseInt(timer.minutes) + 1 : parseInt(timer.minutes);
-			}
+				});
 
-			if (seconds < 10) seconds = "0" + seconds;
-			if (minutes < 10) minutes = "0" + minutes;
-
-			this.setState({
-				timer: {
-					seconds: seconds,
-					minutes: minutes
-				}
-			});
-
-		}, 1000);
+			}, 1000);
 	}
 
 
