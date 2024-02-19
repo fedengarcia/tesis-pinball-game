@@ -20,7 +20,7 @@ class BricksClass {
     setInteractions = null
     showBonification = null
     gameEndModal = null
-    setPlayingGame = null
+    saveGameResults = null
 
     constructor(canvas, canvasContext, gameConfig, setLives, setElementCatched, setScore, setInteractions, setGameEndResult, showBonification, gameEndModal, saveGameResults) {
         this.canvas = canvas;
@@ -38,7 +38,7 @@ class BricksClass {
         }
         this.showBonification = showBonification
         this.gameEndModal = gameEndModal
-        this.setPlayingGame = setPlayingGame
+        this.saveGameResults = saveGameResults
 
         this.paddle = {
             x: this.canvas.width / 2 - 40,
@@ -328,8 +328,8 @@ class BricksClass {
     } 
 
     gameOver () { 
-        this.gameEndModal('FIN DEL JUEGO', `Obtuviste una puntuacion de ${this.score}`, () => this.saveGameResults())
         this.setGameEndResult(this.gameConfig.tables)
+        this.gameEndModal('FIN DEL JUEGO', `Obtuviste una puntuacion de ${this.score}`, () => this.saveGameResults())
     }
 }
 

@@ -56,12 +56,10 @@ export default function Game() {
 
   const saveGameResults = async () => {
     let userInfoCopy = {...userInfo}
-    userInfoCopy.gamesPlayed.push(gameResult)
+    userInfoCopy.gamesPlayed = [...userInfoCopy.gamesPlayed, gameResult]
     const userUpdated = await editUser(userInfo.email, userInfoCopy)
     if(userUpdated){
       setUserInfo(userInfoCopy)
-    }else{
-      alert("Err updating data")
     }
     setPlayingGame(false)
   }

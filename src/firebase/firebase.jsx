@@ -66,6 +66,7 @@ export const getUserByEmail = async (email) => {
 
 
   export const editUser = async (email, userDataUpdated) => {
+    console.log(email, userDataUpdated)
     const usuariosCollection = collection(firebaseDB, "usuarios");
     // Crear una consulta para buscar el usuario por su correo electrónico
     const q = query(usuariosCollection, where("email", "==", email));
