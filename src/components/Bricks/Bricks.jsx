@@ -44,13 +44,13 @@ class Bricks extends React.Component{
 				seconds: seconds === "00" ? "00" : seconds < 10 ? `0${seconds}` : seconds,
 			},
 			gameResult: {
-          elementsCatched: [],
-          score: 0,
-          tableAssigned: this.gameConfiguration.tables,
-          timePlayed: 0,
-          date: new Date()
+				elementsCatched: [],
+				score: 0,
+				tableAssigned: this.gameConfiguration.tables,
+				timePlayed: 0,
+				date: new Date()
 			},
-      lives: 2,
+      		lives: 2,
 			start: false,
 			gameEnd: false
 		};
@@ -63,7 +63,7 @@ class Bricks extends React.Component{
 
     
 		if (this.context) {
-			this.gameClass = new BricksClass(this.canvas, this.context, this.gameConfiguration, this.setGameEndResult, this.gameEnd);
+			this.gameClass = new BricksClass(this.canvas, this.context, this.gameConfiguration, this.setGameEndResult, this.setLives, this.gameEnd);
 			this.renderCanvas();
 			this.initTimer();
 		}
@@ -137,18 +137,21 @@ class Bricks extends React.Component{
 		this.animationFrameId = window.requestAnimationFrame(this.renderCanvas);
 	}
 
+	setLives = (lives) => {
+		this.setState({lives: lives})
+	}
 
-  setGameEndResult (elementsCatched = [], score = 0, tableAssigned = [], timePlayed = 0) {
+  	setGameEndResult (elementsCatched = [], score = 0, tableAssigned = [], timePlayed = 0) {
 		this.setState({
 			gameResult: {
-        elementsCatched: elementsCatched,
-        score: score,
-        tableAssigned: tableAssigned,
-        timePlayed: timePlayed,
-        date: new Date()
-      }
+				elementsCatched: elementsCatched,
+				score: score,
+				tableAssigned: tableAssigned,
+				timePlayed: timePlayed,
+				date: new Date(),
+			}
 		});
-	};
+	}	;
 
 
   gameEnd = () => {

@@ -14,11 +14,18 @@ class BricksClass {
     gameEnd = false;
     interactions
 
+    setGameEndResult = null
+    setLives = null
+    gameEndFunction = null
 
-    constructor(canvas, canvasContext, gameConfig, setGameEndResult, gameEnd) {
+
+    constructor(canvas, canvasContext, gameConfig, setGameEndResult, setLives, gameEndFunction) {
         this.canvas = canvas;
         this.canvasContext = canvasContext;
-        this.gameConfig = gameConfig
+        this.gameConfig = gameConfig;
+        this.setGameEndResult = setGameEndResult;
+        this.setLives = setLives;
+        this.gameEndFunction = gameEndFunction;
 
         this.paddle = {
             x: this.canvas.width / 2 - 40,
@@ -277,6 +284,7 @@ class BricksClass {
         if (this.ball.y + this.ball.size > this.canvas.height) {
             if(this.lives > 0){
                 this.lives = this.lives - 1
+                this.setLives(this.lives)
                 this.resetBallAndPaddle();
                 this.showAllBricks();
             }else{
