@@ -93,12 +93,14 @@ export const APP_DATA = {
             SECOND_TIME: {
                 TITLE: 'Esta es tu segunda vez',
                 SUBTITLE: 'Desbloquea una recompensa jugando por segunda vez!',
-                BUTTON_TITLE: 'Juega y obtiene recompensa!',
+                BUTTON_TITLE: 'Comenzar a jugar',
             },
             GAME_FINISH: {
                 TITLE: 'Has hecho todos los intentos posibles',
                 SUBTITLE: 'Gracias por participar',
-                BUTTON_TITLE: 'Responde y obtiene recompensa'
+                BUTTON_TITLE: 'Volver a jugar',
+                BUTTON_TITLE2: 'Responde y obtiene recompensa',
+                BUTTON_TITLE3: 'Ver ranking'
             }
         },
         GAME_CONFIGURATION:{
