@@ -22,7 +22,6 @@ export default function Game() {
   
 
   useEffect(() => {
-    console.log(userInfo?.gamesPlayed)
     if(userInfo?.gamesPlayed?.length === 0) setGameStatus('FIRST_TIME')
     if(userInfo?.gamesPlayed?.length === 1) setGameStatus('SECOND_TIME')
     if(userInfo?.gamesPlayed?.length >= 2) setGameStatus('GAME_FINISH')
@@ -55,12 +54,13 @@ export default function Game() {
     setLoadingLogin(true)
     let userInfoCopy = {...userInfo}
     userInfoCopy.gamesPlayed = [...userInfoCopy.gamesPlayed, gameResult]
-    const userUpdated = await editUser(userInfo.email, userInfoCopy)
-    if(userUpdated){
+    await editUser(userInfo.email, userInfoCopy).then(res => {
       setUserInfo(userInfoCopy)
-    }
-    setPlayingGame(false)
-    setLoadingLogin(false)
+    }).finally(() => {
+      setPlayingGame(false)
+      setLoadingLogin(false)
+    })
+
   }
 
   return (
