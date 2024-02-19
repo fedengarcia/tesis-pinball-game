@@ -11,21 +11,21 @@ class BricksClass {
     lives = 2
     score = 0
     elementsToFall = []
-    gameEnd = false;
     interactions
 
     setGameEndResult = null
     setLives = null
-    gameEndFunction = null
+    setScore = null
+    setElementCatched = null
 
-
-    constructor(canvas, canvasContext, gameConfig, setGameEndResult, setLives, gameEndFunction) {
+    constructor(canvas, canvasContext, gameConfig, setLives, setElementCatched, setScore, setGameEndResult) {
         this.canvas = canvas;
         this.canvasContext = canvasContext;
         this.gameConfig = gameConfig;
         this.setGameEndResult = setGameEndResult;
         this.setLives = setLives;
-        this.gameEndFunction = gameEndFunction;
+        this.setScore = setScore;
+        this.setElementCatched = setElementCatched;
 
         this.paddle = {
             x: this.canvas.width / 2 - 40,
@@ -160,8 +160,6 @@ class BricksClass {
     }
 
     updateStatus(scaleRatio) {
-        if (this.gameEnd === true) return;
-
         this.gameConfig.width *= scaleRatio.xRatio;
         this.gameConfig.height *= scaleRatio.yRatio;
 
@@ -251,6 +249,7 @@ class BricksClass {
                             brick.visible = false;
                         }
                         this.score = this.score + 1;
+                        this.setScore(this.score)
                     }
                 }
             });
@@ -312,7 +311,7 @@ class BricksClass {
     } 
 
     gameOver () { 
-        this.gameEnd = true
+        this.setGameEndResult(this.gameConfig.tables)
     }
 }
 

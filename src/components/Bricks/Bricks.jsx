@@ -43,14 +43,9 @@ class Bricks extends React.Component{
 				minutes: minutes === "00" ? "00" : `0${minutes}`,
 				seconds: seconds === "00" ? "00" : seconds < 10 ? `0${seconds}` : seconds,
 			},
-			gameResult: {
-				elementsCatched: [],
-				score: 0,
-				tableAssigned: this.gameConfiguration.tables,
-				timePlayed: 0,
-				date: new Date()
-			},
-      		lives: 2,
+			score: 0,
+			lives: 2,
+			elementsCatched: [],
 			start: false,
 			gameEnd: false
 		};
@@ -63,7 +58,7 @@ class Bricks extends React.Component{
 
     
 		if (this.context) {
-			this.gameClass = new BricksClass(this.canvas, this.context, this.gameConfiguration, this.setGameEndResult, this.setLives, this.gameEnd);
+			this.gameClass = new BricksClass(this.canvas, this.context, this.gameConfiguration, this.setLives, this.setElementsCatched, this.setScore, this.setGameEndResult);
 			this.renderCanvas();
 			this.initTimer();
 		}
@@ -115,6 +110,7 @@ class Bricks extends React.Component{
 
 
   renderCanvas() {
+		if(this.state.gameEnd) return
 		this.frameCount++;
 		//this.clearCanvas(this.context);
 		// check if time is over
@@ -141,28 +137,27 @@ class Bricks extends React.Component{
 		this.setState({lives: lives})
 	}
 
-  	setGameEndResult (elementsCatched = [], score = 0, tableAssigned = [], timePlayed = 0) {
-		this.setState({
-			gameResult: {
-				elementsCatched: elementsCatched,
-				score: score,
-				tableAssigned: tableAssigned,
-				timePlayed: timePlayed,
-				date: new Date(),
-			}
-		});
-	}	;
+	setElementsCatched = (elementsCatched) => {
+		this.setState({elementsCatched: elementsCatched})
+	}
 
+	setScore = (score) => {
+		this.setState({score: score})
+	}
 
-  gameEnd = () => {
+  	setGameEndResult = (tableAssigned = [], timePlayed = 0) => {
 		this.setState({ gameEnd: true });
 		if (this.intervalTimer) clearInterval(this.intervalTimer);
 		this.props.setGameResult({
-			...this.state.gameResult
-		})
+			elementsCatched: this.elementsCatched,
+			score: this.score,
+			tableAssigned: tableAssigned,
+			timePlayed: timePlayed,
+			date: new Date()	
+		});
 	};
 
-  
+
 
   render(){
     return(
@@ -183,7 +178,7 @@ class Bricks extends React.Component{
               <p>{`${APP_DATA.APP_GAME.GAME_CONFIGURATION.lifesLabel} ${this.state.lives}`}</p>
             </div>
             <div className='points'>
-              <p>{`${APP_DATA.APP_GAME.GAME_CONFIGURATION.pointsLabel} ${this.state.gameResult.score}`}</p>
+              <p>{`${APP_DATA.APP_GAME.GAME_CONFIGURATION.pointsLabel} ${this.state.score}`}</p>
             </div>
           </StyledGameInfoContainer>
       </StyledTableGame>
