@@ -23,8 +23,10 @@ class Bricks extends React.Component{
   constructor(props){
     super(props)
     this.canvasRef = React.createRef()
-    // {setPlayingGame, gameConfiguration, setGameResult, userInfo}){ 
+	this.saveGameResults = this.props.saveGameResults
     this.gameConfiguration = this.props.gameConfiguration
+	this.showBonification = this.props.showBonification
+	this.endGameModal = this.props.endGameModal
 
     this.renderCanvas = this.renderCanvas.bind(this);
 
@@ -59,7 +61,19 @@ class Bricks extends React.Component{
 
     
 		if (this.context) {
-			this.gameClass = new BricksClass(this.canvas, this.context, this.gameConfiguration, this.setLives, this.setElementsCatched, this.setScore, this.setInteractions, this.setGameEndResult);
+			this.gameClass = new BricksClass(
+				this.canvas,
+				this.context,
+				this.gameConfiguration,
+				this.setLives,
+				this.setElementsCatched,
+				this.setScore,
+				this.setInteractions,
+				this.setGameEndResult,
+				this.showBonification,
+				this.endGameModal,
+				this.saveGameResults
+			);
 			this.renderCanvas();
 			this.initTimer();
 		}
