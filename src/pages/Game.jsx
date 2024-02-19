@@ -38,7 +38,7 @@ export default function Game() {
   }, [gameResult]);
 
   const handleEndGame = async () => {
-    if(gameStatus === 'GAME_FINISH') navigate('final-form')
+    if(gameStatus === 'GAME_FINISH') navigate('/final-form')
    
     setPlayingGame(true)
   }

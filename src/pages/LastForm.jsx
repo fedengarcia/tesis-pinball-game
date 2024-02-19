@@ -58,6 +58,8 @@ export default function LastForm() {
   
   return (
     <StyledAppLayout>
+      <h1>{APP_DATA.APP_TITLE}</h1>
+
     <StyledLayoutContent>
       <h2>{APP_DATA.APP_LAST_FORM.TITLE}</h2>
       <p>{APP_DATA.APP_LAST_FORM.SUBTITLE}</p>
