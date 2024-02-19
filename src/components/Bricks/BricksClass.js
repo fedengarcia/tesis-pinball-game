@@ -28,6 +28,11 @@ class BricksClass {
         this.setScore = setScore;
         this.setElementCatched = setElementCatched;
         this.setInteractions = setInteractions
+        this.interactions = {
+            [gameConfig.elementsNames[0]]: 0,
+            [gameConfig.elementsNames[1]]: 0,
+            [gameConfig.elementsNames[2]]: 0
+        }
 
         this.paddle = {
             x: this.canvas.width / 2 - 40,
@@ -185,7 +190,6 @@ class BricksClass {
               ) {
                 // save interaction with element
                 this.interactions[elementFalling.element.name] = this.interactions[elementFalling.element.name] + 1
-                
                 this.setInteractions(this.interactions)
                 if (elementFalling.element.bonification === "premio") {
                   this.score = this.score + 2

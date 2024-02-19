@@ -154,8 +154,8 @@ class Bricks extends React.Component{
 		this.setState({ gameEnd: true });
 		if (this.intervalTimer) clearInterval(this.intervalTimer);
 		this.props.setGameResult({
-			elementsCatched: this.elementsCatched,
-			score: this.score,
+			interactions: this.state.interactions,
+			score: this.state.score,
 			tableAssigned: tableAssigned,
 			timePlayed: timePlayed,
 			date: new Date()	
