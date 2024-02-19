@@ -104,8 +104,6 @@ export const APP_DATA = {
             }
         },
         GAME_CONFIGURATION:{
-            times_up: 'Se acabo el tiempo!',
-            time: 120,
             pointsLabel: 'Puntos:',
             lifesLabel: 'Vidas:',
             elementsNames: ['Samsung', 'Apple', 'Xiaomi'],
