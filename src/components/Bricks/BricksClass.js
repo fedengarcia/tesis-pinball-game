@@ -18,8 +18,11 @@ class BricksClass {
     setScore = null
     setElementCatched = null
     setInteractions = null
+    showBonification = null
+    gameEndModal = null
+    setPlayingGame = null
 
-    constructor(canvas, canvasContext, gameConfig, setLives, setElementCatched, setScore, setInteractions, setGameEndResult) {
+    constructor(canvas, canvasContext, gameConfig, setLives, setElementCatched, setScore, setInteractions, setGameEndResult, showBonification, gameEndModal, saveGameResults) {
         this.canvas = canvas;
         this.canvasContext = canvasContext;
         this.gameConfig = gameConfig;
@@ -33,6 +36,9 @@ class BricksClass {
             [gameConfig.elementsNames[1]]: 0,
             [gameConfig.elementsNames[2]]: 0
         }
+        this.showBonification = showBonification
+        this.gameEndModal = gameEndModal
+        this.setPlayingGame = setPlayingGame
 
         this.paddle = {
             x: this.canvas.width / 2 - 40,
@@ -194,11 +200,15 @@ class BricksClass {
                 if (elementFalling.element.bonification === "premio") {
                   this.score = this.score + 2
                   this.setScore(this.score)
+                  this.showBonification("+2 puntos extra !")
                 } else if (elementFalling.element.bonification === "mediadora") {
                     this.lives = this.lives + 1
                     this.setLives(this.lives)
+                    this.showBonification("+1 vida extra !")
                 } else if (elementFalling.element.bonification === "nula") {
                     this.paddle.w = this.paddle.w + 0.25
+                    this.showBonification("Agrandas paddle")
+
                 }
                 return false
             }
@@ -318,6 +328,7 @@ class BricksClass {
     } 
 
     gameOver () { 
+        this.gameEndModal('FIN DEL JUEGO', `Obtuviste una puntuacion de ${this.score}`, () => this.saveGameResults())
         this.setGameEndResult(this.gameConfig.tables)
     }
 }
