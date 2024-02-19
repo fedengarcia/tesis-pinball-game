@@ -3,14 +3,13 @@ import Swal from "sweetalert2";
 
 export default function useSweetAlert () {
 
-    const modal = async (text,title, onConfirmFunction) => {
+    const modal = async (title,text, onConfirmFunction) => {
         Swal.fire({
             text: text,
             title: title,
-            showCancelButton: true,
             confirmButtonText: 'Accept',
             color: 'black',
-            confirmButtonColor: '#43a1a2',
+            confirmButtonColor: '#1565c0',
             background: 'rgb(255,255,255)',
             focusConfirm: false,
             customClass: {
