@@ -1,20 +1,16 @@
 import React, { useEffect, useState, useRef } from "react"
 import { StyledGameInfoContainer, StyledRules, StyledTableGame } from "./StyledBricks"
 import { APP_DATA } from "../../CONSTANTS"
-import useSweetAlert from "../../hooks/useSweetAlert"
-import { editUser } from "../../firebase/firebase"
 import BricksClass from "./BricksClass"
-
-// const {popUp, modal} = useSweetAlert()
 
 class Bricks extends React.Component{
 	canvasRef;
 	canvas;
 	context;
-  canvasConfig = {
-    width: 900,
-    height: 750,
-  }
+	canvasConfig = {
+		width: 900,
+		height: 750,
+	}
   
 	scaleRatio = {
 		xRatio: 0,
@@ -31,20 +27,9 @@ class Bricks extends React.Component{
     this.renderCanvas = this.renderCanvas.bind(this);
 
     
-		var minutes = "00"
-		var seconds = "00"
-		
-		// If existe time : set timer
-		if(this.gameConfiguration?.time){
-			minutes = Math.floor(this.gameConfiguration?.time / 60);
-			seconds = this.gameConfiguration?.time - minutes * 60;
-		}
 
 		this.state = {
-			timer: {
-				minutes: minutes === "00" ? "00" : `0${minutes}`,
-				seconds: seconds === "00" ? "00" : seconds < 10 ? `0${seconds}` : seconds,
-			},
+			timer: 0,
 			score: 0,
 			lives: 2,
 			elementsCatched: [],
@@ -84,56 +69,16 @@ class Bricks extends React.Component{
 	}
 
 	initTimer() {
-			this.intervalTimer = setInterval(() => {
-				const { timer } = this.state;
-				if (this.props?.gameConfiguration?.time) {
-					if (parseInt(timer.minutes) !== 0 || parseInt(timer.seconds) !== 0) {
-						var minutes = parseInt(timer.seconds) === 0 ? parseInt(timer.minutes) - 1 : parseInt(timer.minutes)
-						var seconds = parseInt(timer.minutes) !== 0 && parseInt(timer.seconds) === 0 ? 59 : (parseInt(timer.seconds) - 1);
-
-						if (seconds === 0 && minutes === 1) {
-							minutes = 1
-						}
-						
-						if(seconds === 0 && minutes === 0){
-							this.setState({
-								timer: {
-									seconds: seconds,
-									minutes: minutes
-								}
-							})
-							this.gameEnd()
-						}
-					}
-				} else {
-					var seconds = (parseInt(timer.seconds) + 1) % 60;
-					var minutes = seconds === 0 ? parseInt(timer.minutes) + 1 : parseInt(timer.minutes);
-				}
-
-				if (seconds < 10) seconds = "0" + seconds;
-				if (minutes < 10) minutes = "0" + minutes;
-
-				this.setState({
-					timer: {
-						seconds: seconds,
-						minutes: minutes
-					}
-				});
-
-			}, 1000);
+		this.intervalTimer = setInterval(() => {
+			this.setState({timer: this.state.timer + 1})
+		}, 1000);
 	}
 
 
   renderCanvas() {
 		if(this.state.gameEnd) return
 		this.frameCount++;
-		//this.clearCanvas(this.context);
-		// check if time is over
-		if(this.gameConfiguration.time){
-			if(parseInt(this.state.timer.seconds) === 0 && parseInt(this.state.timer.minutes) === 0){
-				return
-			}
-		}
+
 		//Calculamos Xratio
 		this.scaleRatio.xRatio = this.canvas?.width / this.canvasConfig.width;
 		this.scaleRatio.yRatio = this.canvas?.width / this.canvasConfig.width;
@@ -164,18 +109,34 @@ class Bricks extends React.Component{
 		this.setState({interactions: interactions})
 	}
 
-  	setGameEndResult = (tableAssigned = [], timePlayed = 0) => {
+  	setTimePlayed = () => {
+		var minutes = "00";
+		var seconds = "00";
+		
+		// If existe time : set timer
+		if(this.state.timer){
+			minutes = Math.floor(this.state.timer / 60);
+			seconds = this.state.timer - minutes * 60;
+		}
+
+		minutes = minutes === "00" ? "00" : minutes < 10 ? `0${minutes}` : minutes;
+		seconds = seconds === "00" ? "00" : seconds < 10 ? `0${seconds}` : seconds;
+
+		return `${minutes}:${seconds}`
+	}
+	
+	setGameEndResult = () => {
 		this.setState({ gameEnd: true });
 		if (this.intervalTimer) clearInterval(this.intervalTimer);
 		this.props.setGameResult({
 			interactions: this.state.interactions,
 			score: this.state.score,
-			tableAssigned: tableAssigned,
-			timePlayed: timePlayed,
+			timePlayed: this.setTimePlayed(),
 			date: new Date()	
 		});
 	};
 
+	
 
 
   render(){
@@ -184,15 +145,7 @@ class Bricks extends React.Component{
       <div className="gameCanvas">
         <canvas ref={this.canvasRef} id="canvas" width={this.canvasConfig.width} height={this.canvasConfig.height}></canvas>
       </div>
-       <StyledGameInfoContainer>
-            {this.gameConfiguration.time > 0 ? 
-                <div className='timer'>
-                    <>
-                      <samp className='mitutes'>{this.state.timer.minutes}</samp>:<samp className='seconds'>{this.state.timer.seconds}</samp>
-                    </>
-                </div>
-              : <></> 
-            }
+       <StyledGameInfoContainer>           
             <div className='lifes'>
               <p>{`${APP_DATA.APP_GAME.GAME_CONFIGURATION.lifesLabel} ${this.state.lives}`}</p>
             </div>
