@@ -54,7 +54,8 @@ export default function Game() {
     setLoadingLogin(true)
     let userInfoCopy = {...userInfo}
     userInfoCopy.gamesPlayed = [...userInfoCopy.gamesPlayed, gameResult]
-    await editUser(userInfo.email, userInfoCopy).then(res => {
+    await editUser(userInfoCopy.email, userInfoCopy).then(res => {
+      console.log(res)
       setUserInfo(userInfoCopy)
     }).finally(() => {
       setPlayingGame(false)
