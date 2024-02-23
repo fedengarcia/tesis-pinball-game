@@ -2,6 +2,8 @@ import apple from '../../assets/apple-logo.svg'
 class BricksClass {
     canvas;
     canvasContext;
+
+    //Game configuration variables 
     gameConfig;
     ball;
     brickInfo;
@@ -12,7 +14,16 @@ class BricksClass {
     score = 0
     elementsToFall = []
     interactions = {}
+    particlesToDraw = []
+
+    // Bonifications colors bricks
+    standardColor = '#0095dd';  // Color estándar para bloques
+    nullBonusColor = '#CCCCCC';  // Color para bonificación nula
+    mediatorBonusColor = '#FFA500';  // Color para bonificación mediadora
+    powerupBonusColor = '#00FF00';  // Color para bonificación de poder
+    paddleColor = '#0011F30'
     
+    // Functions 
     setGameEndResult = null
     setLives = null
     setScore = null
@@ -70,6 +81,7 @@ class BricksClass {
             visible: true
         }
 
+
         this.createBricks()
 
         // Keyboard event handlers
@@ -79,8 +91,8 @@ class BricksClass {
         document.addEventListener('keyup', this.keyUp);
     }
 
+    // Create bricks
     createBricks () {
-
         if(this.brickInfo.visible!==undefined){
             let newArray=[]
             for (let i = 0; i < this.brickRowCount; i++) {
@@ -93,15 +105,61 @@ class BricksClass {
                 // % random
                 let element = null;
                 const randomElement = Math.random() * 100;
-                if (randomElement < 33) element = this.gameConfig.tables[0];
-                else if (randomElement < 66) element =  this.gameConfig.tables[1];
+                if(randomElement < 20) element = {visible: true}
+                else if (randomElement < 40) element = this.gameConfig.tables[0];
+                else if (randomElement < 60) element =  this.gameConfig.tables[1];
                 else element = this.gameConfig.tables[2];
-                newArray[i][j] = { x, y, element, ...this.brickInfo };
+
+                // Selección del color según la bonificación del ladrillo
+                let brickColor;
+                switch (element?.bonification) {
+                    case 'nula':
+                        brickColor = this.nullBonusColor;
+                        break;
+                    case 'mediadora':
+                        brickColor = this.mediatorBonusColor;
+                        break;
+                    case 'premio':
+                        brickColor = this.powerupBonusColor;
+                        break;
+                    default:
+                        brickColor = this.standardColor;
+                        break;
+                }
+                newArray[i][j] = { x, y, element, brickColor, ...this.brickInfo };
               }
             }
             this.bricks = newArray
-            console.log(newArray)
           }
+    }
+
+    // Create particles broken effect
+     createParticlesBrokenEffect(positionX, positionY, color, count = 10) {
+        let particle = {
+            x: positionX,
+            y: positionY,
+            color: color,
+            radius: 2,
+            alpha: 1,
+            velocity: {
+                x: (Math.random() - 0.5) * 2, // Velocidad en el eje x
+                y: (Math.random() - 0.5) * 2  // Velocidad en el eje y
+            }
+        }
+        for (let i = 0; i < count; i++) this.particlesToDraw.push(particle);
+        
+    }
+
+    // Create element to fall
+     createElementToFall(positionX, positionY, brickElement, brickWidth, brickHeight) {
+       this.elementsToFall.push({
+            x: positionX,
+            y: positionY,
+            vy: 2,
+            element: brickElement,
+            w: brickWidth, 
+            h: brickHeight 
+        })
     }
 
     // Keydown event
@@ -125,6 +183,7 @@ class BricksClass {
         }
     }
 
+    // Clear canvas 
     clearCanvas () {
         this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.canvasContext.fillStyle = '#000000'
@@ -151,15 +210,53 @@ class BricksClass {
         this.canvasContext.closePath();
     }
 
-    // Draw bricks on canvas
-    drawBricks () {
+    // Draw bricks on canvas with improved styles and bonuses
+    drawBricks() {
         this.bricks?.forEach(column => {
             column.forEach(brick => {
-                this.canvasContext.beginPath();
-                this.canvasContext.rect(brick.x, brick.y, brick.w, brick.h);
-                this.canvasContext.fillStyle = brick.visible ? '#0095dd' : 'transparent';
-                this.canvasContext.fill();
-                this.canvasContext.closePath();
+
+            // Gradiente radial para simular sombreado
+            const gradient = this.canvasContext.createRadialGradient(
+                brick.x + brick.w / 2, brick.y + brick.h / 2, 1,
+                brick.x + brick.w / 2, brick.y + brick.h / 2, brick.w / 2
+            );
+
+            gradient.addColorStop(0, brick.brickColor);  // Color interior del ladrillo
+            gradient.addColorStop(0.8, 'rgba(0, 0, 0, 0.3)');  // Color de sombreado
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');  // Transparente hacia el exterior
+
+            // Borde con resplandor (efecto de neón)
+            this.canvasContext.beginPath();
+            this.canvasContext.lineWidth = 3; // Ancho del resplandor
+            this.canvasContext.strokeStyle = brick.visible ? 'rgba(255, 255, 255, 0.8)' : 'transparent'; // Color del resplandor
+            this.canvasContext.rect(
+                brick.x - 2, // Ajuste para el resplandor
+                brick.y - 2, // Ajuste para el resplandor
+                brick.w + 3,   // Ajuste para el resplandor
+                brick.h + 3    // Ajuste para el resplandor
+            );
+            this.canvasContext.stroke();
+            this.canvasContext.closePath();
+
+            // Mejora 1: Borde del ladrillo
+            this.canvasContext.beginPath();
+            this.canvasContext.rect(brick.x, brick.y, brick.w, brick.h);
+            this.canvasContext.fillStyle = brick.visible ? gradient : 'transparent';
+            this.canvasContext.strokeStyle = brick.visible ? '#000' : 'transparent'; // Color del borde
+            this.canvasContext.lineWidth = 2; // Ancho del borde
+            this.canvasContext.fill();
+            this.canvasContext.stroke(); // Dibuja el borde
+            this.canvasContext.closePath();
+
+            // Mejora 2: Sombra del ladrillo
+            this.canvasContext.beginPath();
+            this.canvasContext.rect(brick.x, brick.y, brick.w, brick.h);
+            this.canvasContext.fillStyle = brick.visible ? brick.brickColor : 'transparent';
+            this.canvasContext.shadowColor = '#888'; // Color de la sombra
+            this.canvasContext.shadowBlur = 5; // Intensidad de la sombra
+            this.canvasContext.fill();
+            this.canvasContext.closePath();
+
             });
         });
     }
@@ -173,23 +270,28 @@ class BricksClass {
         });
     }
 
-    updateStatus(scaleRatio) {
-        this.gameConfig.width *= scaleRatio.xRatio;
-        this.gameConfig.height *= scaleRatio.yRatio;
-        this.movePaddle();  
-        this.moveBall()
-        this.fallingElement()
-        this.updateBricks()
+    // Draw particles effect
+    drawBrokenBrickParticles () {
+        this.particlesToDraw.forEach((particle) => {
+            this.canvasContext.beginPath();
+            this.canvasContext.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+            this.canvasContext.fillStyle = `rgba(${particle?.color},${particle.alpha})`;
+            this.canvasContext.fill();
+            this.canvasContext.closePath();
+        });
     }
 
+    // DRAW CANVAS 
     draw () {
         this.clearCanvas()
         this.drawElementsToFall();
         this.drawBall();
         this.drawPaddle();
         this.drawBricks();
+        this.drawBrokenBrickParticles()
     }
 
+    // ADD BRICKS 10 seconds
     updateBricks(){
         let timePlayed = this.getTimePlayed() + 1
 
@@ -209,11 +311,20 @@ class BricksClass {
                 newArray[0][j] = { x, y, element, ...this.brickInfo };
             }
             this.bricks.unshift(newArray)
-            console.log(this.bricks)
+            // console.log(this.bricks)
         }
     }
 
+    // UPDATE PARTICLES EFFECTS
+    updateBrokenBrickEffect() {
+        this.particlesToDraw.forEach((particle, index) => {
+            particle.x += particle.velocity.x;
+            particle.y += particle.velocity.y;
+            particle.alpha -= 0.5; // Disminuir opacidad con el tiempo
+        })
+    }
 
+    // UUPDATE FALLING ELEMENT
     fallingElement () {
         this.elementsToFall.filter(elementFalling => {
             elementFalling.y += elementFalling.vy;
@@ -237,9 +348,6 @@ class BricksClass {
                     this.showBonification("Agrandas paddle")
                 } else if (elementFalling.element.bonification === "nula") {
                     // Falta resolver
-                    this.lives = this.lives + 1
-                    this.setLives(this.lives)
-                    this.showBonification("+1 vida extra !")
                     
                 }
                 return false
@@ -251,6 +359,7 @@ class BricksClass {
         })
     }
 
+    // UPDATE PADDLE MOVEMENT
     movePaddle() {
         this.paddle.x += this.paddle.dx;
     
@@ -264,6 +373,7 @@ class BricksClass {
         }    
     }
 
+    // UPDATE BALL MOVEMENT
     moveBall() {
         this.ball.x += this.ball.dx;
         this.ball.y += this.ball.dy;
@@ -274,6 +384,18 @@ class BricksClass {
         this.checkBrickCollision()
     }
 
+     updateStatus(scaleRatio) {
+        this.gameConfig.width *= scaleRatio.xRatio;
+        this.gameConfig.height *= scaleRatio.yRatio;
+        this.movePaddle();  
+        this.moveBall()
+        this.fallingElement()
+        this.updateBrokenBrickEffect()
+    }
+
+
+
+    // CHECK BRICK COLLISION
     checkBrickCollision () {
         // Brick collision
         this.bricks?.forEach((column, columnIndex) => {
@@ -287,16 +409,10 @@ class BricksClass {
                     ) {
                         this.ball.dy *= -1;
                         if (brick.element && brick.visible) {
-                            this.elementsToFall.push({
-                                x: brick.x,
-                                y: brick.y,
-                                vy: 2,
-                                element: brick.element,
-                                w: brick.w, 
-                                h: brick.h 
-                            })
+                            this.createElementToFall(brick.x, brick.y, brick.element, brick.w, brick.h)
                             brick.visible = false;
                         }
+                        this.createParticlesBrokenEffect(brick.x, brick.y, brick.brickColor, 30)
                         this.score = this.score + 1;
                         this.setScore(this.score)
                     }
@@ -305,6 +421,7 @@ class BricksClass {
         });
     }
 
+    // CHECK PADDLE COLLISION
     checkPaddleCollision () {
       // Paddle collision
       if (
@@ -316,6 +433,7 @@ class BricksClass {
       }
     }
 
+    // CHECK CANVAS BORDER COLLISION
     checkBorderCanvasCollision () {
         // Wall collision (right/left)
          if (this.ball.x + this.ball.size > this.canvas.width || this.ball.x - this.ball.size < 0) {
@@ -328,6 +446,7 @@ class BricksClass {
         }
     }
 
+    // CHECK BOTTOM COLLISION
     checkBottomCollision () {
         if (this.ball.y + this.ball.size > this.canvas.height) {
             if(this.lives > 0){
@@ -342,6 +461,7 @@ class BricksClass {
         }
     }
 
+    // RESET GAME
     resetBallAndPaddle () {
         // Restablece la posición del paddle y la pelota al centro o a una posición inicial
         // Ejemplo:
@@ -360,7 +480,7 @@ class BricksClass {
         });
     } 
 
-    
+    // GAME OVER
     gameOver () { 
         this.gameEndModal('FIN DEL JUEGO', `Obtuviste una puntuacion de ${this.score}`, () => this.saveGameResults())
     }
