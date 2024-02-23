@@ -12,7 +12,7 @@ class BricksClass {
     score = 0
     elementsToFall = []
     interactions = {}
-
+    
     setGameEndResult = null
     setLives = null
     setScore = null
@@ -21,8 +21,9 @@ class BricksClass {
     showBonification = null
     gameEndModal = null
     saveGameResults = null
+    getTimePlayed = null
 
-    constructor(canvas, canvasContext, gameConfig, setLives, setElementCatched, setScore, setInteractions, setGameEndResult, showBonification, gameEndModal, saveGameResults) {
+    constructor(canvas, canvasContext, gameConfig, setLives, setElementCatched, setScore, setInteractions, setGameEndResult, showBonification, gameEndModal, saveGameResults, getTimePlayed) {
         this.canvas = canvas;
         this.canvasContext = canvasContext;
         this.gameConfig = gameConfig;
@@ -39,6 +40,7 @@ class BricksClass {
         this.showBonification = showBonification
         this.gameEndModal = gameEndModal
         this.saveGameResults = saveGameResults
+        this.getTimePlayed = getTimePlayed
 
         this.paddle = {
             x: this.canvas.width / 2 - 40,
@@ -54,8 +56,8 @@ class BricksClass {
             y: this.canvas.height / 2,
             size: 10,
             speed: 2,
-            dx: 4,
-            dy: -4,
+            dx: 2,
+            dy: -2,
             visible: true     
         }
 
@@ -87,6 +89,8 @@ class BricksClass {
                 const x = i * (this.brickInfo.w + this.brickInfo.padding) + this.brickInfo.offsetX;
                 const y = j * (this.brickInfo.h + this.brickInfo.padding) + this.brickInfo.offsetY;
 
+
+                // % random
                 let element = null;
                 const randomElement = Math.random() * 100;
                 if (randomElement < 33) element = this.gameConfig.tables[0];
@@ -96,6 +100,7 @@ class BricksClass {
               }
             }
             this.bricks = newArray
+            console.log(newArray)
           }
     }
 
@@ -171,10 +176,10 @@ class BricksClass {
     updateStatus(scaleRatio) {
         this.gameConfig.width *= scaleRatio.xRatio;
         this.gameConfig.height *= scaleRatio.yRatio;
-
-        this.movePaddle();
+        this.movePaddle();  
         this.moveBall()
         this.fallingElement()
+        this.updateBricks()
     }
 
     draw () {
@@ -184,6 +189,30 @@ class BricksClass {
         this.drawPaddle();
         this.drawBricks();
     }
+
+    updateBricks(){
+        let timePlayed = this.getTimePlayed() + 1
+
+        if(timePlayed % 2 === 0){
+            let newArray=[]
+            newArray[0] = [];
+            for (let j = 0; j < this.brickColumnCount; j++) {
+                const x = j * (this.brickInfo.w + this.brickInfo.padding) + this.brickInfo.offsetX;
+                const y = 0 * (this.brickInfo.h + this.brickInfo.padding) + this.brickInfo.offsetY;
+
+                // % random
+                let element = null;
+                const randomElement = Math.random() * 100;
+                if (randomElement < 33) element = this.gameConfig.tables[0];
+                else if (randomElement < 66) element =  this.gameConfig.tables[1];
+                else element = this.gameConfig.tables[2];
+                newArray[0][j] = { x, y, element, ...this.brickInfo };
+            }
+            this.bricks.unshift(newArray)
+            console.log(this.bricks)
+        }
+    }
+
 
     fallingElement () {
         this.elementsToFall.filter(elementFalling => {
@@ -201,14 +230,17 @@ class BricksClass {
                   this.score = this.score + 2
                   this.setScore(this.score)
                   this.showBonification("+2 puntos extra !")
+                  // Marca premio gran recomensa
+
                 } else if (elementFalling.element.bonification === "mediadora") {
+                    this.paddle.w = this.paddle.w + 0.25
+                    this.showBonification("Agrandas paddle")
+                } else if (elementFalling.element.bonification === "nula") {
+                    // Falta resolver
                     this.lives = this.lives + 1
                     this.setLives(this.lives)
                     this.showBonification("+1 vida extra !")
-                } else if (elementFalling.element.bonification === "nula") {
-                    this.paddle.w = this.paddle.w + 0.25
-                    this.showBonification("Agrandas paddle")
-
+                    
                 }
                 return false
             }
@@ -304,6 +336,7 @@ class BricksClass {
                 this.resetBallAndPaddle();
                 this.showAllBricks();
             }else{
+                this.setGameEndResult()
                 this.gameOver();
             }
         }
@@ -327,8 +360,8 @@ class BricksClass {
         });
     } 
 
+    
     gameOver () { 
-        this.setGameEndResult(this.gameConfig.tables)
         this.gameEndModal('FIN DEL JUEGO', `Obtuviste una puntuacion de ${this.score}`, () => this.saveGameResults())
     }
 }
