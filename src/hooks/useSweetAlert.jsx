@@ -17,7 +17,7 @@ export default function useSweetAlert () {
             }
         }).then(async(result) => {
             if (result.isConfirmed) {
-                onConfirmFunction()
+                await onConfirmFunction()
             }
         })
     }
