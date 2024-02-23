@@ -57,7 +57,8 @@ class Bricks extends React.Component{
 				this.setGameEndResult,
 				this.showBonification,
 				this.endGameModal,
-				this.saveGameResults
+				this.saveGameResults,
+				this.getTimePlayed,
 			);
 			this.renderCanvas();
 			this.initTimer();
@@ -124,9 +125,12 @@ class Bricks extends React.Component{
 
 		return `${minutes}:${seconds}`
 	}
+
+	getTimePlayed = () => {
+		return this.state.timer
+	}
 	
 	setGameEndResult = () => {
-		this.setState({ gameEnd: true });
 		if (this.intervalTimer) clearInterval(this.intervalTimer);
 		this.props.setGameResult({
 			interactions: this.state.interactions,
@@ -134,6 +138,7 @@ class Bricks extends React.Component{
 			timePlayed: this.setTimePlayed(),
 			date: new Date()	
 		});
+		this.setState({ gameEnd: true });
 	};
 
 	
