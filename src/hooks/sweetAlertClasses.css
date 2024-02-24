@@ -5,4 +5,29 @@
     box-shadow: rgba(0,0,0,0.24) 0px 3px 8px;
     border-radius: 0;
     font-family: system-ui !important;
-  }
+}
+
+.coloredToast {
+  width: auto !important;
+  padding: 0 !important;
+
+}
+  
+.swal2-title{
+    font-size: 24px !important; /* Ajusta el tamaño de la fuente según sea necesario */
+    font-weight: bold !important; /* Puedes ajustar esto según tus preferencias */
+}
+
+.swal2-html-container{
+    font-size: 20px !important; /* Ajusta el tamaño de la fuente según sea necesario */
+}
+
+.swal2-popup.swal2-toast .swal2-title {
+    text-align: center !important;
+    font-family: system-ui !important;
+    text-transform: uppercase !important;
+}
+
+.swal2-timer-progress-bar {
+  background-color: #3498db !important; /* Cambia esto al color deseado */
+}
