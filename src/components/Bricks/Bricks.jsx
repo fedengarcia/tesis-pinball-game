@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react"
 import { StyledGameInfoContainer, StyledRules, StyledTableGame } from "./StyledBricks"
 import { APP_DATA } from "../../CONSTANTS"
 import BricksClass from "./BricksClass"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeartBroken, faHeart} from "@fortawesome/free-solid-svg-icons";
 
 class Bricks extends React.Component{
 	canvasRef;
@@ -31,7 +33,7 @@ class Bricks extends React.Component{
 		this.state = {
 			timer: 0,
 			score: 0,
-			lives: 2,
+			lives: [faHeart, faHeart, faHeart],
 			elementsCatched: [],
 			interactions: {},
 			start: false,
@@ -94,8 +96,10 @@ class Bricks extends React.Component{
 		this.animationFrameId = window.requestAnimationFrame(this.renderCanvas);
 	}
 
-	setLives = (lives) => {
-		this.setState({lives: lives})
+	setLives = (position) => {
+		let livesCopy = this.state.lives
+		livesCopy[position] = faHeartBroken
+		this.setState({lives: livesCopy})
 	}
 
 	setElementsCatched = (elementsCatched) => {
@@ -150,9 +154,12 @@ class Bricks extends React.Component{
       <div className="gameCanvas">
         <canvas ref={this.canvasRef} id="canvas" width={this.canvasConfig.width} height={this.canvasConfig.height}></canvas>
       </div>
-       <StyledGameInfoContainer>           
+       <StyledGameInfoContainer>        
             <div className='lifes'>
-              <p>{`${APP_DATA.APP_GAME.GAME_CONFIGURATION.lifesLabel} ${this.state.lives}`}</p>
+              	<label>{`${APP_DATA.APP_GAME.GAME_CONFIGURATION.lifesLabel} `}</label>
+				{this.state.lives.map(liveType => <FontAwesomeIcon style={{marginRight: '5px', color: '#ff0000'}} icon={liveType} size="1x"/>)}				
+
+
             </div>
             <div className='points'>
               <p>{`${APP_DATA.APP_GAME.GAME_CONFIGURATION.pointsLabel} ${this.state.score}`}</p>

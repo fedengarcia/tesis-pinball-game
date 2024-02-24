@@ -75,7 +75,10 @@ export const StyledGameInfoContainer = styled('div')`
         border-radius: 8px;
         text-align: left;
         display:flex;
-        flex-direction: column;
+
+        label{
+            margin-right: 5px;
+        }
     }
 
 }
