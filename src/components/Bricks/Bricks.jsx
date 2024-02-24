@@ -81,19 +81,20 @@ class Bricks extends React.Component{
   renderCanvas() {
 		if(this.state.gameEnd) return
 		this.frameCount++;
-
+		
 		//Calculamos Xratio
 		this.scaleRatio.xRatio = this.canvas?.width / this.canvasConfig.width;
 		this.scaleRatio.yRatio = this.canvas?.width / this.canvasConfig.width;
 
 		//We update the canvas
-		this.gameClass.updateStatus(this.scaleRatio);
+		this.gameClass.updateStatus(this.scaleRatio, this.state.timer);
 
 		//We draw the canvas
 		this.gameClass.draw();
 
 		//We call the main Canvas loop again
 		this.animationFrameId = window.requestAnimationFrame(this.renderCanvas);
+	
 	}
 
 	setLives = (position) => {

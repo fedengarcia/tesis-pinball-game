@@ -6,14 +6,15 @@ class BricksClass {
     //Game configuration variables 
     gameConfig;
     ball;
-    brickInfo;
-    bricks;
+    brickInfo = {};
+    bricks = [];
     brickRowCount = 9;
     brickColumnCount = 5;
     lives = 3
     score = 0
     elementsToFall = []
     interactions = {}
+    particleInfo = {}
     particlesToDraw = []
 
     // Bonifications colors bricks
@@ -83,6 +84,18 @@ class BricksClass {
             visible: true
         }
 
+        this.particleInfo = {
+            w: 1,
+            h: 1,    
+            timeToLive: 0.2,
+            radius: 2,
+            alpha: 1,
+            velocity: {
+                x: 1, // Velocidad en el eje x
+                y: 1  // Velocidad en el eje y
+            }
+        }
+
 
         this.createBricks()
 
@@ -135,22 +148,19 @@ class BricksClass {
           }
     }
 
-    // Create particles broken effect
-     createParticlesBrokenEffect(positionX, positionY, color, count = 10) {
-        let particle = {
-            x: positionX,
-            y: positionY,
-            color: color,
-            radius: 2,
-            alpha: 1,
-            velocity: {
-                x: (Math.random() - 0.5) * 2, // Velocidad en el eje x
-                y: (Math.random() - 0.5) * 2  // Velocidad en el eje y
-            }
-        }
-        for (let i = 0; i < count; i++) this.particlesToDraw.push(particle);
-        
+  createParticlesBrokenEffect(brick, count) {
+    const centerX = brick.x + brick.w / 2;
+    const centerY = brick.y + brick.h / 2;
+
+    for (let i = 0; i < count; i++) {
+        this.particlesToDraw.push({
+            x: centerX,
+            y: centerY,
+            color: brick.brickColor,
+
+        });
     }
+}
 
     // Create element to fall
      createElementToFall(positionX, positionY, brickElement, brickWidth, brickHeight, brickColor) {
@@ -397,12 +407,23 @@ class BricksClass {
     }
 
     // UPDATE PARTICLES EFFECTS
-    updateBrokenBrickEffect() {
+    updateBrokenBrickEffect(time) {
         this.particlesToDraw.forEach((particle, index) => {
-            particle.x += particle.velocity.x;
-            particle.y += particle.velocity.y;
-            particle.alpha -= 0.5; // Disminuir opacidad con el tiempo
-        })
+            const randomSign = Math.random() < 0.5 ? 1 : -1;
+            const range = 5; // Rango deseado
+            const randomX = Math.random() * (2 * range) - range; // Número entre -50 y 50
+            const randomY = Math.random() * (2 * range) - range; // Número entre -50 y 50
+
+            particle.x += particle.velocity.x * randomSign * randomX;
+            particle.y += particle.velocity.y * randomSign * randomY;
+            // particle.alpha -= 0.2; // Disminuir opacidad con el tiempo
+            particle.timeToLive -= time; // Decrementar el tiempo de vida
+
+            // Eliminar partículas que hayan alcanzado el final de su vida
+            if (particle.timeToLive <= 0) {
+                this.particlesToDraw.splice(index, 1);
+            }
+        });
     }
 
     // UUPDATE FALLING ELEMENT
@@ -465,13 +486,13 @@ class BricksClass {
         this.checkBrickCollision()
     }
 
-     updateStatus(scaleRatio) {
+     updateStatus(scaleRatio, time) {
         this.gameConfig.width *= scaleRatio.xRatio;
         this.gameConfig.height *= scaleRatio.yRatio;
         this.movePaddle();  
         this.moveBall()
         this.fallingElement()
-        this.updateBrokenBrickEffect()
+        this.updateBrokenBrickEffect(time)
     }
 
 
@@ -493,7 +514,7 @@ class BricksClass {
                             this.createElementToFall(brick.x, brick.y, brick.element, brick.w, brick.h, brick.brickColor)
                             brick.visible = false;
                         }
-                        this.createParticlesBrokenEffect(brick.x, brick.y, brick.brickColor, 30)
+                        this.createParticlesBrokenEffect(brick, 50)
                         this.score = this.score + 1;
                         this.setScore(this.score)
                     }
