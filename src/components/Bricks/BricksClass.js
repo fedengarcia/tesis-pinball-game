@@ -10,7 +10,7 @@ class BricksClass {
     bricks;
     brickRowCount = 9;
     brickColumnCount = 5;
-    lives = 2
+    lives = 3
     score = 0
     elementsToFall = []
     interactions = {}
@@ -54,10 +54,11 @@ class BricksClass {
         this.getTimePlayed = getTimePlayed
 
         this.paddle = {
-            x: this.canvas.width / 2 - 40,
+            x: this.canvas.width / 2 - 65,
             y: this.canvas.height - 20,
             w: 130,
             h: 20,
+            borderRadius: 10, // Radio de las esquinas para hacerlo redondeado
             speed: 4,
             dx: 0,
             visible: true  
@@ -201,13 +202,37 @@ class BricksClass {
         this.canvasContext.closePath();
     }
 
-     // Draw paddle on canvas
-    drawPaddle  () {
+    drawPaddle() {
         this.canvasContext.beginPath();
-        this.canvasContext.rect(this.paddle.x, this.paddle.y, this.paddle.w, this.paddle.h);
-        this.canvasContext.fillStyle = this.paddle.visible ? '#0095dd' : 'transparent';
+        this.canvasContext.moveTo(this.paddle.x + this.paddle.borderRadius, this.paddle.y);
+        this.canvasContext.lineTo(this.paddle.x + this.paddle.w - this.paddle.borderRadius, this.paddle.y);
+        this.canvasContext.quadraticCurveTo(this.paddle.x + this.paddle.w, this.paddle.y, this.paddle.x + this.paddle.w, this.paddle.y + this.paddle.borderRadius);
+        this.canvasContext.lineTo(this.paddle.x + this.paddle.w, this.paddle.y + this.paddle.h - this.paddle.borderRadius);
+        this.canvasContext.quadraticCurveTo(this.paddle.x + this.paddle.w, this.paddle.y + this.paddle.h, this.paddle.x + this.paddle.w - this.paddle.borderRadius, this.paddle.y + this.paddle.h);
+        this.canvasContext.lineTo(this.paddle.x + this.paddle.borderRadius, this.paddle.y + this.paddle.h);
+        this.canvasContext.quadraticCurveTo(this.paddle.x, this.paddle.y + this.paddle.h, this.paddle.x, this.paddle.y + this.paddle.h - this.paddle.borderRadius);
+        this.canvasContext.lineTo(this.paddle.x, this.paddle.y + this.paddle.borderRadius);
+        this.canvasContext.quadraticCurveTo(this.paddle.x, this.paddle.y, this.paddle.x + this.paddle.borderRadius, this.paddle.y);
+        
+        // Aplicar sombras y brillo
+        let gradient = this.canvasContext.createLinearGradient(this.paddle.x, this.paddle.y, this.paddle.x, this.paddle.y + this.paddle.h);
+        gradient.addColorStop(0, '#005588'); // Color principal
+        gradient.addColorStop(1, '#0077aa'); // Color para resaltar o dar brillo
+        
+        this.canvasContext.fillStyle = gradient;
+        // Agregar relieve
+        this.canvasContext.shadowColor = 'rgba(255, 255, 255, 0.5)';
+        this.canvasContext.shadowBlur = 3;
+        this.canvasContext.shadowOffsetX = 1;
+        this.canvasContext.shadowOffsetY = 1;
+        
         this.canvasContext.fill();
         this.canvasContext.closePath();
+        
+        // Restaurar valores de sombra
+        this.canvasContext.shadowBlur = 0;
+        this.canvasContext.shadowOffsetX = 0;
+        this.canvasContext.shadowOffsetY = 0;
     }
 
     // Draw bricks on canvas with improved styles and bonuses
