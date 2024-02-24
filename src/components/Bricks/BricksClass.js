@@ -442,40 +442,47 @@ class BricksClass {
     }
 
     // UUPDATE FALLING ELEMENT
-    fallingElement () {
-        this.elementsToFall.filter(elementFalling => {
-            elementFalling.y += elementFalling.vy;
-            if (
-                elementFalling.x < this.paddle.x + this.paddle.w &&
-                elementFalling.x + elementFalling.w > this.paddle.x &&
-                elementFalling.y < this.paddle.y + this.paddle.h &&
-                elementFalling.y + elementFalling.h > this.paddle.y
-              ) {
+   fallingElement() {
+    this.elementsToFall = this.elementsToFall.filter(elementFalling => {
+        elementFalling.y += elementFalling.vy;
+
+        if (
+            elementFalling.x < this.paddle.x + this.paddle.w &&
+            elementFalling.x + elementFalling.w > this.paddle.x &&
+            elementFalling.y < this.paddle.y + this.paddle.h &&
+            elementFalling.y + elementFalling.h > this.paddle.y
+        ) {
+            // Verificar si la bonificación ya se aplicó
+            if (!elementFalling.appliedBonification) {
                 // save interaction with element
                 this.interactions[elementFalling.element.name] = this.interactions[elementFalling.element.name] + 1
                 this.setInteractions(this.interactions)
-                if (elementFalling.element.bonification === "premio") {
-                  this.score = this.score + 2
-                  this.setScore(this.score)
-                  this.showBonification("+2 puntos extra !")
-                  // Marca premio gran recomensa
 
+                if (elementFalling.element.bonification === "premio") {
+                    this.score = this.score + 2
+                    this.setScore(this.score)
+                    this.showBonification("+2 puntos extra !")
+                    // Marca la bonificación como aplicada
                 } else if (elementFalling.element.bonification === "mediadora") {
                     this.paddle.w = this.paddle.w + 0.25
                     this.showBonification("Agrandas paddle")
+                    // Marca la bonificación como aplicada
                 } else if (elementFalling.element.bonification === "nula") {
                     // Falta resolver
-                    
                 }
-                return false
-            }
-            if (elementFalling.y > this.canvas.height) {
-                return false;
-            }
-            return true;
-        })
-    }
+                elementFalling.appliedBonification = true;
 
+            }
+            return false;
+        }
+
+        if (elementFalling.y > this.canvas.height) {
+            return false;
+        }
+
+        return true;
+    });
+}
     // UPDATE PADDLE MOVEMENT
     movePaddle() {
         this.paddle.x += this.paddle.dx;
