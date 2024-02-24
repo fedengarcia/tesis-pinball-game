@@ -362,11 +362,23 @@ class BricksClass {
     }
 
     // Draw particles effect
-    drawBrokenBrickParticles () {
+    drawBrokenBrickParticles() {
         this.particlesToDraw.forEach((particle) => {
             this.canvasContext.beginPath();
-            this.canvasContext.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-            this.canvasContext.fillStyle = `rgba(${particle?.color},${particle.alpha})`;
+            const gradient = this.canvasContext.createRadialGradient(
+                particle.x,
+                particle.y,
+                0,
+                particle.x,
+                particle.y,
+                particle.timeToLive
+            );
+
+            gradient.addColorStop(0, `${particle.color}`);
+            gradient.addColorStop(1, `${particle.color}`);
+
+            this.canvasContext.fillStyle = gradient;
+            this.canvasContext.arc(particle.x, particle.y, particle.timeToLive, 0, Math.PI * 2);
             this.canvasContext.fill();
             this.canvasContext.closePath();
         });
@@ -410,15 +422,15 @@ class BricksClass {
     updateBrokenBrickEffect(deltaTime) {
         this.particlesToDraw.forEach((particle, index) => {
             const range = 2; // Rango deseado
-            const randomSignX = Math.random() < 0.5 ? 3.2 : -3.2;
+            const randomSignX = Math.random() < 0.5 ? 2.9 : -2.9;
             const randomSignY = Math.random() < 0.5 ? 1 : -1;
             const randomX = Math.random() * (2 * range) - range; 
             const randomY = Math.random() * (2 * range) - range;
 
-            particle.x += particle.velocity.x * randomSignX ;
-            particle.y += particle.velocity.y * randomSignY ;
+            particle.x += particle.velocity.x * randomSignX * randomX;
+            particle.y += particle.velocity.y * randomSignY * randomY;
             // particle.alpha -= 0.2; // Disminuir opacidad con el tiempo
-            particle.timeToLive -= 0.04; // Decrementar el tiempo de vida
+            particle.timeToLive -= 0.009; // Decrementar el tiempo de vida
 
             // Eliminar partículas que hayan alcanzado el final de su vida
             if (particle.timeToLive <= 0) {
@@ -496,8 +508,6 @@ class BricksClass {
         this.updateBrokenBrickEffect(deltaTime)
     }
 
-
-
     // CHECK BRICK COLLISION
     checkBrickCollision () {
         // Brick collision
@@ -515,7 +525,9 @@ class BricksClass {
                             this.createElementToFall(brick.x, brick.y, brick.element, brick.w, brick.h, brick.brickColor)
                             brick.visible = false;
                         }
-                        this.createParticlesBrokenEffect(brick, 100)
+                        setTimeout(() => {
+                            this.createParticlesBrokenEffect(brick, 100)
+                        }, 50);
                         this.score = this.score + 1;
                         this.setScore(this.score)
                     }
