@@ -32,12 +32,12 @@ export default function useSweetAlert () {
             position: popUpPosition ?? 'bottom',
             // icon: iconType,
             showConfirmButton: false,
-            timer: timer ? timer : 2000,
-            timerProgressBar: showProgressBar ?? false,
+            timer: timer ? timer : 1000,
+            timerProgressBar: true,
             color: textColor ?? 'black',
             // iconColor: iconColor,
             customClass: {
-                popup: 'modalContainer',
+                popup: 'modalContainer coloredToast',
             },
             showClass: {
                 popup: 'animate__animated animate__fadeInDown'

@@ -38,14 +38,11 @@ export default function Game() {
     if(gameResult?.points !== null) setButtonDisabled(false)
   }, [gameResult]);
 
-
-  const showBonification = (message) =>{
+  const showBonification = (message, timer) =>{
     return popUp({
       message: message,
-      iconType:'info',
-      timer:'1000',
+      timer: timer,
       popUpPosition:'bottom',
-      iconColor: '#F6AB0E',
     })
   }
 
