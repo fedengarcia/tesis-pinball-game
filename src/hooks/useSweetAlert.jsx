@@ -1,11 +1,12 @@
 import Swal from "sweetalert2";
-// import './sweetAlertClasses.css'
+import './sweetAlertClasses.css'
 
 export default function useSweetAlert () {
 
     const modal = async (title,text, onConfirmFunction) => {
         Swal.fire({
             text: text,
+            allowOutsideClick: false,
             title: title,
             confirmButtonText: 'Accept',
             color: 'black',
@@ -35,6 +36,9 @@ export default function useSweetAlert () {
             timerProgressBar: showProgressBar ?? false,
             color: textColor ?? 'black',
             // iconColor: iconColor,
+            customClass: {
+                popup: 'modalContainer',
+            },
             showClass: {
                 popup: 'animate__animated animate__fadeInDown'
             },

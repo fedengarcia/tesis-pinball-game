@@ -1,0 +1,8 @@
+.modalContainer {
+    border: 1px solid rgb(21, 101, 192) !important;
+    background-color: rgb(241, 247, 255) !important;
+    border-radius: 8px !important;
+    box-shadow: rgba(0,0,0,0.24) 0px 3px 8px;
+    border-radius: 0;
+    font-family: system-ui !important;
+  }
