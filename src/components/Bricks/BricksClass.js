@@ -308,10 +308,46 @@ class BricksClass {
     // Draw falling elements
     drawElementsToFall () {
         this.elementsToFall.forEach((elementToFall) => {
-            let elementImage = new Image();
-            elementImage.src = elementToFall.element.src;
-            this.canvasContext.drawImage(elementImage, elementToFall.x, elementToFall.y, 70, 70);
-        });
+        let elementImage = new Image();
+        elementImage.src = elementToFall.element.src;
+
+        // Guardar el estado actual del contexto
+        this.canvasContext.save();
+
+        // Configurar las sombras para simular el efecto de burbuja
+        this.canvasContext.shadowColor = 'rgba(0, 0, 0, 0.3)';
+        this.canvasContext.shadowBlur = 15;
+        this.canvasContext.shadowOffsetX = 8;
+        this.canvasContext.shadowOffsetY = 8;
+
+        // Dibujar burbuja alrededor de la imagen
+        this.canvasContext.beginPath();
+        this.canvasContext.arc(
+            elementToFall.x + 35, // Centro x de la burbuja
+            elementToFall.y + 35, // Centro y de la burbuja
+            40, // Radio de la burbuja
+            0,
+            Math.PI * 2
+        );
+
+        // Aplicar estilos a la burbuja
+        let bubbleGradient = this.canvasContext.createRadialGradient(elementToFall.x + 35, elementToFall.y + 35, 20, elementToFall.x + 35, elementToFall.y + 35, 40);
+        bubbleGradient.addColorStop(0, 'rgba(0, 149, 221, 0.5)');
+        bubbleGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+
+        this.canvasContext.fillStyle = bubbleGradient;
+        this.canvasContext.fill();
+        this.canvasContext.closePath();
+
+        // Reducir el tamaño de la imagen
+        let imageSize = 50; // Tamaño deseado de la imagen dentro de la burbuja
+
+        // Dibujar la imagen en el centro de la burbuja
+        this.canvasContext.drawImage(elementImage, elementToFall.x + 35 - imageSize / 2, elementToFall.y + 35 - imageSize / 2, imageSize, imageSize);
+
+        // Restaurar el estado del contexto
+        this.canvasContext.restore();
+    });
     }
 
     // Draw particles effect
