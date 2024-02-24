@@ -87,7 +87,7 @@ class BricksClass {
         this.particleInfo = {
             w: 1,
             h: 1,    
-            timeToLive: 0.2,
+            timeToLive: 1,
             radius: 2,
             alpha: 1,
             velocity: {
@@ -100,8 +100,8 @@ class BricksClass {
         this.createBricks()
 
         // Keyboard event handlers
-        this.keyDown = this.keyDown.bind(this);  // Agregar esta línea
-        this.keyUp = this.keyUp.bind(this);  // Agregar esta línea
+        this.keyDown = this.keyDown.bind(this);
+        this.keyUp = this.keyUp.bind(this); 
         document.addEventListener('keydown', this.keyDown);
         document.addEventListener('keyup', this.keyUp);
     }
@@ -148,19 +148,19 @@ class BricksClass {
           }
     }
 
-  createParticlesBrokenEffect(brick, count) {
-    const centerX = brick.x + brick.w / 2;
-    const centerY = brick.y + brick.h / 2;
+    createParticlesBrokenEffect(brick, count) {
+        const centerX = brick.x + brick.w / 2;
+        const centerY = brick.y + brick.h / 2;
 
-    for (let i = 0; i < count; i++) {
-        this.particlesToDraw.push({
-            x: centerX,
-            y: centerY,
-            color: brick.brickColor,
-
-        });
+        for (let i = 0; i < count; i++) {
+            this.particlesToDraw.push({
+                ...this.particleInfo,
+                x: centerX,
+                y: centerY,
+                color: brick.brickColor,
+            });
+        }
     }
-}
 
     // Create element to fall
      createElementToFall(positionX, positionY, brickElement, brickWidth, brickHeight, brickColor) {
@@ -407,17 +407,18 @@ class BricksClass {
     }
 
     // UPDATE PARTICLES EFFECTS
-    updateBrokenBrickEffect(time) {
+    updateBrokenBrickEffect(deltaTime) {
         this.particlesToDraw.forEach((particle, index) => {
-            const randomSign = Math.random() < 0.5 ? 1 : -1;
-            const range = 5; // Rango deseado
-            const randomX = Math.random() * (2 * range) - range; // Número entre -50 y 50
-            const randomY = Math.random() * (2 * range) - range; // Número entre -50 y 50
+            const range = 2; // Rango deseado
+            const randomSignX = Math.random() < 0.5 ? 3.2 : -3.2;
+            const randomSignY = Math.random() < 0.5 ? 1 : -1;
+            const randomX = Math.random() * (2 * range) - range; 
+            const randomY = Math.random() * (2 * range) - range;
 
-            particle.x += particle.velocity.x * randomSign * randomX;
-            particle.y += particle.velocity.y * randomSign * randomY;
+            particle.x += particle.velocity.x * randomSignX ;
+            particle.y += particle.velocity.y * randomSignY ;
             // particle.alpha -= 0.2; // Disminuir opacidad con el tiempo
-            particle.timeToLive -= time; // Decrementar el tiempo de vida
+            particle.timeToLive -= 0.04; // Decrementar el tiempo de vida
 
             // Eliminar partículas que hayan alcanzado el final de su vida
             if (particle.timeToLive <= 0) {
@@ -486,13 +487,13 @@ class BricksClass {
         this.checkBrickCollision()
     }
 
-     updateStatus(scaleRatio, time) {
+     updateStatus(scaleRatio, deltaTime) {
         this.gameConfig.width *= scaleRatio.xRatio;
         this.gameConfig.height *= scaleRatio.yRatio;
         this.movePaddle();  
         this.moveBall()
         this.fallingElement()
-        this.updateBrokenBrickEffect(time)
+        this.updateBrokenBrickEffect(deltaTime)
     }
 
 
@@ -514,7 +515,7 @@ class BricksClass {
                             this.createElementToFall(brick.x, brick.y, brick.element, brick.w, brick.h, brick.brickColor)
                             brick.visible = false;
                         }
-                        this.createParticlesBrokenEffect(brick, 50)
+                        this.createParticlesBrokenEffect(brick, 100)
                         this.score = this.score + 1;
                         this.setScore(this.score)
                     }
