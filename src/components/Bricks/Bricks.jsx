@@ -157,7 +157,7 @@ class Bricks extends React.Component{
        <StyledGameInfoContainer>        
             <div className='lifes'>
               	<label>{`${APP_DATA.APP_GAME.GAME_CONFIGURATION.lifesLabel} `}</label>
-				{this.state.lives.map(liveType => <FontAwesomeIcon style={{marginRight: '5px', color: '#ff0000'}} icon={liveType} size="1x"/>)}				
+				{this.state.lives.map((liveType, key) => <FontAwesomeIcon key={key} style={{marginRight: '5px', color: '#ff0000'}} icon={liveType} size="1x"/>)}				
 
 
             </div>
