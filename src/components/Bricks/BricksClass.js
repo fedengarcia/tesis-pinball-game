@@ -153,14 +153,15 @@ class BricksClass {
     }
 
     // Create element to fall
-     createElementToFall(positionX, positionY, brickElement, brickWidth, brickHeight) {
+     createElementToFall(positionX, positionY, brickElement, brickWidth, brickHeight, brickColor) {
        this.elementsToFall.push({
             x: positionX,
             y: positionY,
             vy: 2,
             element: brickElement,
             w: brickWidth, 
-            h: brickHeight 
+            h: brickHeight,
+            brickColor 
         })
     }
 
@@ -332,7 +333,7 @@ class BricksClass {
 
         // Aplicar estilos a la burbuja
         let bubbleGradient = this.canvasContext.createRadialGradient(elementToFall.x + 35, elementToFall.y + 35, 20, elementToFall.x + 35, elementToFall.y + 35, 40);
-        bubbleGradient.addColorStop(0, 'rgba(0, 149, 221, 0.5)');
+        bubbleGradient.addColorStop(0, elementToFall.brickColor);
         bubbleGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
 
         this.canvasContext.fillStyle = bubbleGradient;
@@ -489,7 +490,7 @@ class BricksClass {
                     ) {
                         this.ball.dy *= -1;
                         if (brick.element && brick.visible) {
-                            this.createElementToFall(brick.x, brick.y, brick.element, brick.w, brick.h)
+                            this.createElementToFall(brick.x, brick.y, brick.element, brick.w, brick.h, brick.brickColor)
                             brick.visible = false;
                         }
                         this.createParticlesBrokenEffect(brick.x, brick.y, brick.brickColor, 30)
