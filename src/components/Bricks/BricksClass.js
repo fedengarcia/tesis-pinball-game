@@ -63,15 +63,16 @@ class BricksClass {
             dx: 0,
             visible: true  
         }
-        this.ball = {
+       this.ball = {
             x: this.canvas.width / 2,
             y: this.canvas.height / 2,
             size: 10,
-            speed: 2,
+            speed: 1.5,
             dx: 2,
             dy: -2,
             visible: true     
         }
+
 
         this.brickInfo = {
             w: 80,
@@ -193,13 +194,31 @@ class BricksClass {
         this.canvasContext.closePath();
     }
 
-    // Draw ball on canvas
-    drawBall () {
+   // Draw ball on canvas
+    drawBall() {
         this.canvasContext.beginPath();
+
+        // Gradiente radial para darle un aspecto tridimensional
+        let gradient = this.canvasContext.createRadialGradient(this.ball.x, this.ball.y, 0, this.ball.x, this.ball.y, this.ball.size);
+        gradient.addColorStop(0, '#0095dd'); // Color principal
+        gradient.addColorStop(1, '#004466'); // Color para sombra
+
         this.canvasContext.arc(this.ball.x, this.ball.y, this.ball.size, 0, Math.PI * 2);
-        this.canvasContext.fillStyle = this.ball.visible ? '#0095dd' : 'transparent';
+        this.canvasContext.fillStyle = gradient;
+        
+        // Aplicar sombra y brillo
+        this.canvasContext.shadowColor = 'rgba(0, 0, 0, 0.3)';
+        this.canvasContext.shadowBlur = 5;
+        this.canvasContext.shadowOffsetX = 2;
+        this.canvasContext.shadowOffsetY = 2;
+
         this.canvasContext.fill();
         this.canvasContext.closePath();
+
+        // Restaurar valores de sombra
+        this.canvasContext.shadowBlur = 0;
+        this.canvasContext.shadowOffsetX = 0;
+        this.canvasContext.shadowOffsetY = 0;
     }
 
     drawPaddle() {
