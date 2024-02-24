@@ -2,13 +2,14 @@
     border: 1px solid rgb(21, 101, 192) !important;
     background-color: rgb(241, 247, 255) !important;
     border-radius: 8px !important;
-    box-shadow: rgba(0,0,0,0.24) 0px 3px 8px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     border-radius: 0;
     font-family: system-ui !important;
 }
 
 .coloredToast {
   width: auto !important;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   padding: 0 !important;
 
 }
