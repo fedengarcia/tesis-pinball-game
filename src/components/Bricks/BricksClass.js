@@ -419,7 +419,7 @@ class BricksClass {
     }
 
     // UPDATE PARTICLES EFFECTS
-    updateBrokenBrickEffect(deltaTime) {
+    updateBrokenBrickEffect() {
         this.particlesToDraw.forEach((particle, index) => {
             const range = 2; // Rango deseado
             const randomSignX = Math.random() < 0.5 ? 2.9 : -2.9;
@@ -505,7 +505,7 @@ class BricksClass {
         this.movePaddle();  
         this.moveBall()
         this.fallingElement()
-        this.updateBrokenBrickEffect(deltaTime)
+        this.updateBrokenBrickEffect()
     }
 
     // CHECK BRICK COLLISION
