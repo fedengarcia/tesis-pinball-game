@@ -441,48 +441,87 @@ class BricksClass {
         });
     }
 
-    // UUPDATE FALLING ELEMENT
-   fallingElement() {
-    this.elementsToFall = this.elementsToFall.filter(elementFalling => {
-        elementFalling.y += elementFalling.vy;
+    fallingElement() {
+        this.elementsToFall = this.elementsToFall.filter(elementFalling => {
+            elementFalling.y += elementFalling.vy;
 
-        if (
-            elementFalling.x < this.paddle.x + this.paddle.w &&
-            elementFalling.x + elementFalling.w > this.paddle.x &&
-            elementFalling.y < this.paddle.y + this.paddle.h &&
-            elementFalling.y + elementFalling.h > this.paddle.y
-        ) {
-            // Verificar si la bonificación ya se aplicó
-            if (!elementFalling.appliedBonification) {
-                // save interaction with element
-                this.interactions[elementFalling.element.name] = this.interactions[elementFalling.element.name] + 1
-                this.setInteractions(this.interactions)
+            if (
+                elementFalling.x < this.paddle.x + this.paddle.w &&
+                elementFalling.x + elementFalling.w > this.paddle.x &&
+                elementFalling.y < this.paddle.y + this.paddle.h &&
+                elementFalling.y + elementFalling.h > this.paddle.y
+            ) {
+                // Verificar si la bonificación ya se aplicó
+                if (!elementFalling.appliedBonification) {
+                    // save interaction with element
+                    this.interactions[elementFalling.element.name] = this.interactions[elementFalling.element.name] + 1
+                    this.setInteractions(this.interactions)
 
-                if (elementFalling.element.bonification === "premio") {
-                    this.score = this.score + 2
-                    this.setScore(this.score)
-                    this.showBonification("+2 puntos extra !")
-                    // Marca la bonificación como aplicada
-                } else if (elementFalling.element.bonification === "mediadora") {
-                    this.paddle.w = this.paddle.w + 0.25
-                    this.showBonification("Agrandas paddle")
-                    // Marca la bonificación como aplicada
-                } else if (elementFalling.element.bonification === "nula") {
-                    // Falta resolver
+                    if (elementFalling.element.bonification === "premio") {
+                        this.score = this.score + 2
+                        this.setScore(this.score)
+                        // Marca la bonificación como aplicada
+                    } else if (elementFalling.element.bonification === "mediadora") {
+                        const originalWidth = this.paddle.w;
+                        const targetWidth = this.paddle.w + 30;
+                        const animationDuration = 100;
+                        const startTime = performance.now();
+
+                        const animatePaddle = (currentTime) => {
+                            const elapsedTime = currentTime - startTime;
+                            const progress = Math.min(elapsedTime / animationDuration, 1);
+                            this.paddle.w = originalWidth + progress * (targetWidth - originalWidth);
+
+                            if (progress < 1) {
+                                requestAnimationFrame(animatePaddle);
+                            } else {
+                                // La animación ha terminado, puedes realizar acciones adicionales aquí
+                                this.showBonification('AGRANDAS PADDLE !', 4000)
+                                setTimeout(() => {
+                                    // Inicia la animación para achicar la barra después de un tiempo de espera
+                                    this.shrinkPaddle();
+                                }, 4000); // Espera 1 segundo antes de achicar la barra
+                            }
+                        };
+
+                        animatePaddle(startTime);
+                        // Marca la bonificación como aplicada
+                    } else if (elementFalling.element.bonification === "nula") {
+                        // Falta resolver
+                    }
+                    elementFalling.appliedBonification = true;
                 }
-                elementFalling.appliedBonification = true;
-
+                return false;
             }
-            return false;
-        }
 
-        if (elementFalling.y > this.canvas.height) {
-            return false;
-        }
+            if (elementFalling.y > this.canvas.height) {
+                return false;
+            }
 
-        return true;
-    });
-}
+            return true;
+        });
+    }
+
+    shrinkPaddle() {
+        const originalWidth = this.paddle.w;
+        const targetWidth = this.paddle.w - 30;
+        const animationDuration = 100; // Puedes ajustar la duración según sea necesario
+        const startTime = performance.now();
+
+        const animatePaddleShrink = (currentTime) => {
+            const elapsedTime = currentTime - startTime;
+            const progress = Math.min(elapsedTime / animationDuration, 1);
+            this.paddle.w = originalWidth + progress * (targetWidth - originalWidth);
+
+            if (progress < 1) {
+                requestAnimationFrame(animatePaddleShrink);
+            }
+        };
+
+        animatePaddleShrink(startTime);
+    }
+
+
     // UPDATE PADDLE MOVEMENT
     movePaddle() {
         this.paddle.x += this.paddle.dx;
@@ -502,7 +541,7 @@ class BricksClass {
         this.ball.x += this.ball.dx;
         this.ball.y += this.ball.dy;
         
-        this.checkBottomCollision()
+        // this.checkBottomCollision()
         this.checkBorderCanvasCollision()
         this.checkPaddleCollision()
         this.checkBrickCollision()
