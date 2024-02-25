@@ -96,9 +96,7 @@ class BricksClass {
             }
         }
 
-
         this.createBricks()
-
         // Keyboard event handlers
         this.keyDown = this.keyDown.bind(this);
         this.keyUp = this.keyUp.bind(this); 
