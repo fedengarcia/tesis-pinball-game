@@ -323,8 +323,6 @@ class BricksClass {
         });
     }
 
-
-
     // DRAW BRICK NEON BORDER
     drawStrokeWithGlow(x, y, w, h, lineWidth, strokeStyle) {
         this.canvasContext.save();
@@ -660,16 +658,15 @@ class BricksClass {
     // RESET GAME
     resetBallAndPaddle () {
         // Restablece la posición del paddle y la pelota al centro o a una posición inicial
-        // Ejemplo:
-        this.paddle.x = this.canvas.width / 2 - this.paddle.w / 2; // Asegúrate de que paddleWidth esté actualizado
-        this.paddle.y = this.canvas.height - 20; // O donde sea que inicialmente coloques el paddle
+        this.paddle.x = this.canvas.width / 2 - this.paddle.w / 2; 
+        this.paddle.y = this.canvas.height - 20; 
         this.ball.x = this.canvas.width / 2;
         this.ball.y = this.canvas.height / 2;
-        this.ball.dx = 2; // O los valores iniciales que tengas para dx y dy
+        this.ball.dx = 2; 
         this.ball.dy = -2;
     }
 
-      // Make all bricks appear
+    // Make all bricks appear
     showAllBricks () {
         this.bricks?.forEach(column => {
             column.forEach(brick => (brick.visible = true));
