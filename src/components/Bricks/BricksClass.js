@@ -207,32 +207,44 @@ class BricksClass {
 
    // Draw ball on canvas
     drawBall() {
+        const gradient = this.canvasContext.createRadialGradient(this.ball.x, this.ball.y, 0, this.ball.x, this.ball.y, this.ball.size);
+        gradient.addColorStop(0, '#3498db'); // Color principal
+        gradient.addColorStop(1, '#2980b9'); // Color para sombra
+
+        // Dibujar bola con gradiente
         this.canvasContext.beginPath();
-
-        // Gradiente radial para darle un aspecto tridimensional
-        let gradient = this.canvasContext.createRadialGradient(this.ball.x, this.ball.y, 0, this.ball.x, this.ball.y, this.ball.size);
-        gradient.addColorStop(0, '#0095dd'); // Color principal
-        gradient.addColorStop(1, '#004466'); // Color para sombra
-
         this.canvasContext.arc(this.ball.x, this.ball.y, this.ball.size, 0, Math.PI * 2);
         this.canvasContext.fillStyle = gradient;
-        
+
         // Aplicar sombra y brillo
-        this.canvasContext.shadowColor = 'rgba(0, 0, 0, 0.3)';
-        this.canvasContext.shadowBlur = 5;
+        this.canvasContext.shadowColor = 'rgba(52, 152, 219, 0.7)';
+        this.canvasContext.shadowBlur = 10;
         this.canvasContext.shadowOffsetX = 2;
         this.canvasContext.shadowOffsetY = 2;
+
+        // Agregar borde negro
+        this.canvasContext.strokeStyle = '#000';
+        this.canvasContext.lineWidth = 2;
+        this.canvasContext.stroke();
 
         this.canvasContext.fill();
         this.canvasContext.closePath();
 
-        // Restaurar valores de sombra
+        // Restaurar valores de sombra y borde
         this.canvasContext.shadowBlur = 0;
         this.canvasContext.shadowOffsetX = 0;
         this.canvasContext.shadowOffsetY = 0;
+        this.canvasContext.lineWidth = 0; // Restaurar el ancho de línea después de dibujar el borde
     }
 
+    // DRAW PADDLE
     drawPaddle() {
+        // Establecer colores del gradiente
+        const gradient = this.canvasContext.createLinearGradient(this.paddle.x, this.paddle.y, this.paddle.x, this.paddle.y + this.paddle.h);
+        gradient.addColorStop(0, '#3498db'); // Color principal
+        gradient.addColorStop(1, '#2980b9'); // Color para resaltar o dar brillo
+
+        // Dibujar paddle con bordes redondeados y borde negro
         this.canvasContext.beginPath();
         this.canvasContext.moveTo(this.paddle.x + this.paddle.borderRadius, this.paddle.y);
         this.canvasContext.lineTo(this.paddle.x + this.paddle.w - this.paddle.borderRadius, this.paddle.y);
@@ -243,29 +255,31 @@ class BricksClass {
         this.canvasContext.quadraticCurveTo(this.paddle.x, this.paddle.y + this.paddle.h, this.paddle.x, this.paddle.y + this.paddle.h - this.paddle.borderRadius);
         this.canvasContext.lineTo(this.paddle.x, this.paddle.y + this.paddle.borderRadius);
         this.canvasContext.quadraticCurveTo(this.paddle.x, this.paddle.y, this.paddle.x + this.paddle.borderRadius, this.paddle.y);
-        
-        // Aplicar sombras y brillo
-        let gradient = this.canvasContext.createLinearGradient(this.paddle.x, this.paddle.y, this.paddle.x, this.paddle.y + this.paddle.h);
-        gradient.addColorStop(0, '#005588'); // Color principal
-        gradient.addColorStop(1, '#0077aa'); // Color para resaltar o dar brillo
-        
+
+        // Aplicar gradiente al paddle
         this.canvasContext.fillStyle = gradient;
-        // Agregar relieve
-        this.canvasContext.shadowColor = 'rgba(255, 255, 255, 0.5)';
-        this.canvasContext.shadowBlur = 3;
-        this.canvasContext.shadowOffsetX = 1;
-        this.canvasContext.shadowOffsetY = 1;
-        
+
+        // Agregar sombras
+        this.canvasContext.shadowColor = 'rgba(52, 152, 219, 0.7)';
+        this.canvasContext.shadowBlur = 10;
+        this.canvasContext.shadowOffsetX = 2;
+        this.canvasContext.shadowOffsetY = 2;
+
+        // Agregar borde negro
+        this.canvasContext.strokeStyle = '#000';
+        this.canvasContext.lineWidth = 2;
+        this.canvasContext.stroke();
+
         this.canvasContext.fill();
         this.canvasContext.closePath();
-        
-        // Restaurar valores de sombra
+
+        // Restaurar valores de sombra y borde
         this.canvasContext.shadowBlur = 0;
         this.canvasContext.shadowOffsetX = 0;
         this.canvasContext.shadowOffsetY = 0;
+        this.canvasContext.lineWidth = 0; // Restaurar el ancho de línea después de dibujar el borde
     }
 
-    // DRAW BRICKS 
     drawBricks() {
         this.bricks?.forEach(column => {
             column.forEach(brick => {
@@ -284,17 +298,19 @@ class BricksClass {
                     x + w / 2, y + h / 2, w / 2
                 );
 
-                gradient.addColorStop(0, brick.brickColor);  // Color interior del ladrillo
-                gradient.addColorStop(0.8, 'rgba(0, 0, 0, 0.3)');  // Color de sombreado
-                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');  // Transparente hacia el exterior
+                gradient.addColorStop(0, brick.brickColor); // Color interior del ladrillo
+                gradient.addColorStop(0.8, 'rgba(0, 0, 0, 0.3)'); // Color de sombreado
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)'); // Transparente hacia el exterior
 
                 // Borde con resplandor (efecto de neón)
-                this.drawStrokeWithGlow(x - 2, y - 2, w + 3, h + 3, 3, brick.visible ? 'rgba(255, 255, 255, 0.8)' : 'transparent');
+                this.drawStrokeWithGlow(x - 2, y - 2, w + 3, h + 3, 5, brick.visible ? 'rgba(255, 255, 255, 0.8)' : 'transparent');
 
                 // Borde del ladrillo
                 this.canvasContext.beginPath();
                 this.canvasContext.rect(x, y, w, h);
                 this.canvasContext.fillStyle = gradient;
+
+                // Agregar borde negro
                 this.canvasContext.strokeStyle = brick.visible ? '#000' : 'transparent';
                 this.canvasContext.lineWidth = 2;
                 this.canvasContext.fill();
@@ -302,10 +318,12 @@ class BricksClass {
                 this.canvasContext.closePath();
 
                 // Sombra del ladrillo
-                this.drawShadowedRect(x, y, w, h, brick.brickColor, 5);
+                this.drawShadowedRect(x, y, w, h, brick.brickColor, 8); // Aumentar la intensidad de la sombra
             });
         });
     }
+
+
 
     // DRAW BRICK NEON BORDER
     drawStrokeWithGlow(x, y, w, h, lineWidth, strokeStyle) {
@@ -329,6 +347,7 @@ class BricksClass {
         this.canvasContext.fill();
         this.canvasContext.restore();
     }
+
     // Draw falling elements
     drawElementsToFall () {
         this.elementsToFall.forEach((elementToFall) => {
@@ -454,6 +473,7 @@ class BricksClass {
         });
     }
 
+    // UPDATE FALLING ELEMENT FUNCION 
     fallingElement() {
         this.elementsToFall = this.elementsToFall.filter(elementFalling => {
             elementFalling.y += elementFalling.vy;
@@ -515,6 +535,7 @@ class BricksClass {
         });
     }
 
+    // SHRINK PADDLE
     shrinkPaddle() {
         const originalWidth = this.paddle.w;
         const targetWidth = this.paddle.w - 30;
@@ -533,7 +554,6 @@ class BricksClass {
 
         animatePaddleShrink(startTime);
     }
-
 
     // UPDATE PADDLE MOVEMENT
     movePaddle() {
