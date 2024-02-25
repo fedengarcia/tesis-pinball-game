@@ -265,57 +265,70 @@ class BricksClass {
         this.canvasContext.shadowOffsetY = 0;
     }
 
-    // Draw bricks on canvas with improved styles and bonuses
+    // DRAW BRICKS 
     drawBricks() {
         this.bricks?.forEach(column => {
             column.forEach(brick => {
+                if (!brick.visible) {
+                    return; // Si el ladrillo no es visible, no hacemos nada
+                }
 
-            // Gradiente radial para simular sombreado
-            const gradient = this.canvasContext.createRadialGradient(
-                brick.x + brick.w / 2, brick.y + brick.h / 2, 1,
-                brick.x + brick.w / 2, brick.y + brick.h / 2, brick.w / 2
-            );
+                const x = brick.x;
+                const y = brick.y;
+                const w = brick.w;
+                const h = brick.h;
 
-            gradient.addColorStop(0, brick.brickColor);  // Color interior del ladrillo
-            gradient.addColorStop(0.8, 'rgba(0, 0, 0, 0.3)');  // Color de sombreado
-            gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');  // Transparente hacia el exterior
+                // Gradiente radial para simular sombreado
+                const gradient = this.canvasContext.createRadialGradient(
+                    x + w / 2, y + h / 2, 1,
+                    x + w / 2, y + h / 2, w / 2
+                );
 
-            // Borde con resplandor (efecto de neón)
-            this.canvasContext.beginPath();
-            this.canvasContext.lineWidth = 3; // Ancho del resplandor
-            this.canvasContext.strokeStyle = brick.visible ? 'rgba(255, 255, 255, 0.8)' : 'transparent'; // Color del resplandor
-            this.canvasContext.rect(
-                brick.x - 2, // Ajuste para el resplandor
-                brick.y - 2, // Ajuste para el resplandor
-                brick.w + 3,   // Ajuste para el resplandor
-                brick.h + 3    // Ajuste para el resplandor
-            );
-            this.canvasContext.stroke();
-            this.canvasContext.closePath();
+                gradient.addColorStop(0, brick.brickColor);  // Color interior del ladrillo
+                gradient.addColorStop(0.8, 'rgba(0, 0, 0, 0.3)');  // Color de sombreado
+                gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');  // Transparente hacia el exterior
 
-            // Mejora 1: Borde del ladrillo
-            this.canvasContext.beginPath();
-            this.canvasContext.rect(brick.x, brick.y, brick.w, brick.h);
-            this.canvasContext.fillStyle = brick.visible ? gradient : 'transparent';
-            this.canvasContext.strokeStyle = brick.visible ? '#000' : 'transparent'; // Color del borde
-            this.canvasContext.lineWidth = 2; // Ancho del borde
-            this.canvasContext.fill();
-            this.canvasContext.stroke(); // Dibuja el borde
-            this.canvasContext.closePath();
+                // Borde con resplandor (efecto de neón)
+                this.drawStrokeWithGlow(x - 2, y - 2, w + 3, h + 3, 3, brick.visible ? 'rgba(255, 255, 255, 0.8)' : 'transparent');
 
-            // Mejora 2: Sombra del ladrillo
-            this.canvasContext.beginPath();
-            this.canvasContext.rect(brick.x, brick.y, brick.w, brick.h);
-            this.canvasContext.fillStyle = brick.visible ? brick.brickColor : 'transparent';
-            this.canvasContext.shadowColor = '#888'; // Color de la sombra
-            this.canvasContext.shadowBlur = 5; // Intensidad de la sombra
-            this.canvasContext.fill();
-            this.canvasContext.closePath();
+                // Borde del ladrillo
+                this.canvasContext.beginPath();
+                this.canvasContext.rect(x, y, w, h);
+                this.canvasContext.fillStyle = gradient;
+                this.canvasContext.strokeStyle = brick.visible ? '#000' : 'transparent';
+                this.canvasContext.lineWidth = 2;
+                this.canvasContext.fill();
+                this.canvasContext.stroke();
+                this.canvasContext.closePath();
 
+                // Sombra del ladrillo
+                this.drawShadowedRect(x, y, w, h, brick.brickColor, 5);
             });
         });
     }
 
+    // DRAW BRICK NEON BORDER
+    drawStrokeWithGlow(x, y, w, h, lineWidth, strokeStyle) {
+        this.canvasContext.save();
+        this.canvasContext.beginPath();
+        this.canvasContext.lineWidth = lineWidth;
+        this.canvasContext.strokeStyle = strokeStyle;
+        this.canvasContext.rect(x, y, w, h);
+        this.canvasContext.stroke();
+        this.canvasContext.restore();
+    }
+
+    // DRAW BRICK SHADOW
+    drawShadowedRect(x, y, w, h, fillStyle, shadowBlur) {
+        this.canvasContext.save();
+        this.canvasContext.beginPath();
+        this.canvasContext.rect(x, y, w, h);
+        this.canvasContext.fillStyle = fillStyle;
+        this.canvasContext.shadowColor = '#888';
+        this.canvasContext.shadowBlur = shadowBlur;
+        this.canvasContext.fill();
+        this.canvasContext.restore();
+    }
     // Draw falling elements
     drawElementsToFall () {
         this.elementsToFall.forEach((elementToFall) => {
