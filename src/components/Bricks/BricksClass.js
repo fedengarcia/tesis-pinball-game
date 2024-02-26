@@ -10,7 +10,7 @@ class BricksClass {
     brickInfo = {};
     bricks = [];
     brickRowCount = 6;
-    brickColumnCount = 10;
+    brickColumnCount = 8;
     lives = 3
     score = 0
     elementsToFall = []
@@ -68,16 +68,17 @@ class BricksClass {
         this.ball = {
             x: this.canvas.width / 2,
             y: this.paddle.y - 10, // Coloca la pelota justo encima del paddle
-            size: 10,
-            speed: 1.7,
+            size: 10, // Tamano
+            speed: 1.7, // velocidad
             dx: 0, // Inicialmente no hay movimiento en x
             dy: 0, // Inicialmente no hay movimiento en y
-            visible: true     
+            visible: true, // Indica si la pelota está lista visible o no
+            readyToLunch: true // Indica si la pelota está lista para ser lanzada
         };
         
 
         this.brickInfo = {
-            w: 75.5,
+            w: 98,
             h: 20,
             padding: 6,
             offsetX: 40,
@@ -98,7 +99,6 @@ class BricksClass {
         }
 
         this.inGame = false
-        this.isBallReadyToLaunch = true; // Indica si la pelota está lista para ser lanzada
         this.arrowAngle = Math.PI / 4; // Angulo inicial de la flecha (45 grados)
         
         this.createBricks()
@@ -116,7 +116,7 @@ class BricksClass {
     }
 
     drawArrow() {
-        if (!this.isBallReadyToLaunch) return;
+        if (!this.ball.readyToLunch) return;
     
         const arrowLength = 50; // Longitud de la flecha
         const endX = this.ball.x + arrowLength * Math.cos(this.arrowAngle);
@@ -247,7 +247,6 @@ class BricksClass {
     }
     
 
-
     createParticlesBrokenEffect(brick, count) {
         const centerX = brick.x + brick.w / 2;
         const centerY = brick.y + brick.h / 2;
@@ -278,7 +277,7 @@ class BricksClass {
     // Keydown event
     keyDown(e) {
         if (e.key === 'Right' || e.key === 'ArrowRight') {
-            if (this.isBallReadyToLaunch) {
+            if (this.ball.readyToLunch) {
                 if(parseFloat(this.arrowAngle) >= 0.6){
                     this.arrowAngle -= 0.1; // Ajusta el ángulo de la flecha
                 }
@@ -286,7 +285,7 @@ class BricksClass {
                 this.paddle.dx = this.paddle.speed;
             }
         } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
-            if (this.isBallReadyToLaunch) {
+            if (this.ball.readyToLunch) {
                 if(parseFloat(this.arrowAngle) <= 2.6){
                     this.arrowAngle += 0.1; // Ajusta el ángulo de la flecha
                 }
@@ -295,10 +294,10 @@ class BricksClass {
             }
         } else if (e.key === 'Space' || e.key === ' ') {
             // Lógica para disparar la pelota
-            if (this.isBallReadyToLaunch) {
+            if (this.ball.readyToLunch) {
                 this.ball.dx = 2 * Math.cos(this.arrowAngle); // Velocidad en x basada en el ángulo
                 this.ball.dy = -2 * Math.sin(this.arrowAngle); // Velocidad en y basada en el ángulo
-                this.isBallReadyToLaunch = false;
+                this.ball.readyToLunch = false;
                 this.inGame = true
             }
         }
@@ -692,7 +691,7 @@ class BricksClass {
         this.ball.x += this.ball.dx;
         this.ball.y += this.ball.dy;
         
-        // this.checkBottomCollision()
+        this.checkBottomCollision()
         this.checkBorderCanvasCollision()
         this.checkPaddleCollision()
         this.checkBrickCollision()
@@ -766,10 +765,12 @@ class BricksClass {
         if (this.ball.y + this.ball.size > this.canvas.height) {
             if(this.lives > 0){
                 this.lives = this.lives - 1
+                this.inGame = false
                 this.setLives(this.lives)
                 this.resetBallAndPaddle();
                 this.showAllBricks();
             }else{
+                this.inGame = false
                 this.setGameEndResult()
                 this.gameOver();
             }
@@ -782,11 +783,11 @@ class BricksClass {
         this.paddle.x = this.canvas.width / 2 - this.paddle.w / 2; 
         this.paddle.y = this.canvas.height - 20; 
         this.ball.x = this.canvas.width / 2;
-        this.ball.y = this.canvas.height / 2;
-        this.ball.dx = 2; 
-        this.ball.dy = -2;
+        this.ball.y = this.paddle.y - 10
+        this.ball.dx = 0; 
+        this.ball.dy = 0;
+        this.ball.readyToLunch = true;
     }
-
     // Make all bricks appear
     showAllBricks () {
         this.bricks?.forEach(column => {
