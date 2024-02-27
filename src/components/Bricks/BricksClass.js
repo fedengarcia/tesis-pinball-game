@@ -19,10 +19,8 @@ class BricksClass {
     particlesToDraw = []
 
     // Bonifications colors bricks
-    standardColor = '#0095dd';  // Color estándar para bloques
-    nullBonusColor = '#CCCCCC';  // Color para bonificación nula
-    mediatorBonusColor = '#FFA500';  // Color para bonificación mediadora
-    powerupBonusColor = '#00FF00';  // Color para bonificación de poder
+    standardColor = '#CCCCCC';  // Color estándar para bloques
+    bonusColor = '#FFA500';  // Color para bonificación nula
     paddleColor = '#0011F30'
     
     // Functions 
@@ -167,27 +165,16 @@ class BricksClass {
                     // % random
                     let element = null;
                     const randomElement = Math.random() * 100;
-                    if (randomElement < 20) element = { visible: true }
+                    if (randomElement < 80) element = { visible: true }
                     else if (randomElement < 40) element = this.gameConfig.tables[0];
                     else if (randomElement < 60) element = this.gameConfig.tables[1];
                     else element = this.gameConfig.tables[2];
     
                     // Selección del color según la bonificación del ladrillo
                     let brickColor;
-                    switch (element?.bonification) {
-                        case 'nula':
-                            brickColor = this.nullBonusColor;
-                            break;
-                        case 'mediadora':
-                            brickColor = this.mediatorBonusColor;
-                            break;
-                        case 'premio':
-                            brickColor = this.powerupBonusColor;
-                            break;
-                        default:
-                            brickColor = this.standardColor;
-                            break;
-                    }
+                    if(element.bonification) brickColor = this.bonusColor
+                    else brickColor = this.standardColor
+
                     newArray[i][j] = { x, y, element, brickColor, ...this.brickInfo };
                 }
             }
@@ -212,22 +199,11 @@ class BricksClass {
             else if (randomElement < 60) element = this.gameConfig.tables[1];
             else element = this.gameConfig.tables[2];
 
-            // Selección del color según la bonificación del ladrillo
+
+           // Selección del color según la bonificación del ladrillo
             let brickColor;
-            switch (element?.bonification) {
-                case 'nula':
-                    brickColor = this.nullBonusColor;
-                    break;
-                case 'mediadora':
-                    brickColor = this.mediatorBonusColor;
-                    break;
-                case 'premio':
-                    brickColor = this.powerupBonusColor;
-                    break;
-                default:
-                    brickColor = this.standardColor;
-                    break;
-            }
+            if(element.bonification) brickColor = this.bonusColor
+            else brickColor = this.standardColor
 
             newRow.push({ x, y, element, brickColor, ...this.brickInfo, visible: true });
         }
@@ -276,23 +252,29 @@ class BricksClass {
 
     // Keydown event
     keyDown(e) {
+        // Check if is in game 
+        setInterval(() => {
+            if(!this.inGame){
+                this.paddle.x = this.canvas.width / 2 - 65
+                this.paddle.y = this.canvas.height - 20
+                this.paddle.dx = 0;
+            }
+        }, 100);
         if (e.key === 'Right' || e.key === 'ArrowRight') {
             if (this.ball.readyToLunch) {
-                if(parseFloat(this.arrowAngle) >= 0.6){
-                    this.arrowAngle -= 0.1; // Ajusta el ángulo de la flecha
-                }
+                if(parseFloat(this.arrowAngle) >= 0.6) this.arrowAngle -= 0.1; // Ajusta el ángulo de la flecha
             } else {
                 this.paddle.dx = this.paddle.speed;
             }
-        } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
+        }
+        if (e.key === 'Left' || e.key === 'ArrowLeft') {
             if (this.ball.readyToLunch) {
-                if(parseFloat(this.arrowAngle) <= 2.6){
-                    this.arrowAngle += 0.1; // Ajusta el ángulo de la flecha
-                }
+                if(parseFloat(this.arrowAngle) <= 2.6) this.arrowAngle += 0.1; // Ajusta el ángulo de la flecha
             } else {
                 this.paddle.dx = -this.paddle.speed;
             }
-        } else if (e.key === 'Space' || e.key === ' ') {
+        }
+        if (e.key === 'Space' || e.key === ' ') {
             // Lógica para disparar la pelota
             if (this.ball.readyToLunch) {
                 this.ball.dx = 2 * Math.cos(this.arrowAngle); // Velocidad en x basada en el ángulo
@@ -546,29 +528,6 @@ class BricksClass {
         this.drawArrow(); // Dibujar la flecha
     }
 
-    // ADD BRICKS 10 seconds
-    updateBricks(){
-        let timePlayed = this.getTimePlayed() + 1
-
-        if(timePlayed % 2 === 0){
-            let newArray=[]
-            newArray[0] = [];
-            for (let j = 0; j < this.brickColumnCount; j++) {
-                const x = j * (this.brickInfo.w + this.brickInfo.padding) + this.brickInfo.offsetX;
-                const y = 0 * (this.brickInfo.h + this.brickInfo.padding) + this.brickInfo.offsetY;
-
-                // % random
-                let element = null;
-                const randomElement = Math.random() * 100;
-                if (randomElement < 33) element = this.gameConfig.tables[0];
-                else if (randomElement < 66) element =  this.gameConfig.tables[1];
-                else element = this.gameConfig.tables[2];
-                newArray[0][j] = { x, y, element, ...this.brickInfo };
-            }
-            this.bricks.unshift(newArray)
-        }
-    }
-
     // UPDATE PARTICLES EFFECTS
     updateBrokenBrickEffect() {
         this.particlesToDraw.forEach((particle, index) => {
@@ -769,12 +728,12 @@ class BricksClass {
                 this.setLives(this.lives)
                 this.resetBallAndPaddle();
                 this.showAllBricks();
-            }else{
-                this.inGame = false
-                this.setGameEndResult()
-                this.gameOver();
-            }
-        }
+                if(this.lives === 0){
+                    this.inGame = false
+                    this.setGameEndResult()
+                    this.gameOver()
+                }
+        }}
     }
 
     // RESET GAME
