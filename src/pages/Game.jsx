@@ -56,7 +56,7 @@ export default function Game() {
     }).finally(() => {
       setPlayingGame(false)
       setLoadingLogin(false)
-      window.location.reload()
+
     })
 
   }
