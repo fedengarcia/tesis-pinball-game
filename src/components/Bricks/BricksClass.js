@@ -574,7 +574,7 @@ class BricksClass {
                         // Marca la bonificación como aplicada
                     } else if (elementFalling.element.bonification === "mediadora") {
                         const originalWidth = this.paddle.w;
-                        const targetWidth = this.paddle.w + 30;
+                        const targetWidth = this.paddle.w + 30 > 160 ? this.paddle.w : this.paddle.w + 30;
                         const animationDuration = 100;
                         const startTime = performance.now();
 
@@ -616,7 +616,7 @@ class BricksClass {
     // SHRINK PADDLE
     shrinkPaddle() {
         const originalWidth = this.paddle.w;
-        const targetWidth = this.paddle.w - 30;
+        const targetWidth = this.paddle.w - 30 < 130 ? this.paddle.w : this.paddle.w - 30;
         const animationDuration = 100; // Puedes ajustar la duración según sea necesario
         const startTime = performance.now();
 
