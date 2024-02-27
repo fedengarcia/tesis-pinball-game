@@ -1,4 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import apple from '../../assets/apple-logo.svg'
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 class BricksClass {
     canvas;
@@ -588,7 +590,7 @@ class BricksClass {
                                 this.showBonification('AGRANDAS PADDLE !', 4000)
                                 setTimeout(() => {
                                     // Inicia la animación para achicar la barra después de un tiempo de espera
-                                    this.shrinkPaddle();
+                                    if(!this.ball.readyToLunch) this.shrinkPaddle();
                                 }, 4000); // Espera 1 segundo antes de achicar la barra
                             }
                         };
@@ -727,7 +729,10 @@ class BricksClass {
                 this.inGame = false
                 this.setLives(this.lives)
                 this.resetBallAndPaddle();
-                this.showAllBricks();
+                this.shrinkPaddle();
+                this.showBonification(' -1 vida ', 2000)
+                // this.showAllBricks();
+
                 if(this.lives === 0){
                     this.inGame = false
                     this.setGameEndResult()
