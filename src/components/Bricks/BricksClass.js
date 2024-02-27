@@ -78,10 +78,10 @@ class BricksClass {
         
 
         this.brickInfo = {
-            w: 98,
+            w: 100,
             h: 20,
             padding: 6,
-            offsetX: 40,
+            offsetX: 35,
             offsetY: 80,
             visible: true
         }
@@ -115,43 +115,6 @@ class BricksClass {
         }, 5000); // 5000 milisegundos = 5 segundos    
     }
 
-    drawArrow() {
-        if (!this.ball.readyToLunch) return;
-    
-        const arrowLength = 50; // Longitud de la flecha
-        const endX = this.ball.x + arrowLength * Math.cos(this.arrowAngle);
-        const endY = this.ball.y - arrowLength * Math.sin(this.arrowAngle);
-    
-        const arrowHeadLength = 20; // Longitud de los lados de la punta de la flecha
-        const arrowHeadAngle = Math.PI / 8; // Ángulo en radianes para los lados de la punta
-        
-        // Calcular los puntos de la punta de la flecha
-        const leftX = endX - arrowHeadLength * Math.cos(this.arrowAngle - arrowHeadAngle);
-        const leftY = endY + arrowHeadLength * Math.sin(this.arrowAngle - arrowHeadAngle);
-        const rightX = endX - arrowHeadLength * Math.cos(this.arrowAngle + arrowHeadAngle);
-        const rightY = endY + arrowHeadLength * Math.sin(this.arrowAngle + arrowHeadAngle);
-        
-        // Dibujar la punta de la flecha
-        this.canvasContext.beginPath();
-        this.canvasContext.moveTo(endX, endY);
-        this.canvasContext.lineTo(leftX, leftY);
-        this.canvasContext.lineTo(rightX, rightY);
-        this.canvasContext.closePath();
-        this.canvasContext.fillStyle = 'black';
-        this.canvasContext.fill();
-        
-
-        this.canvasContext.beginPath();
-        this.canvasContext.moveTo(this.ball.x, this.ball.y);
-        this.canvasContext.lineTo(endX, endY);
-        this.canvasContext.strokeStyle = 'black';
-        this.canvasContext.lineWidth = 2;
-        this.canvasContext.stroke();
-    
-    
-        this.canvasContext.strokeStyle = 'black';
-        this.canvasContext.lineWidth = 1;
-    }
 
     // Create bricks
     createBricks() {
@@ -168,8 +131,8 @@ class BricksClass {
                     let element = null;
                     const randomElement = Math.random() * 100;
                     if (randomElement < 80) element = { visible: true }
-                    else if (randomElement < 40) element = this.gameConfig.tables[0];
-                    else if (randomElement < 60) element = this.gameConfig.tables[1];
+                    else if (randomElement < 87) element = this.gameConfig.tables[0];
+                    else if (randomElement < 95) element = this.gameConfig.tables[1];
                     else element = this.gameConfig.tables[2];
     
                     // Selección del color según la bonificación del ladrillo
@@ -383,6 +346,46 @@ class BricksClass {
         this.canvasContext.lineWidth = 0; // Restaurar el ancho de línea después de dibujar el borde
     }
 
+    // DRAW ARROW
+    drawArrow() {
+        if (!this.ball.readyToLunch) return;
+    
+        const arrowLength = 50; // Longitud de la flecha
+        const endX = this.ball.x + arrowLength * Math.cos(this.arrowAngle);
+        const endY = this.ball.y - arrowLength * Math.sin(this.arrowAngle);
+    
+        const arrowHeadLength = 20; // Longitud de los lados de la punta de la flecha
+        const arrowHeadAngle = Math.PI / 8; // Ángulo en radianes para los lados de la punta
+        
+        // Calcular los puntos de la punta de la flecha
+        const leftX = endX - arrowHeadLength * Math.cos(this.arrowAngle - arrowHeadAngle);
+        const leftY = endY + arrowHeadLength * Math.sin(this.arrowAngle - arrowHeadAngle);
+        const rightX = endX - arrowHeadLength * Math.cos(this.arrowAngle + arrowHeadAngle);
+        const rightY = endY + arrowHeadLength * Math.sin(this.arrowAngle + arrowHeadAngle);
+        
+        // Dibujar la punta de la flecha
+        this.canvasContext.beginPath();
+        this.canvasContext.moveTo(endX, endY);
+        this.canvasContext.lineTo(leftX, leftY);
+        this.canvasContext.lineTo(rightX, rightY);
+        this.canvasContext.closePath();
+        this.canvasContext.fillStyle = 'black';
+        this.canvasContext.fill();
+        
+
+        this.canvasContext.beginPath();
+        this.canvasContext.moveTo(this.ball.x, this.ball.y);
+        this.canvasContext.lineTo(endX, endY);
+        this.canvasContext.strokeStyle = 'black';
+        this.canvasContext.lineWidth = 2;
+        this.canvasContext.stroke();
+    
+    
+        this.canvasContext.strokeStyle = 'black';
+        this.canvasContext.lineWidth = 1;
+    }
+
+    // DRAW BRICKS 
     drawBricks() {
         this.bricks?.forEach(column => {
             column.forEach(brick => {
@@ -633,6 +636,15 @@ class BricksClass {
         animatePaddleShrink(startTime);
     }
 
+     updateStatus(scaleRatio, deltaTime) {
+        this.gameConfig.width *= scaleRatio.xRatio;
+        this.gameConfig.height *= scaleRatio.yRatio;
+        this.movePaddle();  
+        this.moveBall()
+        this.fallingElement()
+        this.updateBrokenBrickEffect()
+    }
+
     // UPDATE PADDLE MOVEMENT
     movePaddle() {
         this.paddle.x += this.paddle.dx;
@@ -656,15 +668,6 @@ class BricksClass {
         this.checkBorderCanvasCollision()
         this.checkPaddleCollision()
         this.checkBrickCollision()
-    }
-
-     updateStatus(scaleRatio, deltaTime) {
-        this.gameConfig.width *= scaleRatio.xRatio;
-        this.gameConfig.height *= scaleRatio.yRatio;
-        this.movePaddle();  
-        this.moveBall()
-        this.fallingElement()
-        this.updateBrokenBrickEffect()
     }
 
     // CHECK BRICK COLLISION
@@ -753,6 +756,7 @@ class BricksClass {
         this.ball.dy = 0;
         this.ball.readyToLunch = true;
     }
+
     // Make all bricks appear
     showAllBricks () {
         this.bricks?.forEach(column => {
