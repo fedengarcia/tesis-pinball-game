@@ -34,7 +34,6 @@ class Bricks extends React.Component{
 			timer: 0,
 			score: 0,
 			lives: [faHeart, faHeart, faHeart],
-			elementsCatched: [],
 			interactions: {},
 			start: false,
 			gameEnd: false
@@ -112,6 +111,7 @@ class Bricks extends React.Component{
 	}
 
 	setInteractions = (interactions) => {
+		console.log("INTERACTIONS", interactions)
 		this.setState({interactions: interactions})
 	}
 
