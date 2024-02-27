@@ -740,7 +740,7 @@ class BricksClass {
                     ) {
                         this.ball.dy *= -1;
                         if (brick.element && brick.visible) {
-                            this.createElementToFall(brick.x, brick.y, brick.element, brick.w, brick.h, brick.brickColor)
+                            if(brick.element.bonification) this.createElementToFall(brick.x, brick.y, brick.element, brick.w, brick.h, brick.brickColor)
                             brick.visible = false;
                         }
                         this.ball.speed += 0.02;
