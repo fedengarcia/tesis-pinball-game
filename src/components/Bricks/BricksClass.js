@@ -669,7 +669,7 @@ class BricksClass {
         this.checkPaddleCollision()
         this.checkBrickCollision()
     }
-
+// (this.brickInfo.w + this.brickInfo.padding) + this.brickInfo.offsetX;
     // CHECK BRICK COLLISION
     checkBrickCollision () {
         // Brick collision
@@ -677,10 +677,10 @@ class BricksClass {
             column.forEach((brick, brickIndex) => {
                 if (brick.visible) {
                     if (
-                    this.ball.x - this.ball.size > brick.x && 
-                    this.ball.x + this.ball.size < brick.x + brick.w &&
-                    this.ball.y + this.ball.size > brick.y &&
-                    this.ball.y - this.ball.size < brick.y + brick.h
+                        this.ball.x - this.ball.size < brick.x + brick.w &&
+                        this.ball.x + this.ball.size > brick.x &&
+                        this.ball.y - this.ball.size < brick.y + brick.h &&
+                        this.ball.y + this.ball.size > brick.y  
                     ) {
                         this.ball.dy *= -1;
                         if (brick.element && brick.visible) {
@@ -703,8 +703,8 @@ class BricksClass {
     checkPaddleCollision () {
       // Paddle collision
       if (
-        this.ball.x - this.ball.size > this.paddle.x &&
         this.ball.x + this.ball.size < this.paddle.x + this.paddle.w &&
+        this.ball.x - this.ball.size > this.paddle.x &&
         this.ball.y + this.ball.size > this.paddle.y
       ) {
         this.ball.dy = - this.ball.speed;
