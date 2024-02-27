@@ -136,59 +136,59 @@ export const APP_DATA = {
                 ],
                 [
                     {
-                        "table": 2,
-                        "name": "Samsung",
-                        "src": samsungSVG,
-                        "bonification": "mediadora",
-                    },
-                    {
-                        "table": 2,
-                        "name": "Apple",
-                        "src": appleSVG,
-                        "bonification": "mediadora",
-                    },
-                    {
-                        "table": 2,
-                        "name": "Xiaomi",
-                        "src": xiaomiSVG,
-                        "bonification": "mediadora",
-                    }
-                ],
-                [
-                    {
-                        "table": 3,
+                        "table": 1,
                         "name": "Samsung",
                         "src": samsungSVG,
                         "bonification": "nula",
                     },
                     {
-                        "table": 3,
+                        "table": 1,
+                        "name": "Apple",
+                        "src": appleSVG,
+                        "bonification": "premio",
+                    },
+                    {
+                        "table": 1,
+                        "name": "Xiaomi",
+                        "src": xiaomiSVG,
+                        "bonification": "mediadora",
+                    }
+                ],
+                [
+                    {
+                        "table": 1,
+                        "name": "Samsung",
+                        "src": samsungSVG,
+                        "bonification": "premio",
+                    },
+                    {
+                        "table": 1,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "nula",
                     },
                     {
-                        "table": 3,
+                        "table": 1,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
-                        "bonification": "premio",
+                        "bonification": "mediadora",
                     }
                 ],
                 [
                     {
-                        "table": 4,
+                        "table": 1,
                         "name": "Samsung",
                         "src": samsungSVG,
+                        "bonification": "mediadora",
+                    },
+                    {
+                        "table": 1,
+                        "name": "Apple",
+                        "src": appleSVG,
                         "bonification": "nula",
                     },
                     {
-                        "table": 4,
-                        "name": "Apple",
-                        "src": appleSVG,
-                        "bonification": "mediadora",
-                    },
-                    {
-                        "table": 4,
+                        "table": 1,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
                         "bonification": "premio",
@@ -196,104 +196,45 @@ export const APP_DATA = {
                 ],
                 [
                     {
-                        "table": 5,
+                        "table": 1,
                         "name": "Samsung",
                         "src": samsungSVG,
-                        "bonification": "premio",
+                        "bonification": "mediadora",
                     },
                     {
-                        "table": 5,
+                        "table": 1,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "premio",
                     },
                     {
-                        "table": 5,
+                        "table": 1,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
-                        "bonification": "mediadora",
-                    }
-                ],
-                [
-                    {
-                        "table": 6,
-                        "name": "Samsung",
-                        "src": samsungSVG,
                         "bonification": "nula",
+                    }
+                ],
+                [
+                    {
+                        "table": 1,
+                        "name": "Samsung",
+                        "src": samsungSVG,
+                        "bonification": "premio",
                     },
                     {
-                        "table": 6,
+                        "table": 1,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "mediadora",
                     },
                     {
-                        "table": 6,
+                        "table": 1,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
-                        "bonification": "mediadora",
-                    }
-                ],
-                [
-                    {
-                        "table": 7,
-                        "name": "Samsung",
-                        "src": samsungSVG,
                         "bonification": "nula",
-                    },
-                    {
-                        "table": 7,
-                        "name": "Apple",
-                        "src": appleSVG,
-                        "bonification": "premio",
-                    },
-                    {
-                        "table": 7,
-                        "name": "Xiaomi",
-                        "src": xiaomiSVG,
-                        "bonification": "premio",
                     }
                 ],
-                [
-                    {
-                        "table": 8,
-                        "name": "Samsung",
-                        "src": samsungSVG,
-                        "bonification": "nula",
-                    },
-                    {
-                        "table": 8,
-                        "name": "Apple",
-                        "src": appleSVG,
-                        "bonification": "premio",
-                    },
-                    {
-                        "table": 8,
-                        "name": "Xiaomi",
-                        "src": xiaomiSVG,
-                        "bonification": "premio",
-                    }
-                ],
-                [
-                    {
-                        "table": 9,
-                        "name": "Samsung",
-                        "src": samsungSVG,
-                        "bonification": "mediadora",
-                    },
-                    {
-                        "table": 9,
-                        "name": "Apple",
-                        "src": appleSVG,
-                        "bonification": "premio",
-                    },
-                    {
-                        "table": 9,
-                        "name": "Xiaomi",
-                        "src": xiaomiSVG,
-                        "bonification": "mediadora",
-                    }
-                ]
+
             ],
         }
     }
