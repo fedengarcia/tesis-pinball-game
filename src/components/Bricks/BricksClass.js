@@ -244,7 +244,7 @@ class BricksClass {
        this.elementsToFall.push({
             x: positionX,
             y: positionY,
-            vy: 2,
+            vy: 0.8,
             element: brickElement,
             w: brickWidth, 
             h: brickHeight,
@@ -729,7 +729,7 @@ class BricksClass {
                 this.inGame = false
                 this.setLives(this.lives)
                 this.resetBallAndPaddle();
-                this.shrinkPaddle();
+                this.paddle.w = 130,
                 this.showBonification(' -1 vida ', 2000)
                 // this.showAllBricks();
 
