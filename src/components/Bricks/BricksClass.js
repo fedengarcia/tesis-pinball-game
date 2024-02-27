@@ -731,6 +731,7 @@ class BricksClass {
                 this.resetBallAndPaddle();
                 this.paddle.w = 130,
                 this.showBonification(' -1 vida ', 2000)
+                this.elementsToFall = []
                 // this.showAllBricks();
 
                 if(this.lives === 0){
