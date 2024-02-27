@@ -52,13 +52,6 @@ export const UserProvider = ({children}) => {
         navigate('/first-form')
     }
 
-    useEffect(() => {
-        console.log(userInfo)
-        // let user = localStorage.getItem('userData') === 'undefined' ?  undefined : JSON?.parse(localStorage?.getItem('userData'));
-    }, [userInfo]);
-
-
-    
     const getCookie = () => {
         const decodedCookie = decodeURIComponent(document.cookie);
         const inicioJson = decodedCookie.indexOf('{');
