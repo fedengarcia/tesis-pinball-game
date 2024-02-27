@@ -19,6 +19,8 @@ class BricksClass {
     interactions = {}
     particleInfo = {}
     particlesToDraw = []
+    bonificationPointInfo = {}
+    bonificationsPointsToDraw = []
 
     // Bonifications colors bricks
     standardColor = '#CCCCCC';  // Color estándar para bloques
@@ -98,6 +100,13 @@ class BricksClass {
             }
         }
 
+        this.bonificationPointInfo = {
+            vy: 0.5,
+            timeToLive: 2,
+        }
+
+
+
         this.inGame = false
         this.arrowAngle = Math.PI / 4; // Angulo inicial de la flecha (45 grados)
         
@@ -159,9 +168,9 @@ class BricksClass {
             // Generar elemento de ladrillo aleatorio
             let element = null;
             const randomElement = Math.random() * 100;
-            if (randomElement < 20) element = { visible: true };
-            else if (randomElement < 40) element = this.gameConfig.tables[0];
-            else if (randomElement < 60) element = this.gameConfig.tables[1];
+            if (randomElement < 80) element = { visible: true }
+            else if (randomElement < 87) element = this.gameConfig.tables[0];
+            else if (randomElement < 95) element = this.gameConfig.tables[1];
             else element = this.gameConfig.tables[2];
 
 
@@ -212,6 +221,15 @@ class BricksClass {
             w: brickWidth, 
             h: brickHeight,
             brickColor 
+        })
+    }
+
+    // CREATE point bonification
+    createBonificationPoints(positionX, positionY) {
+        this.bonificationsPointsToDraw.push({
+            ...this.bonificationPointInfo,
+            x: positionX,
+            y: positionY + 2,
         })
     }
 
@@ -452,7 +470,7 @@ class BricksClass {
         this.canvasContext.restore();
     }
 
-    // Draw falling elements
+    // DRAW FALLING ELEMENTS
     drawElementsToFall () {
         this.elementsToFall.forEach((elementToFall) => {
         if(elementToFall.element.src){
@@ -499,7 +517,7 @@ class BricksClass {
     });
     }
 
-    // Draw particles effect
+    // DRAW PARTICLES EFFECTS
     drawBrokenBrickParticles() {
         this.particlesToDraw.forEach((particle) => {
             this.canvasContext.beginPath();
@@ -522,6 +540,28 @@ class BricksClass {
         });
     }
 
+    // DRAW BONIFICATION POINTS
+    drawBonificationPoints(fontSize = 28, fontColor = 'green', fontFamily = 'Arial', glowColor = 'rgba(255, 255, 0, 0.8)') {
+        this.bonificationsPointsToDraw.forEach((bonification) => {
+            // Dibujar el texto con sombra y brillo
+            this.canvasContext.font = `${fontSize}px ${fontFamily}`;
+            this.canvasContext.fillStyle = fontColor;
+            this.canvasContext.textAlign = 'center';
+            this.canvasContext.textBaseline = 'middle';
+
+            // Configurar la sombra
+            this.canvasContext.shadowColor = glowColor;
+            this.canvasContext.shadowBlur = 10;
+
+            // Dibujar el texto
+            this.canvasContext.fillText('+2', bonification.x, bonification.y);
+
+            // Restaurar la configuración de sombra
+            this.canvasContext.shadowColor = 'transparent';
+            this.canvasContext.shadowBlur = 0;
+        });
+    }
+
     // DRAW CANVAS 
     draw() {
         this.clearCanvas();
@@ -531,6 +571,20 @@ class BricksClass {
         this.drawBricks();
         this.drawBrokenBrickParticles();
         this.drawArrow(); // Dibujar la flecha
+        this.drawBonificationPoints();
+    }
+
+    // UPdate bonification
+    updateShowPointsNotification(){
+        this.bonificationsPointsToDraw.forEach((pointUpwards, index) => {
+            pointUpwards.y -= pointUpwards.vy;
+            pointUpwards.timeToLive -= 0.009; // Decrementar el tiempo de vida
+
+            // Eliminar partículas que hayan alcanzado el final de su vida
+            if (pointUpwards.timeToLive <= 0) {
+                this.bonificationsPointsToDraw.splice(index, 1);
+            }
+        })
     }
 
     // UPDATE PARTICLES EFFECTS
@@ -571,8 +625,9 @@ class BricksClass {
                     this.interactions[elementFalling.element.name] = this.interactions[elementFalling.element.name] + 1
                     this.setInteractions(this.interactions)
 
-                    if (elementFalling.element.bonification === "premio") {
+                    if (elementFalling.element.bonification === "premio" || elementFalling.element.bonification === "nula") {
                         this.score = this.score + 2
+                        this.createBonificationPoints(this.paddle.x, this.paddle.y)
                         this.setScore(this.score)
                         // Marca la bonificación como aplicada
                     } else if (elementFalling.element.bonification === "mediadora") {
@@ -643,6 +698,7 @@ class BricksClass {
         this.moveBall()
         this.fallingElement()
         this.updateBrokenBrickEffect()
+        this.updateShowPointsNotification()
     }
 
     // UPDATE PADDLE MOVEMENT
@@ -664,7 +720,7 @@ class BricksClass {
         this.ball.x += this.ball.dx;
         this.ball.y += this.ball.dy;
         
-        this.checkBottomCollision()
+        // this.checkBottomCollision()
         this.checkBorderCanvasCollision()
         this.checkPaddleCollision()
         this.checkBrickCollision()
