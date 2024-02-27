@@ -720,12 +720,12 @@ class BricksClass {
         this.ball.x += this.ball.dx;
         this.ball.y += this.ball.dy;
         
-        // this.checkBottomCollision()
+        this.checkBottomCollision()
         this.checkBorderCanvasCollision()
         this.checkPaddleCollision()
         this.checkBrickCollision()
     }
-// (this.brickInfo.w + this.brickInfo.padding) + this.brickInfo.offsetX;
+
     // CHECK BRICK COLLISION
     checkBrickCollision () {
         // Brick collision

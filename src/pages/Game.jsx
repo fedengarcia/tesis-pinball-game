@@ -35,7 +35,6 @@ export default function Game() {
 
   useEffect(() => {
     console.log("GAME RESULT", gameResult)
-    if(gameResult?.points !== null) setButtonDisabled(false)
   }, [gameResult]);
 
   const showBonification = (message, timer) =>{
@@ -57,6 +56,7 @@ export default function Game() {
     }).finally(() => {
       setPlayingGame(false)
       setLoadingLogin(false)
+      window.location.reload()
     })
 
   }
