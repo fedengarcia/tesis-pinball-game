@@ -71,7 +71,7 @@ class BricksClass {
             x: this.canvas.width / 2,
             y: this.paddle.y - 10, // Coloca la pelota justo encima del paddle
             size: 10, // Tamano
-            speed: 1.7, // velocidad
+            speed: 2, // velocidad
             dx: 0, // Inicialmente no hay movimiento en x
             dy: 0, // Inicialmente no hay movimiento en y
             visible: true, // Indica si la pelota está lista visible o no
@@ -121,7 +121,7 @@ class BricksClass {
             if(this.inGame){
                 this.addNewBrickLine();
             }
-        }, 5000); // 5000 milisegundos = 5 segundos    
+        }, 10000); // 5000 milisegundos = 5 segundos    
     }
 
 
@@ -243,6 +243,7 @@ class BricksClass {
                 this.paddle.dx = 0;
             }
         }, 100);
+        console.log(this.arrowAngle);
         if (e.key === 'Right' || e.key === 'ArrowRight') {
             if (this.ball.readyToLunch) {
                 if(parseFloat(this.arrowAngle) >= 0.6) this.arrowAngle -= 0.1; // Ajusta el ángulo de la flecha
@@ -279,7 +280,6 @@ class BricksClass {
             this.paddle.dx = 0;
         }
     }
-
     // Clear canvas 
     clearCanvas () {
         this.canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -756,16 +756,32 @@ class BricksClass {
     }
 
     // CHECK PADDLE COLLISION
-    checkPaddleCollision () {
-      // Paddle collision
-      if (
-        this.ball.x + this.ball.size < this.paddle.x + this.paddle.w &&
-        this.ball.x - this.ball.size > this.paddle.x &&
-        this.ball.y + this.ball.size > this.paddle.y
-      ) {
-        this.ball.dy = - this.ball.speed;
-      }
+    checkPaddleCollision() {
+        // Verificar colisión con el paddle
+        if (
+            this.ball.x + this.ball.size > this.paddle.x &&
+            this.ball.x - this.ball.size < this.paddle.x + this.paddle.w &&
+            this.ball.y + this.ball.size > this.paddle.y
+        ) {
+            // Cambiar la dirección en Y para simular un rebote
+            this.ball.dy = -this.ball.speed;
+    
+            // Calcular el punto medio del paddle
+            const paddleMidPoint = this.paddle.x + this.paddle.w / 2;
+    
+            // Determinar el punto de impacto
+            const impactPoint = this.ball.x - paddleMidPoint;
+    
+            // Calcular el cambio de ángulo en base al punto de impacto
+            // Este valor puede ajustarse para cambiar la "sensibilidad" del efecto
+            const angleChange = impactPoint / (this.paddle.w / 2); // Normalizado entre -1 y 1
+    
+            // Ajustar la dirección en X de la pelota
+            // Aquí ajustamos dx basándonos en el punto de impacto y algún factor de influencia
+            this.ball.dx = this.ball.speed * angleChange;
+        }
     }
+    
 
     // CHECK CANVAS BORDER COLLISION
     checkBorderCanvasCollision () {
