@@ -16,7 +16,7 @@ class BricksClass {
     lives = 3
     score = 0
     elementsToFall = []
-    interactionsInPaddle = {}
+    interactions = {}
     particleInfo = {}
     particlesToDraw = []
     bonificationPointInfo = {}
@@ -32,13 +32,13 @@ class BricksClass {
     setLives = null
     setScore = null
     setElementCatched = null
-    setInteractionsInPaddle = null
+    setInteractions = null
     showBonification = null
     gameEndModal = null
     saveGameResults = null
     getTimePlayed = null
 
-    constructor(canvas, canvasContext, gameConfig, setLives, setElementCatched, setScore, setInteractionsInPaddle, setGameEndResult, showBonification, gameEndModal, saveGameResults, getTimePlayed) {
+    constructor(canvas, canvasContext, gameConfig, setLives, setElementCatched, setScore, setInteractions, setGameEndResult, showBonification, gameEndModal, saveGameResults, getTimePlayed) {
         this.canvas = canvas;
         this.canvasContext = canvasContext;
         this.gameConfig = gameConfig;
@@ -46,11 +46,14 @@ class BricksClass {
         this.setLives = setLives;
         this.setScore = setScore;
         this.setElementCatched = setElementCatched;
-        this.setInteractionsInPaddle = setInteractionsInPaddle
-        this.interactionsInPaddle = {
-            [gameConfig.elementsNames[0]]: 0,
-            [gameConfig.elementsNames[1]]: 0,
-            [gameConfig.elementsNames[2]]: 0
+        this.setInteractions = setInteractions
+        this.interactions = {
+            [gameConfig.elementsNames[0]+"InPaddle"]: 0,
+            [gameConfig.elementsNames[1]+"InPaddle"]: 0,
+            [gameConfig.elementsNames[2]+"InPaddle"]: 0,
+            [gameConfig.elementsNames[0]+"InBrick"]: 0,
+            [gameConfig.elementsNames[1]+"InBrick"]: 0,
+            [gameConfig.elementsNames[2]+"InBrick"]: 0,
         }
         this.showBonification = showBonification
         this.gameEndModal = gameEndModal
@@ -622,8 +625,8 @@ class BricksClass {
                 // Verificar si la bonificación ya se aplicó
                 if (!elementFalling.appliedBonification) {
                     // save interaction with element
-                    this.interactionsInPaddle[elementFalling.element.name] = this.interactionsInPaddle[elementFalling.element.name] + 1
-                    this.setInteractionsInPaddle(this.interactionsInPaddle)
+                    this.interactions[elementFalling.element.name+"InPaddle"] = this.interactions[elementFalling.element.name+"InPaddle"] + 1
+                    this.setInteractions(this.interactions)
 
                     if (elementFalling.element.bonification === "premio" || elementFalling.element.bonification === "nula") {
                         this.score = this.score + 2
@@ -742,6 +745,8 @@ class BricksClass {
                         if (brick.element && brick.visible) {
                             if(brick.element.bonification) {
                                 this.createElementToFall(brick.x, brick.y, brick.element, brick.w, brick.h, brick.brickColor)
+                                this.interactions[brick.element.name+"InBrick"] = this.interactions[brick.element.name+"InBrick"] + 1
+                                this.setInteractions(this.interactions)            
                             }
                             brick.visible = false;
                         }
@@ -839,16 +844,29 @@ class BricksClass {
     } 
 
     // GAME OVER
-    gameOver () { 
+    gameOver() {
+        // Initialize objects for storing segregated interactions
+        let interactionsInPaddle = {};
+        let interactionsInBrick = {};
+    
+        // Iterate over the interactions and segregate them
+        for (let key in this.interactions) {
+            if (key.endsWith("InPaddle")) {
+                interactionsInPaddle[key] = this.interactions[key];
+            } else if (key.endsWith("InBrick")) {
+                interactionsInBrick[key] = this.interactions[key];
+            }
+        }
+    
+        // Call the game end modal and save game results with segregated interactions
         this.gameEndModal('FIN DEL JUEGO', `Obtuviste una puntuacion de ${this.score}`, () => this.saveGameResults({
             score: this.score,
             timePlayed: this.getTimePlayed(),
-            interactionsInPaddle: this.interactionsInPaddle,
-            // interactionsInBrick: this.interactionsInBricks, 
+            interactionsInPaddle: interactionsInPaddle, // Add segregated interactions for paddle
+            interactionsInBrick: interactionsInBrick,   // Add segregated interactions for brick
             date: new Date().toLocaleString()
-        }))
+        }));
     }
-
 }
 
 export default BricksClass;
