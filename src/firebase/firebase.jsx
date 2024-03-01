@@ -130,6 +130,25 @@ export const editUser = async (userId, userDataUpdated) => {
     return false;
   }
 }
+
+export const getAllGamesPlayed = async () => {
+  const gamesPlayedCollection = collection(firebaseDB, "gamesPlayed");
+  
+  try {
+    // Realizar la consulta para obtener todos los documentos en la colección "gamesPlayed"
+    const querySnapshot = await getDocs(gamesPlayedCollection);
+    let games = [];
+    querySnapshot.forEach((doc) => {
+      // Agregar cada juego (documento) al arreglo "games"
+      games.push({ id: doc.id, ...doc.data() });
+    });
+    return games;
+  } catch (error) {
+      console.error("Error al obtener todos los juegos jugados:", error.message);
+      return [];
+  }
+}
+
   
   
 

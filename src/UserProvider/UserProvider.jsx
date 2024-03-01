@@ -12,9 +12,11 @@ export const UserProvider = ({children}) => {
     })
     const [loadingLogin, setLoadingLogin] = useState(false)
     const navigate = useNavigate()
-
+console.log(userInfo);
     useEffect(() => {
-        if(userInfo.email === '') navigate('/')
+        if(window.location.pathname!=="/admin-javiT2024"){
+            if(userInfo.email === '') navigate('/')
+        }
     }, [userInfo]);
 
 
@@ -49,7 +51,9 @@ export const UserProvider = ({children}) => {
         setUserInfo(userInfoCopy)
         setIsLogged(true)
         setLoadingLogin(false)
-        navigate('/first-form')
+        if(window.location.pathname!=="/admin-javiT2024"){
+            navigate('/first-form')
+        }
     }
 
     const getCookie = () => {
