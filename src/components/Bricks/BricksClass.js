@@ -16,7 +16,7 @@ class BricksClass {
     lives = 3
     score = 0
     elementsToFall = []
-    interactions = {}
+    interactionsInPaddle = {}
     particleInfo = {}
     particlesToDraw = []
     bonificationPointInfo = {}
@@ -32,13 +32,13 @@ class BricksClass {
     setLives = null
     setScore = null
     setElementCatched = null
-    setInteractions = null
+    setInteractionsInPaddle = null
     showBonification = null
     gameEndModal = null
     saveGameResults = null
     getTimePlayed = null
 
-    constructor(canvas, canvasContext, gameConfig, setLives, setElementCatched, setScore, setInteractions, setGameEndResult, showBonification, gameEndModal, saveGameResults, getTimePlayed) {
+    constructor(canvas, canvasContext, gameConfig, setLives, setElementCatched, setScore, setInteractionsInPaddle, setGameEndResult, showBonification, gameEndModal, saveGameResults, getTimePlayed) {
         this.canvas = canvas;
         this.canvasContext = canvasContext;
         this.gameConfig = gameConfig;
@@ -46,8 +46,8 @@ class BricksClass {
         this.setLives = setLives;
         this.setScore = setScore;
         this.setElementCatched = setElementCatched;
-        this.setInteractions = setInteractions
-        this.interactions = {
+        this.setInteractionsInPaddle = setInteractionsInPaddle
+        this.interactionsInPaddle = {
             [gameConfig.elementsNames[0]]: 0,
             [gameConfig.elementsNames[1]]: 0,
             [gameConfig.elementsNames[2]]: 0
@@ -243,7 +243,7 @@ class BricksClass {
                 this.paddle.dx = 0;
             }
         }, 100);
-        console.log(this.arrowAngle);
+
         if (e.key === 'Right' || e.key === 'ArrowRight') {
             if (this.ball.readyToLunch) {
                 if(parseFloat(this.arrowAngle) >= 0.6) this.arrowAngle -= 0.1; // Ajusta el ángulo de la flecha
@@ -622,8 +622,8 @@ class BricksClass {
                 // Verificar si la bonificación ya se aplicó
                 if (!elementFalling.appliedBonification) {
                     // save interaction with element
-                    this.interactions[elementFalling.element.name] = this.interactions[elementFalling.element.name] + 1
-                    this.setInteractions(this.interactions)
+                    this.interactionsInPaddle[elementFalling.element.name] = this.interactionsInPaddle[elementFalling.element.name] + 1
+                    this.setInteractionsInPaddle(this.interactionsInPaddle)
 
                     if (elementFalling.element.bonification === "premio" || elementFalling.element.bonification === "nula") {
                         this.score = this.score + 2
@@ -740,7 +740,9 @@ class BricksClass {
                     ) {
                         this.ball.dy *= -1;
                         if (brick.element && brick.visible) {
-                            if(brick.element.bonification) this.createElementToFall(brick.x, brick.y, brick.element, brick.w, brick.h, brick.brickColor)
+                            if(brick.element.bonification) {
+                                this.createElementToFall(brick.x, brick.y, brick.element, brick.w, brick.h, brick.brickColor)
+                            }
                             brick.visible = false;
                         }
                         this.ball.speed += 0.02;
@@ -838,7 +840,13 @@ class BricksClass {
 
     // GAME OVER
     gameOver () { 
-        this.gameEndModal('FIN DEL JUEGO', `Obtuviste una puntuacion de ${this.score}`, () => this.saveGameResults())
+        this.gameEndModal('FIN DEL JUEGO', `Obtuviste una puntuacion de ${this.score}`, () => this.saveGameResults({
+            score: this.score,
+            timePlayed: this.getTimePlayed(),
+            interactionsInPaddle: this.interactionsInPaddle,
+            // interactionsInBrick: this.interactionsInBricks, 
+            date: new Date().toLocaleString()
+        }))
     }
 
 }

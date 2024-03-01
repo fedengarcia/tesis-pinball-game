@@ -111,7 +111,6 @@ class Bricks extends React.Component{
 	}
 
 	setInteractions = (interactions) => {
-		console.log("INTERACTIONS", interactions)
 		this.setState({interactions: interactions})
 	}
 

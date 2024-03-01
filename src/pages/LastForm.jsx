@@ -42,10 +42,10 @@ export default function LastForm() {
   }
 
   const handleSeeResults = async () => {
-    let userInfoCopy = {...userInfo}
+    let userInfoCopy = {...userInfo}  
     userInfoCopy.finalForm.isCompleted = true
     userInfoCopy.finalForm.answers = [...answers]
-    const userUpdated = await editUser(userInfoCopy.email, userInfoCopy)
+    const userUpdated = await editUser(userInfoCopy.id, userInfoCopy)
 
     if(userUpdated){
       setUserInfo(userInfoCopy)

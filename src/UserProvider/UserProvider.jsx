@@ -12,7 +12,7 @@ export const UserProvider = ({children}) => {
     })
     const [loadingLogin, setLoadingLogin] = useState(false)
     const navigate = useNavigate()
-console.log(userInfo);
+
     useEffect(() => {
         if(window.location.pathname!=="/admin-javiT2024"){
             if(userInfo.email === '') navigate('/')
@@ -73,7 +73,6 @@ console.log(userInfo);
     const unsetCookie = () => {
         document.cookie = COOKIE_NAME + ',Expires=Thu, 01 Jan 1970 00:00:01 GMT,';
     }
-
 
     return (
         <UserContext.Provider value={{

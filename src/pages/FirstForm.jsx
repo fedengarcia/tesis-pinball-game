@@ -41,7 +41,7 @@ export default function FirstForm() {
     let userInfoCopy = {...userInfo}
     userInfoCopy.firstForm.isCompleted = true
     userInfoCopy.firstForm.answers = [...answers]
-    const userUpdated = await editUser(userInfoCopy.email, userInfoCopy)
+    const userUpdated = await editUser(userInfoCopy.id, userInfoCopy)
     if(userUpdated){
       setUserInfo(userInfoCopy)
       navigate('/game')

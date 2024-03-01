@@ -1,19 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { StyledAppLayout, StyledFlexCenter, StyledLayoutContent } from '../styled-components/containers'
-import LastForm from './LastForm'
 import UserContext from '../UserProvider/UserContext'
 import { useNavigate } from 'react-router-dom'
 import { APP_DATA } from '../CONSTANTS'
 import Bricks from '../components/Bricks/Bricks'
 import { Button, CircularProgress } from '@mui/material'
-import { editUser } from '../firebase/firebase'
+import { addGameToUserGamesPlayed } from '../firebase/firebase'
 import useSweetAlert from '../hooks/useSweetAlert'
 
 
 export default function Game() {
   const navigate = useNavigate()
   const {userInfo, setUserInfo, loadingLogin, setLoadingLogin} = useContext(UserContext)
-  const [buttonDisabled, setButtonDisabled] = useState(true)
   const [gameConfiguration, setGameConfiguration] = useState([])
   const [gameResult, setGameResult] = useState(undefined)
   const [playingGame, setPlayingGame] = useState(false)
@@ -46,11 +44,12 @@ export default function Game() {
   }
 
 
-  const saveGameResults = async () => {
+  const saveGameResults = async (game) => {
     setLoadingLogin(true)
+    if(loadingLogin) return
     let userInfoCopy = {...userInfo}
     userInfoCopy.gamesPlayed = [...userInfoCopy.gamesPlayed, gameResult]
-    await editUser(userInfoCopy.email, userInfoCopy).then(res => {
+    await addGameToUserGamesPlayed(game, userInfoCopy).then(res => {
       console.log(res)
       setUserInfo(userInfoCopy)
     }).finally(() => {
@@ -58,7 +57,6 @@ export default function Game() {
       setLoadingLogin(false)
 
     })
-
   }
 
   return (
