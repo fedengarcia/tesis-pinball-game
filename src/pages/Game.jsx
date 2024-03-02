@@ -31,9 +31,6 @@ export default function Game() {
       setGameConfiguration(configCopy)
     }, []);
 
-  useEffect(() => {
-    console.log("GAME RESULT", gameResult)
-  }, [gameResult]);
 
   const showBonification = (message, timer) =>{
     return popUp({
@@ -42,7 +39,6 @@ export default function Game() {
       popUpPosition:'bottom',
     })
   }
-
 
   const saveGameResults = async (game) => {
     setLoadingLogin(true)
