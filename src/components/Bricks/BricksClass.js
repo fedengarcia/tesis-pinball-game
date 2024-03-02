@@ -28,25 +28,21 @@ class BricksClass {
     paddleColor = '#0011F30'
     
     // Functions 
-    setGameEndResult = null
+    setGameOver = null
     setLives = null
     setScore = null
-    setElementCatched = null
-    setInteractions = null
     showBonification = null
     gameEndModal = null
     saveGameResults = null
     getTimePlayed = null
 
-    constructor(canvas, canvasContext, gameConfig, setLives, setElementCatched, setScore, setInteractions, setGameEndResult, showBonification, gameEndModal, saveGameResults, getTimePlayed) {
+    constructor(canvas, canvasContext, gameConfig, setLives, setScore, setGameOver, showBonification, gameEndModal, saveGameResults, getTimePlayed) {
         this.canvas = canvas;
         this.canvasContext = canvasContext;
         this.gameConfig = gameConfig;
-        this.setGameEndResult = setGameEndResult;
+        this.setGameOver = setGameOver;
         this.setLives = setLives;
         this.setScore = setScore;
-        this.setElementCatched = setElementCatched;
-        this.setInteractions = setInteractions
         this.interactions = {
             [gameConfig.elementsNames[0]+"InPaddle"]: 0,
             [gameConfig.elementsNames[1]+"InPaddle"]: 0,
@@ -626,7 +622,6 @@ class BricksClass {
                 if (!elementFalling.appliedBonification) {
                     // save interaction with element
                     this.interactions[elementFalling.element.name+"InPaddle"] = this.interactions[elementFalling.element.name+"InPaddle"] + 1
-                    this.setInteractions(this.interactions)
 
                     if (elementFalling.element.bonification === "premio" || elementFalling.element.bonification === "nula") {
                         this.score = this.score + 2
@@ -746,7 +741,6 @@ class BricksClass {
                             if(brick.element.bonification) {
                                 this.createElementToFall(brick.x, brick.y, brick.element, brick.w, brick.h, brick.brickColor)
                                 this.interactions[brick.element.name+"InBrick"] = this.interactions[brick.element.name+"InBrick"] + 1
-                                this.setInteractions(this.interactions)            
                             }
                             brick.visible = false;
                         }
@@ -818,7 +812,7 @@ class BricksClass {
 
                 if(this.lives === 0){
                     this.inGame = false
-                    this.setGameEndResult()
+                    this.setGameOver()
                     this.gameOver()
                 }
         }}
