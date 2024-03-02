@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { getAllGamesPlayed } from "../firebase/firebase";
+import { getAllGamesPlayed, getTopRanking } from "../firebase/firebase";
 import { APP_DATA } from "../CONSTANTS";
 import * as XLSX from 'xlsx';
+import { StyledFlexCenter } from "../styled-components/containers";
+import { Button, CircularProgress } from '@mui/material'
 
 function Admin() {
   const [games, setGames] = useState([]);
+  const [table, setTable] = useState('all')
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getAllGamesPlayed();
+      const data = table === 'all' ? await getAllGamesPlayed() : await getTopRanking();
       setGames(data);
     };
 
     fetchData();
-  }, []);
+  }, [table]);
 
   function formatDate(date) {
     date = new Date(date)
@@ -53,9 +56,28 @@ function Admin() {
 
   return (
     <div className="container mt-5">
-      <h1 className="mb-4">Lista de Juegos Jugados</h1>
+      <StyledFlexCenter direction={'column'}>
+        <StyledFlexCenter direction={'row'}>
+          <Button
+            style={{margin: '10px'}}
+            variant='contained'
+            onClick={() =>  setTable('all')}
+          >
+            Ver todos los juegos
+          </Button>
+          <Button
+            style={{margin: '10px'}}
+            variant='contained'
+            onClick={() =>  setTable('topRanking')}
+          >
+            Ver Top Ranking
+          </Button>
+        </StyledFlexCenter>
+        <h1 style={{width: '100%', textAlign:'center'}}>{table === 'all' ? 'All games Played' : 'Top Ranking'}</h1>
+
+      </StyledFlexCenter>
       {games.length > 0 ? (
-        <>
+        <StyledFlexCenter>
           <table className="table">
             <thead>
               <tr>
@@ -92,8 +114,14 @@ function Admin() {
               ))}
             </tbody>
           </table>
-          <p onClick={() => exportToExcel(games, "games_data")} className="boton-excel">EXPORTAR A EXCEL</p>
-        </>
+          <Button
+            style={{margin: '10px'}}
+            variant='contained'
+            onClick={() => exportToExcel(games, "games_data")}
+          >
+            EXPORTAR A EXCEL       
+          </Button>
+        </StyledFlexCenter>
       ) : (
         <p>No hay juegos jugados registrados.</p>
       )}
