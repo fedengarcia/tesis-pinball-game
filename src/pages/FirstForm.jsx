@@ -19,7 +19,7 @@ export default function FirstForm() {
     })
     return answerArray;
   })
-  const {userInfo, setUserInfo, loadingLogin, setLoadingLogin} = useContext(UserContext)
+  const {userInfo, setUserInfo} = useContext(UserContext)
 
   useEffect(() => {
     if(userInfo?.firstForm?.isCompleted) navigate('/game')
@@ -38,18 +38,16 @@ export default function FirstForm() {
 
 
   const handleGameInit = async () => {
-    setLoadingLogin(true)
-    if(loadingLogin) return
     let userInfoCopy = {...userInfo}
     userInfoCopy.firstForm.isCompleted = true
     userInfoCopy.firstForm.answers = [...answers]
-    let userUpdated = await editUser(userInfoCopy.id, userInfoCopy)
-    
+    const userUpdated = await editUser(userInfoCopy.id, userInfoCopy)
     if(userUpdated){
-      setUserInfo(userUpdated)
+      setUserInfo(userInfoCopy)
       navigate('/game')
+    }else{
+      alert("Error, try again")
     }
-    setLoadingLogin(false)
   }
   
   const handleAnswers = (index, subIndex) => {
