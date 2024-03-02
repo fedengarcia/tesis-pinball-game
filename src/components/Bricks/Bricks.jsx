@@ -29,12 +29,10 @@ class Bricks extends React.Component{
     this.renderCanvas = this.renderCanvas.bind(this);
 
     
-
 		this.state = {
 			timer: 0,
 			score: 0,
 			lives: [faHeart, faHeart, faHeart],
-			interactions: {},
 			start: false,
 			gameEnd: false
 		};
@@ -52,10 +50,8 @@ class Bricks extends React.Component{
 				this.context,
 				this.gameConfiguration,
 				this.setLives,
-				this.setElementsCatched,
 				this.setScore,
-				this.setInteractions,
-				this.setGameEndResult,
+				this.setGameOver,
 				this.showBonification,
 				this.endGameModal,
 				this.saveGameResults,
@@ -102,19 +98,11 @@ class Bricks extends React.Component{
 		this.setState({lives: livesCopy})
 	}
 
-	setElementsCatched = (elementsCatched) => {
-		this.setState({elementsCatched: elementsCatched})
-	}
-
 	setScore = (score) => {
 		this.setState({score: score})
 	}
 
-	setInteractions = (interactions) => {
-		this.setState({interactions: interactions})
-	}
-
-  	setTimePlayed = () => {
+	getTimePlayed = () => {
 		var minutes = "00";
 		var seconds = "00";
 		
@@ -129,19 +117,9 @@ class Bricks extends React.Component{
 
 		return `${minutes}:${seconds}`
 	}
-
-	getTimePlayed = () => {
-		return this.state.timer
-	}
 	
-	setGameEndResult = () => {
+	setGameOver = () => {
 		if (this.intervalTimer) clearInterval(this.intervalTimer);
-		this.props.setGameResult({
-			interactions: this.state.interactions,
-			score: this.state.score,
-			timePlayed: this.setTimePlayed(),
-			date: new Date()	
-		});
 		this.setState({ gameEnd: true });
 	};
 
