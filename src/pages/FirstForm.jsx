@@ -22,6 +22,7 @@ export default function FirstForm() {
   const {userInfo, setUserInfo} = useContext(UserContext)
 
   useEffect(() => {
+    if(userInfo?.email === '') navigate('/')
     if(userInfo?.firstForm?.isCompleted) navigate('/game')
   }, [userInfo]);
 
@@ -38,9 +39,11 @@ export default function FirstForm() {
 
 
   const handleGameInit = async () => {
+    console.log(userInfo)
     let userInfoCopy = {...userInfo}
     userInfoCopy.firstForm.isCompleted = true
     userInfoCopy.firstForm.answers = [...answers]
+    console.log(userInfoCopy.id)
     const userUpdated = await editUser(userInfoCopy.id, userInfoCopy)
     if(userUpdated){
       setUserInfo(userInfoCopy)

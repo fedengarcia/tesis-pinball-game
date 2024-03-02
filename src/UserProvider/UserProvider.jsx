@@ -15,7 +15,7 @@ export const UserProvider = ({children}) => {
 
     useEffect(() => {
         if(window.location.pathname!=="/admin-javiT2024"){
-            if(userInfo.email === '') navigate('/')
+            if(userInfo.email === '' && getCookie()?.email === '') navigate('/')
         }
     }, [userInfo]);
 
@@ -30,12 +30,12 @@ export const UserProvider = ({children}) => {
         setLoadingLogin(true)
         let userInfoCopy = {...userInfo}
         let userExistingData = await getUserByEmail(email)
-
-        try {
-            // Check email in firebase
-            if(userExistingData){
-                userInfoCopy = {...userExistingData}
-            }else{
+        
+        if(userExistingData){
+            userInfoCopy = {...userExistingData}
+        }else{
+            try {
+                // Check email in firebase
                 let tables = APP_DATA.APP_GAME.GAME_CONFIGURATION?.tables
                 userInfoCopy.tableAssigned = tables[Math.floor(Math.random() * tables?.length)]
                 userInfoCopy.date = new Date();
@@ -46,22 +46,23 @@ export const UserProvider = ({children}) => {
                 userInfoCopy.finalForm = {
                     isCompleted: false
                 }
-                await createUserDocument(userInfoCopy)
+                    if(userInfoCopy.email !== '') {
+                        await createUserDocument(userInfoCopy)
+                    }
+            } catch (error) {
+                alert("err")
+                console.log(error)
+                setLoadingLogin(false)
+                // navigate("/")
             }
-            setCookie({email: email})
-            setUserInfo(userInfoCopy)
-            setIsLogged(true)
-            setLoadingLogin(false)
-            if(window.location.pathname!=="/admin-javiT2024"){
-                navigate('/first-form')
-            }
-        } catch (error) {
-            alert("err")
-            console.log(error)
-            setLoadingLogin(false)
-            // navigate("/")
         }
-        
+        setCookie({email: email})
+        setUserInfo(userInfoCopy)
+        setIsLogged(true)
+        setLoadingLogin(false)
+        if(window.location.pathname!=="/admin-javiT2024" && userInfo.email !== ''){
+            navigate('/first-form')
+        }
     }
 
     const getCookie = () => {

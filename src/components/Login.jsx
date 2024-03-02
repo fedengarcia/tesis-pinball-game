@@ -7,11 +7,19 @@ import { Button, CircularProgress, TextField } from '@mui/material'
 import UserContext from '../UserProvider/UserContext'
 
 export default function Login() {
-  const {userInfo, setUserInfo, validateEmail, handleLogin, loadingLogin } = useContext(UserContext)
+  const {userInfo, setUserInfo, validateEmail, handleLogin, loadingLogin, getCookie } = useContext(UserContext)
 
   const handleEmailInput = (e) =>{
       setUserInfo((prevState) => ({...prevState, email: e.target.value}))
   }
+
+  useEffect(() => {
+    const cookieEmail =  getCookie()
+    if(cookieEmail?.email) {
+      handleLogin(cookieEmail?.email)
+    }
+  }, []);
+
 
   return (
         <>

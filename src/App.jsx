@@ -9,12 +9,6 @@ import { CircularProgress } from '@mui/material';
 
 
 export default function App() {
- const {handleLogin, getCookie, loadingLogin} = useContext(UserContext)
-
-  useEffect(() => {
-    const cookieEmail =  getCookie()
-    if(cookieEmail?.email) handleLogin(cookieEmail?.email)
-  }, []);
 
   return (
     <StyledAppLayout>
