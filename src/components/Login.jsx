@@ -27,7 +27,7 @@ export default function Login() {
               </Box>
               <Button 
                 disabled={!validateEmail(userInfo.email)}
-                onClick={() => handleLogin()}
+                onClick={() => handleLogin(userInfo.email)}
                 variant='contained'
                 >
                 LOGIN

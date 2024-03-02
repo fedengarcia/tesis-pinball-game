@@ -26,34 +26,42 @@ export const UserProvider = ({children}) => {
         return validation
     }   
 
-    const handleLogin = async (cookieEmail) => {
+    const handleLogin = async (email) => {
         setLoadingLogin(true)
         let userInfoCopy = {...userInfo}
-        let userExistingData = await getUserByEmail(cookieEmail ? cookieEmail : userInfo.email)
+        let userExistingData = await getUserByEmail(email)
 
-        // Check email in firebase
-        if(userExistingData){
-            userInfoCopy = {...userExistingData}
-        }else{
-            let tables = APP_DATA.APP_GAME.GAME_CONFIGURATION.tables
-            userInfoCopy.tableAssigned = tables[Math.floor(Math.random() * tables?.length)]
-            userInfoCopy.date = new Date();
-            userInfoCopy.gamesPlayed = []
-            userInfoCopy.firstForm = {
-                isCompleted: false
+        try {
+            // Check email in firebase
+            if(userExistingData){
+                userInfoCopy = {...userExistingData}
+            }else{
+                let tables = APP_DATA.APP_GAME.GAME_CONFIGURATION?.tables
+                userInfoCopy.tableAssigned = tables[Math.floor(Math.random() * tables?.length)]
+                userInfoCopy.date = new Date();
+                userInfoCopy.gamesPlayed = []
+                userInfoCopy.firstForm = {
+                    isCompleted: false
+                }
+                userInfoCopy.finalForm = {
+                    isCompleted: false
+                }
+                await createUserDocument(userInfoCopy)
             }
-            userInfoCopy.finalForm = {
-                isCompleted: false
+            setCookie({email: email})
+            setUserInfo(userInfoCopy)
+            setIsLogged(true)
+            setLoadingLogin(false)
+            if(window.location.pathname!=="/admin-javiT2024"){
+                navigate('/first-form')
             }
-            await createUserDocument(userInfoCopy)
+        } catch (error) {
+            alert("err")
+            console.log(error)
+            setLoadingLogin(false)
+            // navigate("/")
         }
-        setCookie({email: cookieEmail ? cookieEmail : userInfo.email})
-        setUserInfo(userInfoCopy)
-        setIsLogged(true)
-        setLoadingLogin(false)
-        if(window.location.pathname!=="/admin-javiT2024"){
-            navigate('/first-form')
-        }
+        
     }
 
     const getCookie = () => {
