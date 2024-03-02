@@ -19,7 +19,8 @@ export default function LastForm() {
     return answerArray;
   })
   const navigate = useNavigate()  
-  const {userInfo, setUserInfo} = useContext(UserContext)
+  const {userInfo, setUserInfo, loadingLogin, setLoadingLogin} = useContext(UserContext)
+
 
   useEffect(() => {
     if(userInfo?.finalForm.isCompleted) navigate('/end-game')
@@ -42,18 +43,19 @@ export default function LastForm() {
   }
 
   const handleSeeResults = async () => {
+    setLoadingLogin(true)
+    if(loadingLogin) return
     let userInfoCopy = {...userInfo}  
     userInfoCopy.finalForm.isCompleted = true
     userInfoCopy.finalForm.answers = [...answers]
     const userUpdated = await editUser(userInfoCopy.id, userInfoCopy)
-
     if(userUpdated){
       setUserInfo(userInfoCopy)
       navigate('/end-game')
     }else{
       alert("Error, try again")
     }
-
+    setLoadingLogin(false)
   }
   
   return (
