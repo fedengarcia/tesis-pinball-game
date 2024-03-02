@@ -136,19 +136,19 @@ export const APP_DATA = {
                 ],
                 [
                     {
-                        "table": 1,
+                        "table": 2,
                         "name": "Samsung",
                         "src": samsungSVG,
                         "bonification": "nula",
                     },
                     {
-                        "table": 1,
+                        "table": 2,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "premio",
                     },
                     {
-                        "table": 1,
+                        "table": 2,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
                         "bonification": "mediadora",
@@ -156,19 +156,19 @@ export const APP_DATA = {
                 ],
                 [
                     {
-                        "table": 1,
+                        "table": 3,
                         "name": "Samsung",
                         "src": samsungSVG,
                         "bonification": "premio",
                     },
                     {
-                        "table": 1,
+                        "table": 3,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "nula",
                     },
                     {
-                        "table": 1,
+                        "table": 3,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
                         "bonification": "mediadora",
@@ -176,19 +176,19 @@ export const APP_DATA = {
                 ],
                 [
                     {
-                        "table": 1,
+                        "table": 4,
                         "name": "Samsung",
                         "src": samsungSVG,
                         "bonification": "mediadora",
                     },
                     {
-                        "table": 1,
+                        "table": 4,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "nula",
                     },
                     {
-                        "table": 1,
+                        "table": 4,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
                         "bonification": "premio",
@@ -196,19 +196,19 @@ export const APP_DATA = {
                 ],
                 [
                     {
-                        "table": 1,
+                        "table": 5,
                         "name": "Samsung",
                         "src": samsungSVG,
                         "bonification": "mediadora",
                     },
                     {
-                        "table": 1,
+                        "table": 5,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "premio",
                     },
                     {
-                        "table": 1,
+                        "table": 5,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
                         "bonification": "nula",
@@ -216,19 +216,19 @@ export const APP_DATA = {
                 ],
                 [
                     {
-                        "table": 1,
+                        "table": 6,
                         "name": "Samsung",
                         "src": samsungSVG,
                         "bonification": "premio",
                     },
                     {
-                        "table": 1,
+                        "table": 6,
                         "name": "Apple",
                         "src": appleSVG,
                         "bonification": "mediadora",
                     },
                     {
-                        "table": 1,
+                        "table": 6,
                         "name": "Xiaomi",
                         "src": xiaomiSVG,
                         "bonification": "nula",
