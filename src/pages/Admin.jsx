@@ -36,8 +36,7 @@ function Admin() {
   const exportToExcel = (games, fileName) => {
     const ws = XLSX.utils.json_to_sheet(games.map(game => ({
         "Participante": game.userEmail,
-        "Opción": "Participante " + (game.index + 1),
-        "Número partida": game.gameNumber,
+        "Tablero asignado": game.gameNumber,
         "Fecha": formatDate(game.userDate.seconds * 1000 + game.userDate.nanoseconds / 1000),
         "Tiempo de juego": game.timePlayed,
         "Puntuación": game.score,
@@ -82,8 +81,7 @@ function Admin() {
             <thead>
               <tr>
                 <th>Participante</th>
-                <th>Opción</th>
-                <th>Número partida</th>
+                <th>Tablero asignado</th>
                 <th>Fecha</th>
                 <th>Tiempo de juego</th>
                 <th>Puntuación</th>
@@ -99,7 +97,6 @@ function Admin() {
               {games.map((game, index) => (
                 <tr key={index} className={index % 2 === 0 ? "active-row" : ""}>
                   <td>{game.userEmail}</td>
-                  <td>Participante {index + 1}</td>
                   <td>{game.gameNumber}</td>
                   <td>{formatDate(game.userDate.seconds * 1000 + game.userDate.nanoseconds / 1000)}</td>
                   <td>{game.timePlayed}</td>

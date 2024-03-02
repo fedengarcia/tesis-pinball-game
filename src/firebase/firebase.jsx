@@ -144,6 +144,7 @@ export const getAllGamesPlayed = async () => {
           userEmail: userData.email,
           userDate: userData.date,
           userId: userData.id,
+          gameNumber: userData.tableAssigned[0].table,
           ...game
         });
       });
@@ -165,7 +166,6 @@ export const getTopRanking = async (withExtraData) => {
     querySnapshot.forEach((doc) => {
       const userData = doc.data();
       const userGamesPlayed = userData.gamesPlayed || [];
-
       userGamesPlayed.forEach(game => {
         let index = topRanking.findIndex(element => element.userEmail === userData.email)
         let gameCopy = {...game}
@@ -179,6 +179,7 @@ export const getTopRanking = async (withExtraData) => {
             userEmail: userData.email,
             userDate: userData.date,
             userId: userData.id,
+            gameNumber: userData.tableAssigned[0].table,
             ...game
           }
         }else{
@@ -186,6 +187,7 @@ export const getTopRanking = async (withExtraData) => {
             userEmail: userData.email,
             userDate: userData.date,
             userId: userData.id,
+            gameNumber: userData.tableAssigned[0].table,
             ...game
           });
         }
