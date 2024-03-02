@@ -87,6 +87,7 @@ export default function FirstForm() {
       variant='contained'
       onClick={handleGameInit}
       disabled={buttonDisabled}
+      style={{marginBottom: '2em'}}
     >
       {APP_DATA.APP_BUTTON_PLAY}
     </Button>

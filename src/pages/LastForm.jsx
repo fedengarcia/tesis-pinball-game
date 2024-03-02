@@ -85,6 +85,8 @@ export default function LastForm() {
       variant='contained'
       disabled={buttonDisabled}
       onClick={handleSeeResults}
+      style={{marginBottom: '2em'}}
+
     >
       {APP_DATA.APP_BUTTON_END}
     </Button>
