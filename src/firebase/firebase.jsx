@@ -154,3 +154,46 @@ export const getAllGamesPlayed = async () => {
       return [];
   }
 }
+
+export const getTopRanking = async (withExtraData) => {
+  const usersCollection = collection(firebaseDB, "usuarios");
+  
+  try {
+    const querySnapshot = await getDocs(usersCollection);
+    let topRanking = [];
+    
+    querySnapshot.forEach((doc) => {
+      const userData = doc.data();
+      const userGamesPlayed = userData.gamesPlayed || [];
+
+      userGamesPlayed.forEach(game => {
+        let index = topRanking.findIndex(element => element.userEmail === userData.email)
+        let gameCopy = {...game}
+        if(withExtraData === false){
+          delete gameCopy.interactionsInBrick;
+          delete gameCopy.interactionsInPaddle;
+          delete gameCopy.timePlayed;
+        }
+        if(index !== -1){
+          topRanking[index] = {
+            userEmail: userData.email,
+            userDate: userData.date,
+            userId: userData.id,
+            ...game
+          }
+        }else{
+          topRanking.push({
+            userEmail: userData.email,
+            userDate: userData.date,
+            userId: userData.id,
+            ...game
+          });
+        }
+      });
+    });
+    return topRanking.sort((a,b) => a.score + b.score);
+  } catch (error) {
+      console.error("Error al obtener todos los juegos jugados:", error.message);
+      return [];
+  }
+}
