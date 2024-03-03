@@ -99,11 +99,6 @@ export const APP_DATA = {
             pointsLabel: 'Puntos:',
             lifesLabel: 'Vidas:',
             elementsNames: BRANDS,
-            /* 
-                Bonifications must be same length of images/words 
-                The only functionality of points available are x2, x1, +1 
-                Ball will rest -1 point
-            */
             showBonifications: true,
             tables: [
                 [
