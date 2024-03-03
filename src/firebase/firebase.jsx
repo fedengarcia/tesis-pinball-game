@@ -31,6 +31,7 @@ export const createUserDocument =  async (userData) => {
     try {
         // Utilizar setDoc para agregar el nuevo documento con los datos del usuario
         await setDoc(nuevoUsuarioRef, userData);
+        return {id: nuevoUsuarioRef.id}
     } catch (error) {
         console.error("Error al agregar nuevo usuario:", error.message);
     }
