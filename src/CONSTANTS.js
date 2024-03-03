@@ -2,36 +2,28 @@ import appleSVG from './assets/apple-logo.svg'
 import samsungSVG from './assets/samsung-logo.svg'
 import xiaomiSVG from './assets/xiaomi-logo.svg'
 
-const generate_tables = () => {
-    let tables = [];
-
-    const interactions = ['nula', 'mediadora', 'premio'];
-
-    const brands = [
-        { name: 'Samsung', src: samsungSVG },
-        { name: 'Apple', src: appleSVG },
-        { name: 'Xiaomi', src: xiaomiSVG }
-    ];
-
-    for (let i = 0; i < 9; i++) {
-        const table = [];
-
-        // Generar aleatoriamente las interacciones y asignar name y src para cada marca en esta mesa
-        for (let j = 0; j < 3; j++) {
-            const randomInteractionIndex = Math.floor(Math.random() * 3);
-            const brand = {
-            table: i+1,
-            name: brands[j].name,
-            src: brands[j].src,
-            bonification: interactions[randomInteractionIndex]
-            };
-            table.push(brand);
-        }
-
-        tables.push(table);
+// CHANGE HERE THE INFORMATION OF THE BRANDS 
+// MAKE SHURE THAT THE NAME MATCH WITH THE SRC IMAGE
+const BRANDS_INFO = {
+    BRAND_1: {
+        name: "Samsung",
+        src: samsungSVG
+    },
+    BRAND_2: {
+        name: "Apple",
+        src: appleSVG
+    },
+    BRAND_3: {
+        name: "Xiaomi",
+        src: xiaomiSVG
     }
-    return tables
 }
+
+const BRANDS = [
+    BRANDS_INFO.BRAND_1.name,
+    BRANDS_INFO.BRAND_2.name,
+    BRANDS_INFO.BRAND_3.name,
+]
 
 export const APP_DATA = {
     APP_TITLE: "APP TITLE",
@@ -106,7 +98,7 @@ export const APP_DATA = {
         GAME_CONFIGURATION:{
             pointsLabel: 'Puntos:',
             lifesLabel: 'Vidas:',
-            elementsNames: ['Samsung', 'Apple', 'Xiaomi'],
+            elementsNames: BRANDS,
             /* 
                 Bonifications must be same length of images/words 
                 The only functionality of points available are x2, x1, +1 
@@ -117,125 +109,158 @@ export const APP_DATA = {
                 [
                     {
                         "table": 1,
-                        "name": "Samsung",
-                        "src": samsungSVG,
+                        "name": BRANDS_INFO.BRAND_1.name,
+                        "src": BRANDS_INFO.BRAND_1.src,
                         "bonification": "nula",
                     },
                     {
                         "table": 1,
-                        "name": "Apple",
-                        "src": appleSVG,
+                        "name": BRANDS_INFO.BRAND_2.name,
+                        "src": BRANDS_INFO.BRAND_2.src,
                         "bonification": "mediadora",
                     },
                     {
                         "table": 1,
-                        "name": "Xiaomi",
-                        "src": xiaomiSVG,
+                        "name": BRANDS_INFO.BRAND_3.name,
+                        "src": BRANDS_INFO.BRAND_3.src,
                         "bonification": "premio",
                     }
                 ],
                 [
                     {
                         "table": 2,
-                        "name": "Samsung",
-                        "src": samsungSVG,
+                        "name": BRANDS_INFO.BRAND_1.name,
+                        "src": BRANDS_INFO.BRAND_1.src,
                         "bonification": "nula",
                     },
                     {
                         "table": 2,
-                        "name": "Apple",
-                        "src": appleSVG,
+                        "name": BRANDS_INFO.BRAND_2.name,
+                        "src": BRANDS_INFO.BRAND_2.src,
                         "bonification": "premio",
                     },
                     {
                         "table": 2,
-                        "name": "Xiaomi",
-                        "src": xiaomiSVG,
+                        "name": BRANDS_INFO.BRAND_3.name,
+                        "src": BRANDS_INFO.BRAND_3.src,
                         "bonification": "mediadora",
                     }
                 ],
                 [
                     {
                         "table": 3,
-                        "name": "Samsung",
-                        "src": samsungSVG,
+                        "name": BRANDS_INFO.BRAND_1.name,
+                        "src": BRANDS_INFO.BRAND_1.src,
                         "bonification": "premio",
                     },
                     {
                         "table": 3,
-                        "name": "Apple",
-                        "src": appleSVG,
+                        "name": BRANDS_INFO.BRAND_2.name,
+                        "src": BRANDS_INFO.BRAND_2.src,
                         "bonification": "nula",
                     },
                     {
                         "table": 3,
-                        "name": "Xiaomi",
-                        "src": xiaomiSVG,
+                        "name": BRANDS_INFO.BRAND_3.name,
+                        "src": BRANDS_INFO.BRAND_3.src,
                         "bonification": "mediadora",
                     }
                 ],
                 [
                     {
                         "table": 4,
-                        "name": "Samsung",
-                        "src": samsungSVG,
+                        "name": BRANDS_INFO.BRAND_1.name,
+                        "src": BRANDS_INFO.BRAND_1.src,
                         "bonification": "mediadora",
                     },
                     {
                         "table": 4,
-                        "name": "Apple",
-                        "src": appleSVG,
+                        "name": BRANDS_INFO.BRAND_2.name,
+                        "src": BRANDS_INFO.BRAND_2.src,
                         "bonification": "nula",
                     },
                     {
                         "table": 4,
-                        "name": "Xiaomi",
-                        "src": xiaomiSVG,
+                        "name": BRANDS_INFO.BRAND_3.name,
+                        "src": BRANDS_INFO.BRAND_3.src,
                         "bonification": "premio",
                     }
                 ],
                 [
                     {
                         "table": 5,
-                        "name": "Samsung",
-                        "src": samsungSVG,
+                        "name": BRANDS_INFO.BRAND_1.name,
+                        "src": BRANDS_INFO.BRAND_1.src,
                         "bonification": "mediadora",
                     },
                     {
                         "table": 5,
-                        "name": "Apple",
-                        "src": appleSVG,
+                        "name": BRANDS_INFO.BRAND_2.name,
+                        "src": BRANDS_INFO.BRAND_2.src,
                         "bonification": "premio",
                     },
                     {
                         "table": 5,
-                        "name": "Xiaomi",
-                        "src": xiaomiSVG,
+                        "name": BRANDS_INFO.BRAND_3.name,
+                        "src": BRANDS_INFO.BRAND_3.src,
                         "bonification": "nula",
                     }
                 ],
                 [
                     {
                         "table": 6,
-                        "name": "Samsung",
-                        "src": samsungSVG,
+                        "name": BRANDS_INFO.BRAND_1.name,
+                        "src": BRANDS_INFO.BRAND_1.src,
                         "bonification": "premio",
                     },
                     {
                         "table": 6,
-                        "name": "Apple",
-                        "src": appleSVG,
+                        "name": BRANDS_INFO.BRAND_2.name,
+                        "src": BRANDS_INFO.BRAND_2.src,
                         "bonification": "mediadora",
                     },
                     {
                         "table": 6,
-                        "name": "Xiaomi",
-                        "src": xiaomiSVG,
+                        "name": BRANDS_INFO.BRAND_3.name,
+                        "src": BRANDS_INFO.BRAND_3.src,
                         "bonification": "nula",
                     }
                 ],
 
             ],
+            lives: 3,
+            addLinesBlockTimer: 5000, // En milisegundos
+            brickBonification: 10, // Bonificacion para ruptra de bloque standar
+            brickStandardColor: '#CCCCCC',  // Color para bloques estándar
+            brickBonusColor: '#FFA500',  // Color para bloques con bonificacion
+            fallingElementVelocity: 0.8, // velocidad al caer las bonificaciones marcas
+            arrowColor: 'black',
+            paddleInformation: {
+                color: '#3498db',
+                width: 130, // largo del paddle
+                height: 20, // alto del paddle
+                borderRadius: 10, // Radio de las esquinas para hacerlo redondeado
+                speed: 4, // velocidad de movimiento
+            },
+            ballInformation:{
+                color: '#3498db',
+                size: 10, // Tamano
+                speed: 2, // velocidad
+                ballVelocityToAdd: 0.02 // velocidad incremental de la bola al colisionar
+            },
+            bonificationPointInfo:{
+                vy: 0.5, // velocidad de aparicion hacia arriba
+                timeToLive: 2, // tiempo de vida de la bonificacion
+                color: 'lightgreen', //color
+                shadowColor: 'rgba(255, 255, 0, 0.8)', //sombra
+            },
+            randomBricks:{
+                standarBrick: 80, // entre 0 y 80%
+                [BRANDS_INFO.BRAND_1.name]: 86, // entre 80 y 86
+                [BRANDS_INFO.BRAND_2.name]: 93, // entre 86 y 93
+                [BRANDS_INFO.BRAND_3.name]: 100, // entre 93 y 100
+            }
+
         }
     }
 }

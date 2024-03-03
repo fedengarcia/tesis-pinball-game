@@ -55,22 +55,26 @@ class BricksClass {
         this.gameEndModal = gameEndModal
         this.saveGameResults = saveGameResults
         this.getTimePlayed = getTimePlayed
-
+        this.lives = gameConfig.lives
+        this.standardColor = gameConfig.brickStandardColor;  // Color estándar para bloques
+        this.bonusColor = gameConfig.brickBonusColor;  // Color para bonificación nula
+        console.log(this.gameConfig)
         this.paddle = {
             x: this.canvas.width / 2 - 65,
             y: this.canvas.height - 20,
-            w: 130,
-            h: 20,
-            borderRadius: 10, // Radio de las esquinas para hacerlo redondeado
-            speed: 4,
+            w: gameConfig.paddleInformation.width,
+            h: gameConfig.paddleInformation.height,
+            borderRadius: gameConfig.paddleInformation.borderRadius, // Radio de las esquinas para hacerlo redondeado
+            speed: gameConfig.paddleInformation.speed,
+            color: gameConfig.paddleInformation.color,
             dx: 0,
             visible: true  
         }
         this.ball = {
             x: this.canvas.width / 2,
             y: this.paddle.y - 10, // Coloca la pelota justo encima del paddle
-            size: 10, // Tamano
-            speed: 2, // velocidad
+            size: gameConfig.ballInformation.size, // Tamano
+            speed: gameConfig.ballInformation.speed, // velocidad
             dx: 0, // Inicialmente no hay movimiento en x
             dy: 0, // Inicialmente no hay movimiento en y
             visible: true, // Indica si la pelota está lista visible o no
@@ -100,8 +104,10 @@ class BricksClass {
         }
 
         this.bonificationPointInfo = {
-            vy: 0.5,
-            timeToLive: 2,
+            vy: gameConfig.bonificationPointInfo.vy,
+            timeToLive: gameConfig.bonificationPointInfo.timeToLive,
+            color: gameConfig.bonificationPointInfo.color,
+            shadowColor: gameConfig.bonificationPointInfo.shadowColor,
         }
 
 
@@ -120,7 +126,7 @@ class BricksClass {
             if(this.inGame){
                 this.addNewBrickLine();
             }
-        }, 10000); // 5000 milisegundos = 5 segundos    
+        }, gameConfig.addLinesBlockTimer); // 5000 milisegundos = 5 segundos    
     }
 
 
@@ -169,7 +175,7 @@ class BricksClass {
             const randomElement = Math.random() * 100;
             if (randomElement < 80) element = { visible: true }
             else if (randomElement < 87) element = this.gameConfig.tables[0];
-            else if (randomElement < 95) element = this.gameConfig.tables[1];
+            else if (randomElement < 96) element = this.gameConfig.tables[1];
             else element = this.gameConfig.tables[2];
 
 
@@ -215,7 +221,7 @@ class BricksClass {
        this.elementsToFall.push({
             x: positionX,
             y: positionY,
-            vy: 0.8,
+            vy: this.gameConfig.fallingElementVelocity,
             element: brickElement,
             w: brickWidth, 
             h: brickHeight,
@@ -291,7 +297,7 @@ class BricksClass {
    // Draw ball on canvas
     drawBall() {
         const gradient = this.canvasContext.createRadialGradient(this.ball.x, this.ball.y, 0, this.ball.x, this.ball.y, this.ball.size);
-        gradient.addColorStop(0, '#3498db'); // Color principal
+        gradient.addColorStop(0, this.gameConfig.ballInformation.color); // Color principal
         gradient.addColorStop(1, '#2980b9'); // Color para sombra
 
         // Dibujar bola con gradiente
@@ -324,7 +330,7 @@ class BricksClass {
     drawPaddle() {
         // Establecer colores del gradiente
         const gradient = this.canvasContext.createLinearGradient(this.paddle.x, this.paddle.y, this.paddle.x, this.paddle.y + this.paddle.h);
-        gradient.addColorStop(0, '#3498db'); // Color principal
+        gradient.addColorStop(0, this.paddle.color); // Color principal
         gradient.addColorStop(1, '#2980b9'); // Color para resaltar o dar brillo
 
         // Dibujar paddle con bordes redondeados y borde negro
@@ -386,19 +392,19 @@ class BricksClass {
         this.canvasContext.lineTo(leftX, leftY);
         this.canvasContext.lineTo(rightX, rightY);
         this.canvasContext.closePath();
-        this.canvasContext.fillStyle = 'black';
+        this.canvasContext.fillStyle = this.gameConfig.arrowColor;
         this.canvasContext.fill();
         
 
         this.canvasContext.beginPath();
         this.canvasContext.moveTo(this.ball.x, this.ball.y);
         this.canvasContext.lineTo(endX, endY);
-        this.canvasContext.strokeStyle = 'black';
+        this.canvasContext.strokeStyle = this.gameConfig.arrowColor;
         this.canvasContext.lineWidth = 2;
         this.canvasContext.stroke();
     
     
-        this.canvasContext.strokeStyle = 'black';
+        this.canvasContext.strokeStyle = this.gameConfig.arrowColor;
         this.canvasContext.lineWidth = 1;
     }
 
@@ -540,7 +546,7 @@ class BricksClass {
     }
 
     // DRAW BONIFICATION POINTS
-    drawBonificationPoints(fontSize = 28, fontColor = 'green', fontFamily = 'Arial', glowColor = 'rgba(255, 255, 0, 0.8)') {
+    drawBonificationPoints(fontSize = 28, fontColor = this.bonificationPointInfo.color, fontFamily = 'Arial', shadowColor = this.bonificationPointInfo.shadowColor) {
         this.bonificationsPointsToDraw.forEach((bonification) => {
             // Dibujar el texto con sombra y brillo
             this.canvasContext.font = `${fontSize}px ${fontFamily}`;
@@ -549,7 +555,7 @@ class BricksClass {
             this.canvasContext.textBaseline = 'middle';
 
             // Configurar la sombra
-            this.canvasContext.shadowColor = glowColor;
+            this.canvasContext.shadowColor = shadowColor;
             this.canvasContext.shadowBlur = 10;
 
             // Dibujar el texto
