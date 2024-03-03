@@ -13,12 +13,6 @@ export default function Login() {
       setUserInfo((prevState) => ({...prevState, email: e.target.value}))
   }
 
-  useEffect(() => {
-    const cookieEmail =  getCookie()
-    if(cookieEmail?.email) {
-      handleLogin(cookieEmail?.email)
-    }
-  }, []);
 
 
   return (
