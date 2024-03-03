@@ -13,7 +13,6 @@ export default function Game() {
   const navigate = useNavigate()
   const {userInfo, setUserInfo, loadingLogin, setLoadingLogin} = useContext(UserContext)
   const [gameConfiguration, setGameConfiguration] = useState([])
-  const [gameResult, setGameResult] = useState(undefined)
   const [playingGame, setPlayingGame] = useState(false)
   const [gameStatus, setGameStatus] = useState('FIRST_TIME')
   const {popUp, modal} = useSweetAlert()
@@ -66,7 +65,6 @@ export default function Game() {
                     <Bricks
                       saveGameResults={saveGameResults}
                       gameConfiguration={gameConfiguration}
-                      setGameResult={setGameResult}
                       showBonification={showBonification}
                       endGameModal = {modal}
                     />
