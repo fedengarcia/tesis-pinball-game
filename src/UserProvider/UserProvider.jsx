@@ -7,18 +7,16 @@ import { useNavigate } from 'react-router-dom';
 export const UserProvider = ({children}) => {
     const COOKIE_NAME = 'tesis_user_logged'
     const [isLogged, setIsLogged]= useState(false);
-    const [userInfo, setUserInfo] = useState({
-        email: ''
-    })
+    const [userInfo, setUserInfo] = useState({})
     const [loadingLogin, setLoadingLogin] = useState(false)
     const navigate = useNavigate()
 
     useEffect(() => {
-        if(window.location.pathname!=="/admin-javiT2024"){
-            if(userInfo.email === '' && getCookie()?.email === '') navigate('/')
+        const cookieEmail =  getCookie()
+        if(cookieEmail?.email) {
+          handleLogin(cookieEmail?.email)
         }
-    }, [userInfo]);
-
+    }, []);
 
     const validateEmail = (email) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -30,7 +28,6 @@ export const UserProvider = ({children}) => {
         setLoadingLogin(true)
         let userInfoCopy = {...userInfo}
         let userExistingData = await getUserByEmail(email)
-        
         if(userExistingData){
             userInfoCopy = {...userExistingData}
         }else{
@@ -46,9 +43,10 @@ export const UserProvider = ({children}) => {
                 userInfoCopy.finalForm = {
                     isCompleted: false
                 }
-                    if(userInfoCopy.email !== '') {
-                        await createUserDocument(userInfoCopy)
-                    }
+                if(userInfoCopy.email) {
+                    const res = await createUserDocument(userInfoCopy)
+                    userInfoCopy.id = res.id
+                }
             } catch (error) {
                 alert("err")
                 console.log(error)
@@ -56,11 +54,15 @@ export const UserProvider = ({children}) => {
                 // navigate("/")
             }
         }
-        setCookie({email: email})
+        console.log("hola2",userInfoCopy)
+        setCookie({
+            email: email,
+            id: userInfoCopy.id
+        })
         setUserInfo(userInfoCopy)
         setIsLogged(true)
         setLoadingLogin(false)
-        if(window.location.pathname!=="/admin-javiT2024" && userInfo.email !== ''){
+        if(window.location.pathname !=="/admin-javiT2024" && userInfoCopy.id){
             navigate('/first-form')
         }
     }
