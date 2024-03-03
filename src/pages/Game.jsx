@@ -20,6 +20,7 @@ export default function Game() {
   
 
   useEffect(() => {
+    if(!userInfo.email) navigate('/')
     if(userInfo?.gamesPlayed?.length === 0) setGameStatus('FIRST_TIME')
     if(userInfo?.gamesPlayed?.length === 1) setGameStatus('SECOND_TIME')
     if(userInfo?.gamesPlayed?.length >= 2) setGameStatus('GAME_FINISH')
@@ -44,7 +45,7 @@ export default function Game() {
     setLoadingLogin(true)
     if(loadingLogin) return
     let userInfoCopy = {...userInfo}
-    userInfoCopy.gamesPlayed = [...userInfoCopy.gamesPlayed, gameResult]
+    userInfoCopy.gamesPlayed.push(game)
     await addGameToUserGamesPlayed(game, userInfoCopy).then(res => {
       console.log(res)
       setUserInfo(userInfoCopy)
