@@ -253,12 +253,13 @@ export const APP_DATA = {
                 timeToLive: 2, // tiempo de vida de la bonificacion
                 color: 'lightgreen', //color
                 shadowColor: 'rgba(255, 255, 0, 0.8)', //sombra
+                bonificationValue: 2 //puntuacion de bonificacion
             },
             randomBricks:{
-                standarBrick: 80, // entre 0 y 80%
-                [BRANDS_INFO.BRAND_1.name]: 86, // entre 80 y 86
-                [BRANDS_INFO.BRAND_2.name]: 93, // entre 86 y 93
-                [BRANDS_INFO.BRAND_3.name]: 100, // entre 93 y 100
+                standardBrick: 80, // entre 0 y 80%
+                brand1: 86, // entre 80 y 86
+                brand2: 93, // entre 86 y 93
+                brand3: 100, // entre 93 y 100
             }
 
         }

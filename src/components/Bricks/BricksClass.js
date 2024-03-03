@@ -58,7 +58,8 @@ class BricksClass {
         this.lives = gameConfig.lives
         this.standardColor = gameConfig.brickStandardColor;  // Color estándar para bloques
         this.bonusColor = gameConfig.brickBonusColor;  // Color para bonificación nula
-        console.log(this.gameConfig)
+
+        // PADDLE
         this.paddle = {
             x: this.canvas.width / 2 - 65,
             y: this.canvas.height - 20,
@@ -70,6 +71,8 @@ class BricksClass {
             dx: 0,
             visible: true  
         }
+
+        // BALL
         this.ball = {
             x: this.canvas.width / 2,
             y: this.paddle.y - 10, // Coloca la pelota justo encima del paddle
@@ -81,7 +84,7 @@ class BricksClass {
             readyToLunch: true // Indica si la pelota está lista para ser lanzada
         };
         
-
+        // BRICK INFO
         this.brickInfo = {
             w: 100,
             h: 20,
@@ -91,6 +94,7 @@ class BricksClass {
             visible: true
         }
 
+        // PARTICLE INFO
         this.particleInfo = {
             w: 1,
             h: 1,    
@@ -103,11 +107,13 @@ class BricksClass {
             }
         }
 
+        // BONIFICATION POINT
         this.bonificationPointInfo = {
             vy: gameConfig.bonificationPointInfo.vy,
             timeToLive: gameConfig.bonificationPointInfo.timeToLive,
             color: gameConfig.bonificationPointInfo.color,
             shadowColor: gameConfig.bonificationPointInfo.shadowColor,
+            shadowColor: gameConfig.bonificationPointInfo.bonificationValue,
         }
 
 
@@ -144,9 +150,9 @@ class BricksClass {
                     // % random
                     let element = null;
                     const randomElement = Math.random() * 100;
-                    if (randomElement < 80) element = { visible: true }
-                    else if (randomElement < 87) element = this.gameConfig.tables[0];
-                    else if (randomElement < 95) element = this.gameConfig.tables[1];
+                    if (randomElement < this.gameConfig.randomBricks.standardBrick) element = { visible: true }
+                    else if (randomElement < this.gameConfig.randomBricks.brand1) element = this.gameConfig.tables[0];
+                    else if (randomElement < this.gameConfig.randomBricks.brand2) element = this.gameConfig.tables[1];
                     else element = this.gameConfig.tables[2];
     
                     // Selección del color según la bonificación del ladrillo
@@ -173,9 +179,9 @@ class BricksClass {
             // Generar elemento de ladrillo aleatorio
             let element = null;
             const randomElement = Math.random() * 100;
-            if (randomElement < 80) element = { visible: true }
-            else if (randomElement < 87) element = this.gameConfig.tables[0];
-            else if (randomElement < 96) element = this.gameConfig.tables[1];
+            if (randomElement < this.gameConfig.randomBricks.standardBrick) element = { visible: true }
+            else if (randomElement < this.gameConfig.randomBricks.brand1) element = this.gameConfig.tables[0];
+            else if (randomElement < this.gameConfig.randomBricks.brand2) element = this.gameConfig.tables[1];
             else element = this.gameConfig.tables[2];
 
 
@@ -629,8 +635,8 @@ class BricksClass {
                     // save interaction with element
                     this.interactions[elementFalling.element.name+"InPaddle"] = this.interactions[elementFalling.element.name+"InPaddle"] + 1
 
-                    if (elementFalling.element.bonification === "premio" || elementFalling.element.bonification === "nula") {
-                        this.score = this.score + 2
+                    if (elementFalling.element.bonification === "premio") {
+                        this.score += this.bonificationPointInfo.bonificationValue
                         this.createBonificationPoints(this.paddle.x, this.paddle.y)
                         this.setScore(this.score)
                         // Marca la bonificación como aplicada
