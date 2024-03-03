@@ -47,7 +47,6 @@ export default function Game() {
     let userInfoCopy = {...userInfo}
     userInfoCopy.gamesPlayed.push(game)
     await addGameToUserGamesPlayed(game, userInfoCopy).then(res => {
-      console.log(res)
       setUserInfo(userInfoCopy)
     }).finally(() => {
       setPlayingGame(false)

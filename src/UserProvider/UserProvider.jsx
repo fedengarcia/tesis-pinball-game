@@ -48,16 +48,13 @@ export const UserProvider = ({children}) => {
                     userInfoCopy.id = res.id
                 }
             } catch (error) {
-                alert("err")
                 console.log(error)
                 setLoadingLogin(false)
                 // navigate("/")
             }
         }
-        console.log("hola2",userInfoCopy)
         setCookie({
             email: email,
-            id: userInfoCopy.id
         })
         setUserInfo(userInfoCopy)
         setIsLogged(true)

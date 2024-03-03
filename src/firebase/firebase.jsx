@@ -65,7 +65,6 @@ export const getUserByEmail = async (email) => {
 
 
   export const addGameToUserGamesPlayed = async (gameData, userData) => {
-    console.log("ACA =>", gameData, userData);
     try {
       // Referencia a la colección de usuarios
       const usuariosCollection = collection(firebaseDB, "usuarios");
@@ -92,7 +91,6 @@ export const getUserByEmail = async (email) => {
         transaction.update(userDocRef, { gamesPlayed: updatedGamesPlayed });
       });
   
-      console.log("Juego agregado correctamente al usuario.");
       return true;
     } catch (error) {
       console.error("Error al agregar juego a gamesPlayed:", error.message);
