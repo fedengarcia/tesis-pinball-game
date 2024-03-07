@@ -32,11 +32,11 @@ export default function Game() {
     }, []);
 
 
-  const showBonification = (message, timer) =>{
+  const showBonification = (message, timer, popUpPosition) =>{
     return popUp({
       message: message,
       timer: timer,
-      popUpPosition:'bottom',
+      popUpPosition: popUpPosition
     })
   }
 
