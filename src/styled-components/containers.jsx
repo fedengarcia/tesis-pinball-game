@@ -2,7 +2,7 @@ import { styled } from "@mui/system";
 
 export const StyledLayoutContent = styled('div')`
     width: 900px;
-    height: 750px;
+    height: 560px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
