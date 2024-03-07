@@ -68,6 +68,7 @@ class BricksClass {
             borderRadius: gameConfig.paddleInformation.borderRadius, // Radio de las esquinas para hacerlo redondeado
             speed: gameConfig.paddleInformation.speed,
             color: gameConfig.paddleInformation.color,
+            bonificationDuration: gameConfig.paddleInformation.bonificationDuration,
             dx: 0,
             visible: true  
         }
@@ -526,6 +527,7 @@ class BricksClass {
             this.canvasContext.restore();
         }
     });
+
     }
 
     // DRAW PARTICLES EFFECTS
@@ -615,7 +617,7 @@ class BricksClass {
     // UPDATE FALLING ELEMENT FUNCION 
     fallingElement() {
         this.elementsToFall = this.elementsToFall.filter(elementFalling => {
-            elementFalling.y += elementFalling.vy;
+            elementFalling.y += elementFalling.element.bonification === "nula" ? 0 : elementFalling.vy;
 
             if (
                 elementFalling.x < this.paddle.x + this.paddle.w &&
@@ -648,19 +650,17 @@ class BricksClass {
                                 requestAnimationFrame(animatePaddle);
                             } else {
                                 // La animación ha terminado, puedes realizar acciones adicionales aquí
-                                this.showBonification('AGRANDAS PADDLE !', 4000)
+                                this.showBonification('AGRANDAS PADDLE !', this.paddle.bonificationDuration)
                                 setTimeout(() => {
                                     // Inicia la animación para achicar la barra después de un tiempo de espera
                                     if(!this.ball.readyToLunch) this.shrinkPaddle();
-                                }, 4000); // Espera 1 segundo antes de achicar la barra
+                                }, this.paddle.bonificationDuration); // Espera x segundo antes de achicar la barra
                             }
                         };
 
                         animatePaddle(startTime);
                         // Marca la bonificación como aplicada
-                    } else if (elementFalling.element.bonification === "nula") {
-                        // Falta resolver
-                    }
+                    } 
                     elementFalling.appliedBonification = true;
                 }
                 return false;

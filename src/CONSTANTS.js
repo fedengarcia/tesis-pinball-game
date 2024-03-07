@@ -236,6 +236,7 @@ export const APP_DATA = {
                 height: 20, // alto del paddle
                 borderRadius: 10, // Radio de las esquinas para hacerlo redondeado
                 speed: 4, // velocidad de movimiento
+                bonificationDuration: 12000
             },
             ballInformation:{
                 color: '#3498db',
