@@ -11,7 +11,7 @@ class Bricks extends React.Component{
 	context;
 	canvasConfig = {
 		width: 900,
-		height: 750,
+		height: 560,
 	}
   
 	scaleRatio = {
