@@ -834,14 +834,8 @@ class BricksClass {
         this.ball.dx = 0; 
         this.ball.dy = 0;
         this.ball.readyToLunch = true;
+        this.ball.speed = this.gameConfig.ballInformation.speed
     }
-
-    // Make all bricks appear
-    showAllBricks () {
-        this.bricks?.forEach(column => {
-            column.forEach(brick => (brick.visible = true));
-        });
-    } 
 
     // GAME OVER
     gameOver() {
