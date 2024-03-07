@@ -112,8 +112,8 @@ class BricksClass {
             vy: gameConfig.bonificationPointInfo.vy,
             timeToLive: gameConfig.bonificationPointInfo.timeToLive,
             color: gameConfig.bonificationPointInfo.color,
-            shadowColor: gameConfig.bonificationPointInfo.shadowColor,
-            shadowColor: gameConfig.bonificationPointInfo.bonificationValue,
+            bonificationValue: gameConfig.bonificationPointInfo.bonificationValue,
+            fontSize: gameConfig.bonificationPointInfo.fontSize,
         }
 
 
@@ -552,7 +552,7 @@ class BricksClass {
     }
 
     // DRAW BONIFICATION POINTS
-    drawBonificationPoints(fontSize = 28, fontColor = this.bonificationPointInfo.color, fontFamily = 'Arial', shadowColor = this.bonificationPointInfo.shadowColor) {
+    drawBonificationPoints(fontSize = this.bonificationPointInfo.fontSize, fontColor = this.bonificationPointInfo.color, fontFamily = 'Arial') {
         this.bonificationsPointsToDraw.forEach((bonification) => {
             // Dibujar el texto con sombra y brillo
             this.canvasContext.font = `${fontSize}px ${fontFamily}`;
@@ -560,16 +560,9 @@ class BricksClass {
             this.canvasContext.textAlign = 'center';
             this.canvasContext.textBaseline = 'middle';
 
-            // Configurar la sombra
-            this.canvasContext.shadowColor = shadowColor;
-            this.canvasContext.shadowBlur = 10;
-
             // Dibujar el texto
-            this.canvasContext.fillText('+2', bonification.x, bonification.y);
+            this.canvasContext.fillText('+100', bonification.x, bonification.y);
 
-            // Restaurar la configuración de sombra
-            this.canvasContext.shadowColor = 'transparent';
-            this.canvasContext.shadowBlur = 0;
         });
     }
 
@@ -753,15 +746,16 @@ class BricksClass {
                             if(brick.element.bonification) {
                                 this.createElementToFall(brick.x, brick.y, brick.element, brick.w, brick.h, brick.brickColor)
                                 this.interactions[brick.element.name+"InBrick"] = this.interactions[brick.element.name+"InBrick"] + 1
+                            }else{
+                                this.score = this.score + this.gameConfig.brickBonification;
+                                this.setScore(this.score)
                             }
                             brick.visible = false;
                         }
-                        this.ball.speed += 0.02;
+                        this.ball.speed += 0.005;
                         setTimeout(() => {
                             this.createParticlesBrokenEffect(brick, 100)
                         }, 50);
-                        this.score = this.score + 1;
-                        this.setScore(this.score)
                     }
                 }
             });

@@ -224,7 +224,7 @@ export const APP_DATA = {
 
             ],
             lives: 3,
-            addLinesBlockTimer: 5000, // En milisegundos
+            addLinesBlockTimer: 10000, // En milisegundos -> Progresivo hasta 5 segundos
             brickBonification: 10, // Bonificacion para ruptra de bloque standar
             brickStandardColor: '#CCCCCC',  // Color para bloques estándar
             brickBonusColor: '#FFA500',  // Color para bloques con bonificacion
@@ -246,9 +246,10 @@ export const APP_DATA = {
             bonificationPointInfo:{
                 vy: 0.5, // velocidad de aparicion hacia arriba
                 timeToLive: 2, // tiempo de vida de la bonificacion
-                color: 'lightgreen', //color
+                color: '£FFA500', //color
                 shadowColor: 'rgba(255, 255, 0, 0.8)', //sombra
-                bonificationValue: 2 //puntuacion de bonificacion
+                bonificationValue: 100, //puntuacion de bonificacion
+                fontSize: 40
             },
             randomBricks:{
                 standardBrick: 80, // entre 0 y 80%
