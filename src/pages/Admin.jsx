@@ -85,12 +85,12 @@ function Admin() {
                 <th>Fecha</th>
                 <th>Tiempo de juego</th>
                 <th>Puntuación</th>
-                <th>Recogido marca {configCopy.elementsNames[0]}</th>
-                <th>Recogido marca {configCopy.elementsNames[1]}</th>
-                <th>Recogido marca {configCopy.elementsNames[2]}</th>
                 <th>Golpeado marca {configCopy.elementsNames[0]}</th>
                 <th>Golpeado marca {configCopy.elementsNames[1]}</th>
                 <th>Golpeado marca {configCopy.elementsNames[2]}</th>
+                <th>Recogido marca {configCopy.elementsNames[0]}</th>
+                <th>Recogido marca {configCopy.elementsNames[1]}</th>
+                <th>Recogido marca {configCopy.elementsNames[2]}</th>
               </tr>
             </thead>
             <tbody>
