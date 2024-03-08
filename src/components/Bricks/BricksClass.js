@@ -209,7 +209,7 @@ class BricksClass {
     }
     
 
-    createParticlesBrokenEffect(brick, count) {
+    createParticlesBrokenEffect(brick, count, isElementFall) {
         const centerX = brick.x + brick.w / 2;
         const centerY = brick.y + brick.h / 2;
 
@@ -503,18 +503,24 @@ class BricksClass {
             this.canvasContext.arc(
                 elementToFall.x + 35, // Centro x de la burbuja
                 elementToFall.y + 35, // Centro y de la burbuja
-                40, // Radio de la burbuja
+                30, // Radio de la burbuja
                 0,
                 Math.PI * 2
             );
 
             // Aplicar estilos a la burbuja
             let bubbleGradient = this.canvasContext.createRadialGradient(elementToFall.x + 35, elementToFall.y + 35, 20, elementToFall.x + 35, elementToFall.y + 35, 40);
-            bubbleGradient.addColorStop(0, elementToFall.brickColor);
+            bubbleGradient.addColorStop(0, 'white');
             bubbleGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-
             this.canvasContext.fillStyle = bubbleGradient;
             this.canvasContext.fill();
+            this.canvasContext.closePath();
+
+            // Aplicar estilos al círculo
+            this.canvasContext.strokeStyle = this.bonusColor; // Color del borde del círculo
+            this.canvasContext.lineWidth = 2; // Grosor del borde del círculo
+
+            this.canvasContext.stroke();
             this.canvasContext.closePath();
 
             // Reducir el tamaño de la imagen
@@ -615,15 +621,15 @@ class BricksClass {
     }
 
     // UPDATE FALLING ELEMENT FUNCION 
-    fallingElement() {
+    updateElementToFall() {
         this.elementsToFall = this.elementsToFall.filter(elementFalling => {
             elementFalling.y += elementFalling.element.bonification === "nula" ? 0 : elementFalling.vy;
-
+            console.log(elementFalling.y + 25)
             if (
                 elementFalling.x < this.paddle.x + this.paddle.w &&
                 elementFalling.x + elementFalling.w > this.paddle.x &&
-                elementFalling.y < this.paddle.y + this.paddle.h &&
-                elementFalling.y + elementFalling.h > this.paddle.y
+                elementFalling.y < this.paddle.y + this.paddle.h + 50 &&
+                elementFalling.y + elementFalling.h + 50 > this.paddle.y
             ) {
                 // Verificar si la bonificación ya se aplicó
                 if (!elementFalling.appliedBonification) {
@@ -662,6 +668,13 @@ class BricksClass {
                         // Marca la bonificación como aplicada
                     } 
                     elementFalling.appliedBonification = true;
+                    setTimeout(() => {
+                        this.createParticlesBrokenEffect({
+                            ...elementFalling,
+                             brickColor: this.bonusColor,
+                            y: elementFalling.y + 40
+                            }, 100)
+                    }, 50);
                 }
                 return false;
             }
@@ -699,7 +712,7 @@ class BricksClass {
         this.gameConfig.height *= scaleRatio.yRatio;
         this.movePaddle();  
         this.moveBall()
-        this.fallingElement()
+        this.updateElementToFall()
         this.updateBrokenBrickEffect()
         this.updateShowPointsNotification()
     }
