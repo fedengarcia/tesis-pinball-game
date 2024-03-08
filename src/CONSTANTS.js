@@ -1,6 +1,7 @@
 import appleSVG from './assets/apple-logo.svg'
 import samsungSVG from './assets/samsung-logo.svg'
 import xiaomiSVG from './assets/xiaomi-logo.svg'
+import brickTexture from './assets/wallTexture.jpg'
 
 // CHANGE HERE THE INFORMATION OF THE BRANDS 
 // MAKE SHURE THAT THE NAME MATCH WITH THE SRC IMAGE
@@ -230,6 +231,7 @@ export const APP_DATA = {
             brickBonusColor: '#FFA500',  // Color para bloques con bonificacion
             fallingElementVelocity: 0.8, // velocidad al caer las bonificaciones marcas
             arrowColor: 'black',
+            brickTexture: brickTexture,
             paddleInformation: {
                 color: '#3498db',
                 width: 130, // largo del paddle

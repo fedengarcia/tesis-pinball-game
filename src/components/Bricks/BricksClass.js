@@ -92,7 +92,8 @@ class BricksClass {
             padding: 6,
             offsetX: 35,
             offsetY: 80,
-            visible: true
+            visible: true,
+            src: gameConfig.brickTexture
         }
 
         // PARTICLE INFO
