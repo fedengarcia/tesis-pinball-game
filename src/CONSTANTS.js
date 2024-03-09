@@ -1,22 +1,15 @@
-import appleSVG from './assets/apple-logo.svg'
-import samsungSVG from './assets/samsung-logo.svg'
-import xiaomiSVG from './assets/xiaomi-logo.svg'
-import brickTexture from './assets/wallTexture.jpg'
 
 // CHANGE HERE THE INFORMATION OF THE BRANDS 
 // MAKE SHURE THAT THE NAME MATCH WITH THE SRC IMAGE
 const BRANDS_INFO = {
     BRAND_1: {
         name: "Samsung",
-        src: samsungSVG
     },
     BRAND_2: {
         name: "Apple",
-        src: appleSVG
     },
     BRAND_3: {
         name: "Xiaomi",
-        src: xiaomiSVG
     }
 }
 
@@ -106,19 +99,16 @@ export const APP_DATA = {
                     {
                         "table": 1,
                         "name": BRANDS_INFO.BRAND_1.name,
-                        "src": BRANDS_INFO.BRAND_1.src,
                         "bonification": "nula",
                     },
                     {
                         "table": 1,
                         "name": BRANDS_INFO.BRAND_2.name,
-                        "src": BRANDS_INFO.BRAND_2.src,
                         "bonification": "mediadora",
                     },
                     {
                         "table": 1,
                         "name": BRANDS_INFO.BRAND_3.name,
-                        "src": BRANDS_INFO.BRAND_3.src,
                         "bonification": "premio",
                     }
                 ],
@@ -126,19 +116,16 @@ export const APP_DATA = {
                     {
                         "table": 2,
                         "name": BRANDS_INFO.BRAND_1.name,
-                        "src": BRANDS_INFO.BRAND_1.src,
                         "bonification": "nula",
                     },
                     {
                         "table": 2,
                         "name": BRANDS_INFO.BRAND_2.name,
-                        "src": BRANDS_INFO.BRAND_2.src,
                         "bonification": "premio",
                     },
                     {
                         "table": 2,
                         "name": BRANDS_INFO.BRAND_3.name,
-                        "src": BRANDS_INFO.BRAND_3.src,
                         "bonification": "mediadora",
                     }
                 ],
@@ -146,19 +133,16 @@ export const APP_DATA = {
                     {
                         "table": 3,
                         "name": BRANDS_INFO.BRAND_1.name,
-                        "src": BRANDS_INFO.BRAND_1.src,
                         "bonification": "premio",
                     },
                     {
                         "table": 3,
                         "name": BRANDS_INFO.BRAND_2.name,
-                        "src": BRANDS_INFO.BRAND_2.src,
                         "bonification": "nula",
                     },
                     {
                         "table": 3,
                         "name": BRANDS_INFO.BRAND_3.name,
-                        "src": BRANDS_INFO.BRAND_3.src,
                         "bonification": "mediadora",
                     }
                 ],
@@ -166,19 +150,16 @@ export const APP_DATA = {
                     {
                         "table": 4,
                         "name": BRANDS_INFO.BRAND_1.name,
-                        "src": BRANDS_INFO.BRAND_1.src,
                         "bonification": "mediadora",
                     },
                     {
                         "table": 4,
                         "name": BRANDS_INFO.BRAND_2.name,
-                        "src": BRANDS_INFO.BRAND_2.src,
                         "bonification": "nula",
                     },
                     {
                         "table": 4,
                         "name": BRANDS_INFO.BRAND_3.name,
-                        "src": BRANDS_INFO.BRAND_3.src,
                         "bonification": "premio",
                     }
                 ],
@@ -186,19 +167,16 @@ export const APP_DATA = {
                     {
                         "table": 5,
                         "name": BRANDS_INFO.BRAND_1.name,
-                        "src": BRANDS_INFO.BRAND_1.src,
                         "bonification": "mediadora",
                     },
                     {
                         "table": 5,
                         "name": BRANDS_INFO.BRAND_2.name,
-                        "src": BRANDS_INFO.BRAND_2.src,
                         "bonification": "premio",
                     },
                     {
                         "table": 5,
                         "name": BRANDS_INFO.BRAND_3.name,
-                        "src": BRANDS_INFO.BRAND_3.src,
                         "bonification": "nula",
                     }
                 ],
@@ -206,19 +184,16 @@ export const APP_DATA = {
                     {
                         "table": 6,
                         "name": BRANDS_INFO.BRAND_1.name,
-                        "src": BRANDS_INFO.BRAND_1.src,
                         "bonification": "premio",
                     },
                     {
                         "table": 6,
                         "name": BRANDS_INFO.BRAND_2.name,
-                        "src": BRANDS_INFO.BRAND_2.src,
                         "bonification": "mediadora",
                     },
                     {
                         "table": 6,
                         "name": BRANDS_INFO.BRAND_3.name,
-                        "src": BRANDS_INFO.BRAND_3.src,
                         "bonification": "nula",
                     }
                 ],
@@ -231,7 +206,6 @@ export const APP_DATA = {
             brickBonusColor: '#FFA500',  // Color para bloques con bonificacion
             fallingElementVelocity: 0.8, // velocidad al caer las bonificaciones marcas
             arrowColor: 'black',
-            brickTexture: brickTexture,
             paddleInformation: {
                 color: '#3498db',
                 width: 130, // largo del paddle
