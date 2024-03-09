@@ -755,7 +755,7 @@ class BricksClass {
         this.ball.x += this.ball.dx;
         this.ball.y += this.ball.dy;
         
-        // this.checkBottomCollision()
+        this.checkBottomCollision()
         this.checkBorderCanvasCollision()
         this.checkPaddleCollision()
         this.checkBrickCollision()
