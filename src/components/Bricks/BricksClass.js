@@ -251,7 +251,8 @@ class BricksClass {
             element: brickElement,
             w: brickWidth, 
             h: brickHeight,
-            brickColor 
+            brickColor,
+            startTime: Date.now()  // Agregar tiempo de inicio
         })
     }
 
@@ -647,9 +648,19 @@ class BricksClass {
 
     // UPDATE FALLING ELEMENT FUNCION 
     updateElementToFall() {
-
+        const currentTime = Date.now();
         this.elementsToFall = this.elementsToFall.filter(elementFalling => {
-            elementFalling.y += elementFalling.element.bonification === "nula" ? 0 : elementFalling.vy;
+
+            if (elementFalling.element.bonification === "nula") {
+                if (!elementFalling.startTime) {
+                    elementFalling.startTime = currentTime;
+                } else if (currentTime - elementFalling.startTime > 3000) {
+                    return false;
+                }
+            } else {
+                elementFalling.y += elementFalling.vy;
+            }
+
             if (
                 elementFalling.x < this.paddle.x + this.paddle.w &&
                 elementFalling.x + elementFalling.w > this.paddle.x &&
@@ -762,7 +773,7 @@ class BricksClass {
         this.ball.x += this.ball.dx;
         this.ball.y += this.ball.dy;
         
-        this.checkBottomCollision()
+        // this.checkBottomCollision()
         this.checkBorderCanvasCollision()
         this.checkPaddleCollision()
         this.checkBrickCollision()
