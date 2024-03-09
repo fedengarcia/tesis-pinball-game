@@ -211,13 +211,13 @@ export const APP_DATA = {
                 width: 130, // largo del paddle
                 height: 20, // alto del paddle
                 borderRadius: 10, // Radio de las esquinas para hacerlo redondeado
-                speed: 6, // velocidad de movimiento
+                speed: 5, // velocidad de movimiento
                 bonificationDuration: 12000
             },
             ballInformation:{
                 color: '#3498db',
                 size: 10, // Tamano
-                speed: 4, // velocidad
+                speed: 2, // velocidad
                 ballVelocityToAdd: 0.02 // velocidad incremental de la bola al colisionar
             },
             bonificationPointInfo:{
