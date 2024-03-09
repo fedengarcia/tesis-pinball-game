@@ -591,7 +591,7 @@ class BricksClass {
     }
 
     drawBackground(){
-        this.canvasContext.globalAlpha = 0.9;
+        this.canvasContext.globalAlpha = 0.7;
         this.canvasContext.drawImage(this.imageBackground, 0, 0, 900, 560)
         this.canvasContext.globalAlpha = 1;
     }
