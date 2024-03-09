@@ -787,7 +787,7 @@ class BricksClass {
                             }
                             brick.visible = false;
                         }
-                        this.ball.speed += 0.005;
+                        this.ball.speed += 1;
                         setTimeout(() => {
                             this.createParticlesBrokenEffect(brick, 100)
                         }, 50);
