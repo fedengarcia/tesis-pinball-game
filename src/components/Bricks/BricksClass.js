@@ -1,7 +1,6 @@
 import appleSVG from '../../assets/apple-logo.svg'
 import samsungSVG from '../../assets/samsung-logo.svg'
 import xiaomiSVG from '../../assets/xiaomi-logo.svg'
-import brickTexture from '../../assets/wallTexture.jpg'
 
 class BricksClass {
     canvas;
@@ -133,9 +132,6 @@ class BricksClass {
         this.elementsImages[gameConfig.elementsNames[0]].src = samsungSVG
         this.elementsImages[gameConfig.elementsNames[1]].src = appleSVG
         this.elementsImages[gameConfig.elementsNames[2]].src = xiaomiSVG
-
-        this.imageBackground = new Image();
-        this.imageBackground.src = brickTexture;
 
         this.inGame = false
         this.arrowAngle = Math.PI / 4; // Angulo inicial de la flecha (45 grados)
@@ -597,16 +593,15 @@ class BricksClass {
         });
     }
 
-    drawBackground(){
-        this.canvasContext.globalAlpha = 0.7;
-        this.canvasContext.drawImage(this.imageBackground, 0, 0, 900, 560)
-        this.canvasContext.globalAlpha = 1;
-    }
+    // drawBackground(){
+    //     this.canvasContext.globalAlpha = 0.7;
+    //     this.canvasContext.drawImage(this.imageBackground, 0, 0, 900, 560)
+    //     this.canvasContext.globalAlpha = 1;
+    // }
 
     // DRAW CANVAS 
     draw() {
         this.clearCanvas();
-        this.drawBackground();
         this.drawElementsToFall();
         this.drawBall();
         this.drawPaddle();
