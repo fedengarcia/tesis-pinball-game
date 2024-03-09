@@ -240,16 +240,17 @@ class BricksClass {
     }
 
     // Create element to fall
-     createElementToFall(positionX, positionY, brickElement, brickWidth, brickHeight, brickColor) {
-       this.elementsToFall.push({
+    createElementToFall(positionX, positionY, brickElement, brickWidth, brickHeight, brickColor) {
+        this.elementsToFall.push({
             x: positionX,
             y: positionY,
             vy: this.gameConfig.fallingElementVelocity,
             element: brickElement,
-            w: brickWidth, 
+            w: brickWidth,
             h: brickHeight,
-            brickColor 
-        })
+            brickColor,
+            startTime: Date.now()  // Agregar tiempo de inicio
+        });
     }
 
     // CREATE point bonification
@@ -642,70 +643,59 @@ class BricksClass {
             }
         });
     }
-
-    // UPDATE FALLING ELEMENT FUNCION 
     updateElementToFall() {
+        const currentTime = Date.now();
         this.elementsToFall = this.elementsToFall.filter(elementFalling => {
-            elementFalling.y += elementFalling.element.bonification === "nula" ? 0 : elementFalling.vy;
-            if (
+            if (elementFalling.element.bonification === "nula") {
+                if (!elementFalling.startTime) {
+                    elementFalling.startTime = currentTime;
+                } else if (currentTime - elementFalling.startTime > 3000) {
+                    return false;
+                }
+            } else {
+                elementFalling.y += elementFalling.vy;
+            }
+    
+            const isCollected = (
                 elementFalling.x < this.paddle.x + this.paddle.w &&
                 elementFalling.x + elementFalling.w > this.paddle.x &&
                 elementFalling.y < this.paddle.y + this.paddle.h + 50 &&
                 elementFalling.y + elementFalling.h + 50 > this.paddle.y
-            ) {
-                // Verificar si la bonificación ya se aplicó
+            );
+    
+            if (isCollected) {
                 if (!elementFalling.appliedBonification) {
-                    // save interaction with element
-                    this.interactions[elementFalling.element.name+"InPaddle"] = this.interactions[elementFalling.element.name+"InPaddle"] + 1
-
+                    this.interactions[elementFalling.element.name + "InPaddle"]++;
                     if (elementFalling.element.bonification === "premio") {
-                        this.score += this.bonificationPointInfo.bonificationValue
-                        this.createBonificationPoints(this.paddle.x, this.paddle.y)
-                        this.setScore(this.score)
-                        // Marca la bonificación como aplicada
+                        this.score += this.bonificationPointInfo.bonificationValue;
+                        this.createBonificationPoints(this.paddle.x, this.paddle.y);
+                        this.setScore(this.score);
                     } else if (elementFalling.element.bonification === "mediadora") {
                         const originalWidth = this.paddle.w;
                         const targetWidth = this.paddle.w + 30 > 160 ? this.paddle.w : this.paddle.w + 30;
                         const animationDuration = 100;
                         const startTime = performance.now();
-
                         const animatePaddle = (currentTime) => {
                             const elapsedTime = currentTime - startTime;
                             const progress = Math.min(elapsedTime / animationDuration, 1);
                             this.paddle.w = originalWidth + progress * (targetWidth - originalWidth);
-
                             if (progress < 1) {
                                 requestAnimationFrame(animatePaddle);
                             } else {
-                                // La animación ha terminado, puedes realizar acciones adicionales aquí
-                                this.showBonification('AGRANDAS PADDLE !', this.paddle.bonificationDuration)
+                                this.showBonification('AGRANDAS PADDLE !', this.paddle.bonificationDuration);
                                 setTimeout(() => {
-                                    // Inicia la animación para achicar la barra después de un tiempo de espera
-                                    if(!this.ball.readyToLunch) this.shrinkPaddle();
-                                }, this.paddle.bonificationDuration); // Espera x segundo antes de achicar la barra
+                                    if (!this.ball.readyToLunch) this.shrinkPaddle();
+                                }, this.paddle.bonificationDuration);
                             }
                         };
-
                         animatePaddle(startTime);
-                        // Marca la bonificación como aplicada
-                    } 
+                    }
                     elementFalling.appliedBonification = true;
-                    setTimeout(() => {
-                        this.createParticlesBrokenEffect({
-                            ...elementFalling,
-                             brickColor: this.bonusColor,
-                            y: elementFalling.y + 40
-                            }, 100)
-                    }, 50);
                 }
                 return false;
             }
-
-            if (elementFalling.y > this.canvas.height) {
-                return false;
-            }
-
-            return true;
+    
+            return elementFalling.y <= this.canvas.height;
         });
     }
 
