@@ -204,20 +204,20 @@ export const APP_DATA = {
             brickBonification: 10, // Bonificacion para ruptra de bloque standar
             brickStandardColor: '#CCCCCC',  // Color para bloques estándar
             brickBonusColor: '#FFA500',  // Color para bloques con bonificacion
-            fallingElementVelocity: 0.8, // velocidad al caer las bonificaciones marcas
+            fallingElementVelocity: 20, // velocidad al caer las bonificaciones marcas
             arrowColor: 'black',
             paddleInformation: {
                 color: '#3498db',
                 width: 130, // largo del paddle
                 height: 20, // alto del paddle
                 borderRadius: 10, // Radio de las esquinas para hacerlo redondeado
-                speed: 4, // velocidad de movimiento
+                speed: 10, // velocidad de movimiento
                 bonificationDuration: 12000
             },
             ballInformation:{
                 color: '#3498db',
                 size: 10, // Tamano
-                speed: 2, // velocidad
+                speed: 5, // velocidad
                 ballVelocityToAdd: 0.02 // velocidad incremental de la bola al colisionar
             },
             bonificationPointInfo:{
