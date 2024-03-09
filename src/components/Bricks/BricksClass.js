@@ -22,6 +22,8 @@ class BricksClass {
     particlesToDraw = []
     bonificationPointInfo = {}
     bonificationsPointsToDraw = []
+    levels = 3
+    actualLevel = 0
 
     // Bonifications colors bricks
     standardColor = '#CCCCCC';  // Color estándar para bloques
@@ -147,9 +149,14 @@ class BricksClass {
         
         setInterval(() => {
             if(this.inGame){
-                this.addNewBrickLine();
+                if(this.actualLevel < 3) 
+                    this.addNewBrickLine();
+                else{
+                    this.addNewBrickLine();
+                    this.addNewBrickLine();
+                }
             }
-        }, gameConfig.addLinesBlockTimer); // 5000 milisegundos = 5 segundos    
+        }, this.actualLevel === 0 ? gameConfig.addLinesBlockTimer : gameConfig.addLinesBlockTimer - 2000); 
     }
 
 
@@ -758,7 +765,7 @@ class BricksClass {
         this.ball.x += this.ball.dx;
         this.ball.y += this.ball.dy;
         
-        this.checkBottomCollision()
+        // this.checkBottomCollision()
         this.checkBorderCanvasCollision()
         this.checkPaddleCollision()
         this.checkBrickCollision()
@@ -766,6 +773,16 @@ class BricksClass {
 
     // CHECK BRICK COLLISION
     checkBrickCollision () {
+        const allBroken = this.bricks.every(column => column.every(brick => !brick.visible));
+
+
+        if(allBroken) {
+            this.showBonification('Avanzas de nivel', 2000, 'top')
+            this.resetBallAndPaddle()
+            this.createBricks()
+            this.inGame = false
+            this.actualLevel += 1
+        }
         // Brick collision
         this.bricks?.forEach((column, columnIndex) => {
             column.forEach((brick, brickIndex) => {
