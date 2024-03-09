@@ -217,7 +217,7 @@ export const APP_DATA = {
             ballInformation:{
                 color: '#3498db',
                 size: 10, // Tamano
-                speed: 18, // velocidad   5 para deploy
+                speed: 5, // velocidad   5 para deploy
                 ballVelocityToAdd: 0.02 // velocidad incremental de la bola al colisionar
             },
             bonificationPointInfo:{
