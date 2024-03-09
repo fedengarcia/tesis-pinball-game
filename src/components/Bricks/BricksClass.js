@@ -1,6 +1,7 @@
 import appleSVG from '../../assets/apple-logo.svg'
 import samsungSVG from '../../assets/samsung-logo.svg'
 import xiaomiSVG from '../../assets/xiaomi-logo.svg'
+import brickTexture from '../../assets/wallTexture.jpg'
 
 class BricksClass {
     canvas;
@@ -131,6 +132,8 @@ class BricksClass {
         this.elementsImages[gameConfig.elementsNames[1]].src = appleSVG
         this.elementsImages[gameConfig.elementsNames[2]].src = xiaomiSVG
 
+        this.imageBackground = new Image();
+        this.imageBackground.src = brickTexture;
 
         this.inGame = false
         this.arrowAngle = Math.PI / 4; // Angulo inicial de la flecha (45 grados)
@@ -452,7 +455,7 @@ class BricksClass {
                 gradient.addColorStop(1, 'rgba(0, 0, 0, 0)'); // Transparente hacia el exterior
 
                 // Borde con resplandor (efecto de neón)
-                this.drawStrokeWithGlow(x - 2, y - 2, w + 3, h + 3, 5, brick.visible ? 'rgba(255, 255, 255, 0.8)' : 'transparent');
+                this.drawStrokeWithGlow(x - 1, y - 1, w + 2, h + 2, 2.5, brick.visible ? 'black' : 'transparent');
 
                 // Borde del ladrillo
                 this.canvasContext.beginPath();
@@ -461,7 +464,7 @@ class BricksClass {
 
                 // Agregar borde negro
                 this.canvasContext.strokeStyle = brick.visible ? '#000' : 'transparent';
-                this.canvasContext.lineWidth = 2;
+                this.canvasContext.lineWidth = 1;
                 this.canvasContext.fill();
                 this.canvasContext.stroke();
                 this.canvasContext.closePath();
@@ -587,9 +590,16 @@ class BricksClass {
         });
     }
 
+    drawBackground(){
+        this.canvasContext.globalAlpha = 0.9;
+        this.canvasContext.drawImage(this.imageBackground, 0, 0, 900, 560)
+        this.canvasContext.globalAlpha = 1;
+    }
+
     // DRAW CANVAS 
     draw() {
         this.clearCanvas();
+        this.drawBackground();
         this.drawElementsToFall();
         this.drawBall();
         this.drawPaddle();
