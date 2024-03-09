@@ -756,6 +756,7 @@ class BricksClass {
 
     // CHECK BRICK COLLISION
     checkBrickCollision () {
+        
         // Brick collision
         this.bricks?.forEach((column, columnIndex) => {
             column.forEach((brick, brickIndex) => {
@@ -763,7 +764,7 @@ class BricksClass {
                     if (
                         this.ball.x - this.ball.size < brick.x + brick.w - 5 &&
                         this.ball.x + this.ball.size > brick.x &&
-                        this.ball.y - this.ball.size < brick.y + brick.h - 1 &&
+                        this.ball.y - this.ball.size < brick.y + brick.h - 5 &&
                         this.ball.y + this.ball.size > brick.y  
                     ) {
                         this.ball.dy *= -1;
