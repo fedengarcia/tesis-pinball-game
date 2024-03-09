@@ -47,7 +47,7 @@ export const StyledGameInfoContainer = styled('div')`
         align-items: center;
         justify-content: center;
         margin: 20px;
-        background-color: lightgrey;
+        background-color: white;
         color: black;
         font-size: 1.5em;
         border-radius: 8px;
@@ -57,7 +57,7 @@ export const StyledGameInfoContainer = styled('div')`
     .points{
         padding: 0.2em 0.5em;
         margin: 20px;
-        background-color: lightgrey;
+        background-color: white;
         color: black;
         font-size: 1.5em;
         border-radius: 8px;
@@ -69,7 +69,7 @@ export const StyledGameInfoContainer = styled('div')`
     .lifes{
         padding: 0.2em 0.5em;
         margin: 20px;
-        background-color: lightgrey;
+        background-color: white;
         color: black;
         font-size: 1.5em;
         border-radius: 8px;
