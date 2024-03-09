@@ -134,8 +134,8 @@ class BricksClass {
         this.elementsImages[gameConfig.elementsNames[1]].src = appleSVG
         this.elementsImages[gameConfig.elementsNames[2]].src = xiaomiSVG
 
-        // this.imageBackground = new Image();
-        // this.imageBackground.src = brickTexture;
+        this.imageBackground = new Image();
+        this.imageBackground.src = brickTexture;
 
         this.inGame = false
         this.arrowAngle = Math.PI / 4; // Angulo inicial de la flecha (45 grados)
@@ -247,17 +247,16 @@ class BricksClass {
     }
 
     // Create element to fall
-    createElementToFall(positionX, positionY, brickElement, brickWidth, brickHeight, brickColor) {
-        this.elementsToFall.push({
+     createElementToFall(positionX, positionY, brickElement, brickWidth, brickHeight, brickColor) {
+       this.elementsToFall.push({
             x: positionX,
             y: positionY,
             vy: this.gameConfig.fallingElementVelocity,
             element: brickElement,
-            w: brickWidth,
+            w: brickWidth, 
             h: brickHeight,
-            brickColor,
-            startTime: Date.now()  // Agregar tiempo de inicio
-        });
+            brickColor 
+        })
     }
 
     // CREATE point bonification
@@ -598,16 +597,16 @@ class BricksClass {
         });
     }
 
-    // drawBackground(){
-    //     this.canvasContext.globalAlpha = 0.7;
-    //     this.canvasContext.drawImage(this.imageBackground, 0, 0, 900, 560)
-    //     this.canvasContext.globalAlpha = 1;
-    // }
+    drawBackground(){
+        this.canvasContext.globalAlpha = 0.7;
+        this.canvasContext.drawImage(this.imageBackground, 0, 0, 900, 560)
+        this.canvasContext.globalAlpha = 1;
+    }
 
     // DRAW CANVAS 
     draw() {
         this.clearCanvas();
-        // this.drawBackground();
+        this.drawBackground();
         this.drawElementsToFall();
         this.drawBall();
         this.drawPaddle();
@@ -650,59 +649,70 @@ class BricksClass {
             }
         });
     }
+
+    // UPDATE FALLING ELEMENT FUNCION 
     updateElementToFall() {
-        const currentTime = Date.now();
         this.elementsToFall = this.elementsToFall.filter(elementFalling => {
-            if (elementFalling.element.bonification === "nula") {
-                if (!elementFalling.startTime) {
-                    elementFalling.startTime = currentTime;
-                } else if (currentTime - elementFalling.startTime > 3000) {
-                    return false;
-                }
-            } else {
-                elementFalling.y += elementFalling.vy;
-            }
-    
-            const isCollected = (
+            elementFalling.y += elementFalling.element.bonification === "nula" ? 0 : elementFalling.vy;
+            if (
                 elementFalling.x < this.paddle.x + this.paddle.w &&
                 elementFalling.x + elementFalling.w > this.paddle.x &&
                 elementFalling.y < this.paddle.y + this.paddle.h + 50 &&
                 elementFalling.y + elementFalling.h + 50 > this.paddle.y
-            );
-    
-            if (isCollected) {
+            ) {
+                // Verificar si la bonificación ya se aplicó
                 if (!elementFalling.appliedBonification) {
-                    this.interactions[elementFalling.element.name + "InPaddle"]++;
+                    // save interaction with element
+                    this.interactions[elementFalling.element.name+"InPaddle"] = this.interactions[elementFalling.element.name+"InPaddle"] + 1
+
                     if (elementFalling.element.bonification === "premio") {
-                        this.score += this.bonificationPointInfo.bonificationValue;
-                        this.createBonificationPoints(this.paddle.x, this.paddle.y);
-                        this.setScore(this.score);
+                        this.score += this.bonificationPointInfo.bonificationValue
+                        this.createBonificationPoints(this.paddle.x, this.paddle.y)
+                        this.setScore(this.score)
+                        // Marca la bonificación como aplicada
                     } else if (elementFalling.element.bonification === "mediadora") {
                         const originalWidth = this.paddle.w;
                         const targetWidth = this.paddle.w + 30 > 160 ? this.paddle.w : this.paddle.w + 30;
                         const animationDuration = 100;
                         const startTime = performance.now();
+
                         const animatePaddle = (currentTime) => {
                             const elapsedTime = currentTime - startTime;
                             const progress = Math.min(elapsedTime / animationDuration, 1);
                             this.paddle.w = originalWidth + progress * (targetWidth - originalWidth);
+
                             if (progress < 1) {
                                 requestAnimationFrame(animatePaddle);
                             } else {
-                                this.showBonification('AGRANDAS PADDLE !', this.paddle.bonificationDuration);
+                                // La animación ha terminado, puedes realizar acciones adicionales aquí
+                                this.showBonification('AGRANDAS PADDLE !', this.paddle.bonificationDuration)
                                 setTimeout(() => {
-                                    if (!this.ball.readyToLunch) this.shrinkPaddle();
-                                }, this.paddle.bonificationDuration);
+                                    // Inicia la animación para achicar la barra después de un tiempo de espera
+                                    if(!this.ball.readyToLunch) this.shrinkPaddle();
+                                }, this.paddle.bonificationDuration); // Espera x segundo antes de achicar la barra
                             }
                         };
+
                         animatePaddle(startTime);
-                    }
+                        // Marca la bonificación como aplicada
+                    } 
                     elementFalling.appliedBonification = true;
+                    setTimeout(() => {
+                        this.createParticlesBrokenEffect({
+                            ...elementFalling,
+                             brickColor: this.bonusColor,
+                            y: elementFalling.y + 40
+                            }, 100)
+                    }, 50);
                 }
                 return false;
             }
-    
-            return elementFalling.y <= this.canvas.height;
+
+            if (elementFalling.y > this.canvas.height) {
+                return false;
+            }
+
+            return true;
         });
     }
 
@@ -765,6 +775,7 @@ class BricksClass {
     checkBrickCollision () {
         const allBroken = this.bricks.every(column => column.every(brick => !brick.visible));
 
+
         if(allBroken) {
             this.showBonification('Avanzas de nivel', 2000, 'top')
             this.resetBallAndPaddle()
@@ -779,7 +790,7 @@ class BricksClass {
                     if (
                         this.ball.x - this.ball.size < brick.x + brick.w - 5 &&
                         this.ball.x + this.ball.size > brick.x &&
-                        this.ball.y - this.ball.size < brick.y + brick.h - 5 &&
+                        this.ball.y - this.ball.size < brick.y + brick.h - 1 &&
                         this.ball.y + this.ball.size > brick.y  
                     ) {
                         this.ball.dy *= -1;
@@ -793,6 +804,7 @@ class BricksClass {
                             }
                             brick.visible = false;
                         }
+                        this.ball.speed += 0.005;
                         setTimeout(() => {
                             this.createParticlesBrokenEffect(brick, 100)
                         }, 50);
