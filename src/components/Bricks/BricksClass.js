@@ -773,7 +773,7 @@ class BricksClass {
                     if (
                         this.ball.x - this.ball.size < brick.x + brick.w - 5 &&
                         this.ball.x + this.ball.size > brick.x &&
-                        this.ball.y - this.ball.size < brick.y + brick.h &&
+                        this.ball.y - this.ball.size < brick.y + brick.h - 1 &&
                         this.ball.y + this.ball.size > brick.y  
                     ) {
                         this.ball.dy *= -1;
@@ -816,7 +816,7 @@ class BricksClass {
     
             // Calcular el cambio de ángulo en base al punto de impacto
             // Este valor puede ajustarse para cambiar la "sensibilidad" del efecto
-            const angleChange = impactPoint / (this.paddle.w / 2); // Normalizado entre -1 y 1
+            const angleChange = impactPoint / (this.paddle.w - 4 / 2); // Normalizado entre -1 y 1
     
             // Ajustar la dirección en X de la pelota
             // Aquí ajustamos dx basándonos en el punto de impacto y algún factor de influencia
