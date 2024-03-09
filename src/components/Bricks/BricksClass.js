@@ -826,6 +826,7 @@ class BricksClass {
             // Ajustar la dirección en X de la pelota
             // Aquí ajustamos dx basándonos en el punto de impacto y algún factor de influencia
             this.ball.dx = this.ball.speed * angleChange;
+            this.ball.speed = 0.7
         }
     }
     
