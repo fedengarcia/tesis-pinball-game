@@ -1,6 +1,6 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import apple from '../../assets/apple-logo.svg'
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import appleSVG from '../../assets/apple-logo.svg'
+import samsungSVG from '../../assets/samsung-logo.svg'
+import xiaomiSVG from '../../assets/xiaomi-logo.svg'
 
 class BricksClass {
     canvas;
@@ -35,6 +35,8 @@ class BricksClass {
     gameEndModal = null
     saveGameResults = null
     getTimePlayed = null
+
+    elementsImages = {}
 
     constructor(canvas, canvasContext, gameConfig, setLives, setScore, setGameOver, showBonification, gameEndModal, saveGameResults, getTimePlayed) {
         this.canvas = canvas;
@@ -118,6 +120,16 @@ class BricksClass {
             fontSize: gameConfig.bonificationPointInfo.fontSize,
         }
 
+
+        this.elementsImages = {
+            [gameConfig.elementsNames[0]]:new Image(),
+            [gameConfig.elementsNames[1]]:new Image(),
+            [gameConfig.elementsNames[2]]:new Image()
+        }
+        
+        this.elementsImages[gameConfig.elementsNames[0]].src = samsungSVG
+        this.elementsImages[gameConfig.elementsNames[1]].src = appleSVG
+        this.elementsImages[gameConfig.elementsNames[2]].src = xiaomiSVG
 
 
         this.inGame = false
@@ -487,51 +499,51 @@ class BricksClass {
     drawElementsToFall () {
         this.elementsToFall.forEach((elementToFall) => {
         if(elementToFall.element.src){
-            let elementImage = new Image();
-            elementImage.src = elementToFall.element.src;
+            // let elementImage = new Image();
 
-            // Guardar el estado actual del contexto
-            this.canvasContext.save();
-
-            // Configurar las sombras para simular el efecto de burbuja
-            this.canvasContext.shadowColor = 'rgba(0, 0, 0, 0.3)';
-            this.canvasContext.shadowBlur = 15;
-            this.canvasContext.shadowOffsetX = 8;
-            this.canvasContext.shadowOffsetY = 8;
-
-            // Dibujar burbuja alrededor de la imagen
-            this.canvasContext.beginPath();
-            this.canvasContext.arc(
-                elementToFall.x + 35, // Centro x de la burbuja
-                elementToFall.y + 35, // Centro y de la burbuja
-                30, // Radio de la burbuja
-                0,
-                Math.PI * 2
-            );
-
-            // Aplicar estilos a la burbuja
-            let bubbleGradient = this.canvasContext.createRadialGradient(elementToFall.x + 35, elementToFall.y + 35, 20, elementToFall.x + 35, elementToFall.y + 35, 40);
-            bubbleGradient.addColorStop(0, 'white');
-            bubbleGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-            this.canvasContext.fillStyle = bubbleGradient;
-            this.canvasContext.fill();
-            this.canvasContext.closePath();
-
-            // Aplicar estilos al círculo
-            this.canvasContext.strokeStyle = this.bonusColor; // Color del borde del círculo
-            this.canvasContext.lineWidth = 2; // Grosor del borde del círculo
-
-            this.canvasContext.stroke();
-            this.canvasContext.closePath();
-
-            // Reducir el tamaño de la imagen
-            let imageSize = 50; // Tamaño deseado de la imagen dentro de la burbuja
-
-            // Dibujar la imagen en el centro de la burbuja
-            this.canvasContext.drawImage(elementImage, elementToFall.x + 35 - imageSize / 2, elementToFall.y + 35 - imageSize / 2, imageSize, imageSize);
-
-            // Restaurar el estado del contexto
-            this.canvasContext.restore();
+            // elementImage.src = elementToFall.element.src;
+            
+                // Guardar el estado actual del contexto
+                this.canvasContext.save();
+    
+                // Configurar las sombras para simular el efecto de burbuja
+                this.canvasContext.shadowColor = 'rgba(0, 0, 0, 0.3)';
+                this.canvasContext.shadowBlur = 15;
+                this.canvasContext.shadowOffsetX = 8;
+                this.canvasContext.shadowOffsetY = 8;
+    
+                // Dibujar burbuja alrededor de la imagen
+                this.canvasContext.beginPath();
+                this.canvasContext.arc(
+                    elementToFall.x + 35, // Centro x de la burbuja
+                    elementToFall.y + 35, // Centro y de la burbuja
+                    30, // Radio de la burbuja
+                    0,
+                    Math.PI * 2
+                );
+    
+                // Aplicar estilos a la burbuja
+                let bubbleGradient = this.canvasContext.createRadialGradient(elementToFall.x + 35, elementToFall.y + 35, 20, elementToFall.x + 35, elementToFall.y + 35, 40);
+                bubbleGradient.addColorStop(0, 'white');
+                bubbleGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                this.canvasContext.fillStyle = bubbleGradient;
+                this.canvasContext.fill();
+                this.canvasContext.closePath();
+    
+                // Aplicar estilos al círculo
+                this.canvasContext.strokeStyle = this.bonusColor; // Color del borde del círculo
+                this.canvasContext.lineWidth = 2; // Grosor del borde del círculo
+    
+                this.canvasContext.stroke();
+                this.canvasContext.closePath();
+    
+                // Reducir el tamaño de la imagen
+                let imageSize = 50; // Tamaño deseado de la imagen dentro de la burbuja
+    
+                // Dibujar la imagen en el centro de la burbuja
+                this.canvasContext.drawImage(this.elementsImages[elementToFall.element.name], elementToFall.x + 35 - imageSize / 2, elementToFall.y + 35 - imageSize / 2, imageSize, imageSize);
+                // Restaurar el estado del contexto
+                this.canvasContext.restore();
         }
     });
 
@@ -625,7 +637,6 @@ class BricksClass {
     updateElementToFall() {
         this.elementsToFall = this.elementsToFall.filter(elementFalling => {
             elementFalling.y += elementFalling.element.bonification === "nula" ? 0 : elementFalling.vy;
-            console.log(elementFalling.y + 25)
             if (
                 elementFalling.x < this.paddle.x + this.paddle.w &&
                 elementFalling.x + elementFalling.w > this.paddle.x &&
