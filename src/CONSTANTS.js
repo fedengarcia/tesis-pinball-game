@@ -20,8 +20,8 @@ const BRANDS = [
 ]
 
 export const APP_DATA = {
-    APP_TITLE: "APP TITLE",
-    APP_LOGIN_SUBTITLE: "SUBTITLE LOGIN",
+    APP_TITLE: "¡Bienvenido/a al Brick Breaker!",
+    APP_LOGIN_SUBTITLE: "Es importante que dejes tu correo para que podamos contactarte si eres el ganador o ganadora.",
     APP_EMAIL_LABEL: "Email",
     APP_BUTTON_PLAY: 'Responder y a jugar !',
     APP_BUTTON_END: 'Responder y ver resultados',
@@ -66,27 +66,42 @@ export const APP_DATA = {
     APP_END:{
         TITLE: 'FIN DE TESIS',
         SUB_TITLE: 'RESULTADOS',
-        RESTART_BUTTON: 'Volver a jugar'
+        RESTART_BUTTON: 'Atras'
     },
     APP_GAME: {
-        TITLE: 'Bricks',
+        TITLE: '¡Bienvenido/a al Brick Breaker!',
+        CONTROLS: {
+            TITLE: 'CONTROLES',
+            SUBTITLE: 'Pulsa los CURSORES DE DIRECCIÓN del teclado para mover la flecha hacia donde lanzar la bola.',
+            SUBTITLE2: 'Pulsa BARRA ESPACIADORA para lanzarla.',
+            SUBTITLE3: 'Mueve tu barra con los CURSORES de DIRECCIÓN del teclado para golpear la bola.',
+            SUBTITLE4: '¿Preparado para jugar?',
+            BUTTON: 'JUGAR'
+        },
         GAME_STATUS:{
             FIRST_TIME: {
-                TITLE: 'Esta es tu primera vez',
-                SUBTITLE: 'Desafia tus limites y haz el puntaje mas alto que puedas!',
-                BUTTON_TITLE: 'Comenzar a jugar',
+                TITLE: 'INSTRUCCIONES',
+                SUBTITLE: '¿Como se juega?',
+                SUBTITLE2: 'Objetivo: conseguir el mayor número de puntos posibles para aparecer en el ranking en primera posición.',
+                SUBTITLE3: 'El jugador que aparezca primero en el ranking ganará una tarjeta de Amazon de 20€',
+                BUTTON_TITLE: 'CONTINUAR',
             },
             SECOND_TIME: {
-                TITLE: 'Esta es tu segunda vez',
-                SUBTITLE: 'Desbloquea una recompensa jugando por segunda vez!',
-                BUTTON_TITLE: 'Comenzar a jugar',
+                TITLE: 'Partida terminada',
+                SUBTITLE: 'Para poder ganar necesitas jugar al menos dos partidas y rellenar el cuestionario.',
+                SUBTITLE2: 'Puedes jugar un máximo de 5 partidas.',
+                BUTTON_TITLE: 'JUGAR',
+                BUTTON_TITLE2: 'JUGAR OTRO DIA',
             },
             GAME_FINISH: {
-                TITLE: 'Has hecho todos los intentos posibles',
-                SUBTITLE: 'Gracias por participar',
-                BUTTON_TITLE: 'Volver a jugar',
-                BUTTON_TITLE2: 'Responde y obtiene recompensa',
-                BUTTON_TITLE3: 'Ver ranking'
+                TITLE: 'Partida terminada',
+                SUBTITLE: 'Puedes seguir jugando para tener mayor puntuación o rellenar el cuestionario.',
+                CANT_PLAY: 'Ya has realizado todos tus intentos.',
+                ADVISE: 'Si no rellenas el cuestionario, tu puntuación no queda registrada.',
+                ADVISE2: 'Una vez rellenas el cuestionario, no puedes volver a jugar.',
+                BUTTON_TITLE: 'JUGAR',
+                BUTTON_TITLE2: 'CUESTIONARIO',
+                BUTTON_TITLE3: 'VER RANKING',
             }
         },
         GAME_CONFIGURATION:{
