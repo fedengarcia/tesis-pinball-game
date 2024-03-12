@@ -3,19 +3,33 @@ import './sweetAlertClasses.css'
 
 export default function useSweetAlert () {
 
-    const modal = async (title,text, onConfirmFunction) => {
+    const modal = async (title,text, onConfirmFunction, buttonText) => {
         Swal.fire({
-            text: text,
+            html: text,
             allowOutsideClick: false,
             title: title,
-            confirmButtonText: 'Accept',
+            confirmButtonText: buttonText ?? 'Accept',
             color: 'black',
             confirmButtonColor: '#1565c0',
             background: 'rgb(255,255,255)',
             focusConfirm: false,
             customClass: {
                 popup: 'modalContainer',
-            }
+            },
+            showClass: {
+                popup: `
+                  animate__animated
+                  animate__fadeInUp
+                  animate__faster
+                `
+              },
+              hideClass: {
+                popup: `
+                  animate__animated
+                  animate__fadeOutDown
+                  animate__faster
+                `
+              }
         }).then(async(result) => {
             if (result.isConfirmed) {
                 await onConfirmFunction()
@@ -38,11 +52,19 @@ export default function useSweetAlert () {
                 popup: 'modalContainer coloredToast',
             },
             showClass: {
-                popup: 'animate__animated animate__fadeInDown'
-            },
-            hideClass: {
-                popup: 'animate__animated animate__fadeOutUp'
-            },
+                popup: `
+                  animate__animated
+                  animate__fadeInUp
+                  animate__faster
+                `
+              },
+              hideClass: {
+                popup: `
+                  animate__animated
+                  animate__fadeOutDown
+                  animate__faster
+                `
+              },
             ...props,
         })}
         </>
