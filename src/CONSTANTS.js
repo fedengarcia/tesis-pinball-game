@@ -308,7 +308,7 @@ export const APP_DATA = {
             bonificationPointInfo:{
                 vy: bonificationVyVelocitiy, // velocidad de aparicion hacia arriba
                 timeToLive: bonificationShowTimer, // tiempo de vida de la bonificacion
-                color: '£FFA500', //color
+                color: 'green', //color
                 shadowColor: 'rgba(255, 255, 0, 0.8)', //sombra
                 bonificationValue: 100, //puntuacion de bonificacion
                 fontSize: 40

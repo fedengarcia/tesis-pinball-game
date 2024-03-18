@@ -582,14 +582,32 @@ class BricksClass {
     // DRAW BONIFICATION POINTS
     drawBonificationPoints(fontSize = this.bonificationPointInfo.fontSize, fontColor = this.bonificationPointInfo.color, fontFamily = 'Arial') {
         this.bonificationsPointsToDraw.forEach((bonification) => {
+            console.log(bonification)
             // Dibujar el texto con sombra y brillo
-            this.canvasContext.font = `${fontSize}px ${fontFamily}`;
-            this.canvasContext.fillStyle = fontColor;
-            this.canvasContext.textAlign = 'center';
-            this.canvasContext.textBaseline = 'middle';
+  // Dibujar el texto con sombra y brillo
+  this.canvasContext.font = `${fontSize}px ${fontFamily}`;
+  this.canvasContext.fillStyle = fontColor;
+  this.canvasContext.textAlign = 'center';
+  this.canvasContext.textBaseline = 'middle';
 
-            // Dibujar el texto
-            this.canvasContext.fillText('+100', bonification.x, bonification.y);
+  // Dibujar sombra
+  this.canvasContext.shadowColor = 'rgba(0, 0, 0, 0.5)';
+  this.canvasContext.shadowBlur = 5;
+  this.canvasContext.shadowOffsetX = 2;
+  this.canvasContext.shadowOffsetY = 2;
+
+  // Dibujar el texto principal
+  this.canvasContext.fillText('+100', bonification.x, bonification.y);
+
+  // Restablecer la sombra
+  this.canvasContext.shadowColor = 'transparent';
+  this.canvasContext.shadowBlur = 0;
+  this.canvasContext.shadowOffsetX = 0;
+  this.canvasContext.shadowOffsetY = 0;
+
+  // Dibujar el texto con brillo
+  this.canvasContext.fillStyle = fontColor;
+  this.canvasContext.fillText('+100', bonification.x + 1, bonification.y - 1);
 
         });
     }
@@ -674,6 +692,7 @@ class BricksClass {
                     this.interactions[elementFalling.element.name+"InPaddle"] = this.interactions[elementFalling.element.name+"InPaddle"] + 1
 
                     if (elementFalling.element.bonification === "premio") {
+                        console.log(elementFalling.element.bonification)
                         this.score += this.bonificationPointInfo.bonificationValue
                         this.createBonificationPoints(this.paddle.x, this.paddle.y)
                         this.setScore(this.score)
