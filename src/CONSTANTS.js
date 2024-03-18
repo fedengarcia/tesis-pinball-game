@@ -12,17 +12,6 @@ const detectBrowser = () => {
     if (userAgent.indexOf(BROWSERS.CHROME) !== -1) {
         return {
             addBlocksLineTime: 10000,
-            ballVelocity: 8,
-            ballColisionVelocitiy: 0.02,
-            paddleVelocity: 8,
-            paddleBofinificationDuration: 12000,
-            fallingElementVelocity: 2,
-            bonificationShowTimer: 2,
-            bonificationVyVelocitiy: 0.5,
-        };
-    } else if (userAgent.indexOf(BROWSERS.FIREFOX) !== -1) {
-        return {
-            addBlocksLineTime: 10000,
             ballVelocity: 5,
             ballColisionVelocitiy: 0.02,
             paddleVelocity: 6,
@@ -31,12 +20,50 @@ const detectBrowser = () => {
             bonificationShowTimer: 2,
             bonificationVyVelocitiy: 0.5,
         };
+    } else if (userAgent.indexOf(BROWSERS.FIREFOX) !== -1) {
+        return {
+            addBlocksLineTime: 10000,
+            ballVelocity: 8,
+            ballColisionVelocitiy: 0.02,
+            paddleVelocity: 8,
+            paddleBofinificationDuration: 12000,
+            fallingElementVelocity: 2,
+            bonificationShowTimer: 2,
+            bonificationVyVelocitiy: 0.5,
+        };
     } else if (userAgent.indexOf(BROWSERS.SAFARI) !== -1) {
-        return "Safari";
+        return {
+            addBlocksLineTime: 10000,
+            ballVelocity: 8,
+            ballColisionVelocitiy: 0.02,
+            paddleVelocity: 8,
+            paddleBofinificationDuration: 12000,
+            fallingElementVelocity: 2,
+            bonificationShowTimer: 2,
+            bonificationVyVelocitiy: 0.5,
+        };
     } else if (userAgent.indexOf(BROWSERS.EXPLORER) !== -1 || userAgent.indexOf("Trident") !== -1) {
-        return "MSIE";
+        return {
+            addBlocksLineTime: 10000,
+            ballVelocity: 8,
+            ballColisionVelocitiy: 0.02,
+            paddleVelocity: 8,
+            paddleBofinificationDuration: 12000,
+            fallingElementVelocity: 2,
+            bonificationShowTimer: 2,
+            bonificationVyVelocitiy: 0.5,
+        };
     } else if (userAgent.indexOf(BROWSERS.EDGE) !== -1) {
-        return "Edge";
+        return {
+            addBlocksLineTime: 10000,
+            ballVelocity: 8,
+            ballColisionVelocitiy: 0.02,
+            paddleVelocity: 8,
+            paddleBofinificationDuration: 12000,
+            fallingElementVelocity: 2,
+            bonificationShowTimer: 2,
+            bonificationVyVelocitiy: 0.5,
+        };
     } else {
         return "Unknown";
     }
