@@ -2,14 +2,13 @@ const BROWSERS = {
     CHROME: "Chrome",
     FIREFOX: "Firefox",
     SAFARI: "Safari",
-    EXPLORER: "MSIE",
     EDGE: "Edge",
 }
 
 const detectBrowser = () => {
     var userAgent = navigator.userAgent;
 
-    if (userAgent.indexOf(BROWSERS.CHROME) !== -1) {
+    if (userAgent.indexOf(BROWSERS.CHROME) !== -1) { //FUNCIONA PERFECTO !!
         return {
             addBlocksLineTime: 10000,
             ballVelocity: 5,
@@ -23,7 +22,7 @@ const detectBrowser = () => {
     } else if (userAgent.indexOf(BROWSERS.FIREFOX) !== -1) {
         return {
             addBlocksLineTime: 10000,
-            ballVelocity: 10,
+            ballVelocity: 18,
             ballColisionVelocitiy: 0.02,
             paddleVelocity: 10,
             paddleBofinificationDuration: 12000,
@@ -34,26 +33,15 @@ const detectBrowser = () => {
     } else if (userAgent.indexOf(BROWSERS.SAFARI) !== -1) {
         return {
             addBlocksLineTime: 10000,
-            ballVelocity: 8,
+            ballVelocity: 5,
             ballColisionVelocitiy: 0.02,
-            paddleVelocity: 8,
+            paddleVelocity: 6,
             paddleBofinificationDuration: 12000,
             fallingElementVelocity: 2,
             bonificationShowTimer: 2,
             bonificationVyVelocitiy: 0.5,
         };
-    } else if (userAgent.indexOf(BROWSERS.EXPLORER) !== -1 || userAgent.indexOf("Trident") !== -1) {
-        return {
-            addBlocksLineTime: 10000,
-            ballVelocity: 8,
-            ballColisionVelocitiy: 0.02,
-            paddleVelocity: 8,
-            paddleBofinificationDuration: 12000,
-            fallingElementVelocity: 2,
-            bonificationShowTimer: 2,
-            bonificationVyVelocitiy: 0.5,
-        };
-    } else if (userAgent.indexOf(BROWSERS.EDGE) !== -1) {
+    } else if (userAgent.indexOf(BROWSERS.EDGE) !== -1) { //FUNCIONA PERFECTO !!
         return {
             addBlocksLineTime: 10000,
             ballVelocity: 8,
