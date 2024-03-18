@@ -13,6 +13,7 @@ export default function useSweetAlert () {
             confirmButtonColor: '#1565c0',
             background: 'rgb(255,255,255)',
             focusConfirm: false,
+            allowEscapeKey : false,
             customClass: {
                 popup: 'modalContainer',
             },

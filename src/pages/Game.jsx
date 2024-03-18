@@ -93,7 +93,7 @@ export default function Game() {
                       
                       
                       <div>
-                        {!userInfo.finalForm.isCompleted && 
+                        {!userInfo?.finalForm?.isCompleted && 
                         <>
                           <p>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE}</p>
                           <p>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE2}</p>
@@ -110,7 +110,7 @@ export default function Game() {
                         
                         }
 
-                      {!userInfo.finalForm.isCompleted && 
+                      {!userInfo?.finalForm?.isCompleted && 
                       <Button
                         fullWidth
                         variant='contained'
@@ -119,7 +119,7 @@ export default function Game() {
                       >
                         {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].BUTTON_TITLE}
                       </Button>}
-                      {gameStatus === "GAME_FINISH" && userInfo.finalForm.isCompleted &&
+                      {gameStatus === "GAME_FINISH" && userInfo?.finalForm?.isCompleted &&
                       <Button
                         style={{margin: '15px 0'}}
                         variant='contained'
@@ -129,7 +129,7 @@ export default function Game() {
                       >
                         {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].BUTTON_TITLE3}
                       </Button>}
-                      {gameStatus === "GAME_FINISH" && !userInfo.finalForm.isCompleted &&
+                      {gameStatus === "GAME_FINISH" && !userInfo?.finalForm?.isCompleted &&
                       <Button
                         style={{margin: '15px 0'}}
                         variant='contained'
