@@ -582,32 +582,30 @@ class BricksClass {
     // DRAW BONIFICATION POINTS
     drawBonificationPoints(fontSize = this.bonificationPointInfo.fontSize, fontColor = this.bonificationPointInfo.color, fontFamily = 'Arial') {
         this.bonificationsPointsToDraw.forEach((bonification) => {
-            console.log(bonification)
             // Dibujar el texto con sombra y brillo
-  // Dibujar el texto con sombra y brillo
-  this.canvasContext.font = `${fontSize}px ${fontFamily}`;
-  this.canvasContext.fillStyle = fontColor;
-  this.canvasContext.textAlign = 'center';
-  this.canvasContext.textBaseline = 'middle';
+            this.canvasContext.font = `${fontSize}px ${fontFamily}`;
+            this.canvasContext.fillStyle = fontColor;
+            this.canvasContext.textAlign = 'center';
+            this.canvasContext.textBaseline = 'middle';
 
-  // Dibujar sombra
-  this.canvasContext.shadowColor = 'rgba(0, 0, 0, 0.5)';
-  this.canvasContext.shadowBlur = 5;
-  this.canvasContext.shadowOffsetX = 2;
-  this.canvasContext.shadowOffsetY = 2;
+            // Dibujar sombra
+            this.canvasContext.shadowColor = 'rgba(0, 0, 0, 0.5)';
+            this.canvasContext.shadowBlur = 5;
+            this.canvasContext.shadowOffsetX = 2;
+            this.canvasContext.shadowOffsetY = 2;
 
-  // Dibujar el texto principal
-  this.canvasContext.fillText('+100', bonification.x, bonification.y);
+            // Dibujar el texto principal
+            this.canvasContext.fillText('+100', bonification.x, bonification.y);
 
-  // Restablecer la sombra
-  this.canvasContext.shadowColor = 'transparent';
-  this.canvasContext.shadowBlur = 0;
-  this.canvasContext.shadowOffsetX = 0;
-  this.canvasContext.shadowOffsetY = 0;
+            // Restablecer la sombra
+            this.canvasContext.shadowColor = 'transparent';
+            this.canvasContext.shadowBlur = 0;
+            this.canvasContext.shadowOffsetX = 0;
+            this.canvasContext.shadowOffsetY = 0;
 
-  // Dibujar el texto con brillo
-  this.canvasContext.fillStyle = fontColor;
-  this.canvasContext.fillText('+100', bonification.x + 1, bonification.y - 1);
+            // Dibujar el texto con brillo
+            this.canvasContext.fillStyle = fontColor;
+            this.canvasContext.fillText('+100', bonification.x + 1, bonification.y - 1);
 
         });
     }

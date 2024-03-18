@@ -7,6 +7,8 @@ import Bricks from '../components/Bricks/Bricks'
 import { Button, CircularProgress } from '@mui/material'
 import { addGameToUserGamesPlayed } from '../firebase/firebase'
 import useSweetAlert from '../hooks/useSweetAlert'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faInfo, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 
 
 export default function Game() {
@@ -97,8 +99,8 @@ export default function Game() {
                         <>
                           <p>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE}</p>
                           <p>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE2}</p>
-                          <p>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].ADVISE}</p>
-                          <p>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].ADVISE2}</p>
+                          <p><FontAwesomeIcon icon={faInfoCircle} style={{marginRight: '8px', color: '#c93a3a'}}/>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].ADVISE}</p>
+                          <p><FontAwesomeIcon icon={faInfoCircle} style={{marginRight: '8px', color: '#c93a3a'}}/>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].ADVISE2}</p>
                           </>
                         }
                        {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE3 &&
