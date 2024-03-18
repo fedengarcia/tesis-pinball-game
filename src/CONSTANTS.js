@@ -23,9 +23,9 @@ const detectBrowser = () => {
     } else if (userAgent.indexOf(BROWSERS.FIREFOX) !== -1) {
         return {
             addBlocksLineTime: 10000,
-            ballVelocity: 8,
+            ballVelocity: 10,
             ballColisionVelocitiy: 0.02,
-            paddleVelocity: 8,
+            paddleVelocity: 10,
             paddleBofinificationDuration: 12000,
             fallingElementVelocity: 2,
             bonificationShowTimer: 2,
