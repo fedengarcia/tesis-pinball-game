@@ -219,11 +219,10 @@ class BricksClass {
             });
         });
 
-        if(this.bricks.length < 21){
+        if(this.bricks.length < 17){
             this.bricks.unshift(newRow);
         }else{
-            this.bricks.unshift(newRow);
-            this.bricks.pop();
+            this.loseLife()
         }
     }
     
@@ -546,7 +545,6 @@ class BricksClass {
 
             // Reducir el tamaño de la imagen
             let imageSize = 50; // Tamaño deseado de la imagen dentro de la burbuja
-                console.log(this.elementsImages)
             // Dibujar la imagen en el centro de la burbuja
             this.canvasContext.drawImage(this.elementsImages[elementToFall.element.name], elementToFall.x + 35 - imageSize / 2, elementToFall.y + 35 - imageSize / 2, imageSize, imageSize);
             // Restaurar el estado del contexto
@@ -690,7 +688,6 @@ class BricksClass {
                     this.interactions[elementFalling.element.name+"InPaddle"] = this.interactions[elementFalling.element.name+"InPaddle"] + 1
 
                     if (elementFalling.element.bonification === "premio") {
-                        console.log(elementFalling.element.bonification)
                         this.score += this.bonificationPointInfo.bonificationValue
                         this.createBonificationPoints(this.paddle.x, this.paddle.y)
                         this.setScore(this.score)
@@ -765,7 +762,7 @@ class BricksClass {
         this.gameConfig.width *= scaleRatio.xRatio;
         this.gameConfig.height *= scaleRatio.yRatio;
         this.movePaddle();  
-        this.moveBall()
+        // this.moveBall()
         this.updateElementToFall()
         this.updateBrokenBrickEffect()
         this.updateShowPointsNotification()
@@ -884,22 +881,28 @@ class BricksClass {
     // CHECK BOTTOM COLLISION
     checkBottomCollision () {
         if (this.ball.y + this.ball.size > this.canvas.height) {
-            if(this.lives > 0){
-                this.lives = this.lives - 1
-                this.inGame = false
-                this.setLives(this.lives)
-                this.resetBallAndPaddle();
-                this.paddle.w = 130,
-                this.showBonification(' -1 vida ', 2000, 'top')
-                this.elementsToFall = []
-                // this.showAllBricks();
+           this.loseLife()
+        }
+    }
 
-                if(this.lives === 0){
-                    this.inGame = false
-                    this.setGameOver()
-                    this.gameOver()
-                }
-        }}
+
+    loseLife(){
+        if(this.lives > 0){
+            this.lives = this.lives - 1
+            this.inGame = false
+            this.setLives(this.lives)
+            this.resetBallAndPaddle();
+            this.paddle.w = 130,
+            this.showBonification(' -1 vida ', 2000, 'top')
+            this.elementsToFall = []
+            // this.showAllBricks();
+
+            if(this.lives === 0){
+                this.inGame = false
+                this.setGameOver()
+                this.gameOver()
+            }
+        }
     }
 
     // RESET GAME
