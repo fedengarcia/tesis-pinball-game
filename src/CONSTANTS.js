@@ -1,3 +1,58 @@
+const BROWSERS = {
+    CHROME: "Chrome",
+    FIREFOX: "Firefox",
+    SAFARI: "Safari",
+    EXPLORER: "MSIE",
+    EDGE: "Edge",
+}
+
+const detectBrowser = () => {
+    var userAgent = navigator.userAgent;
+
+    if (userAgent.indexOf(BROWSERS.CHROME) !== -1) {
+        return {
+            addBlocksLineTime: 10000,
+            ballVelocity: 8,
+            ballColisionVelocitiy: 0.02,
+            paddleVelocity: 8,
+            paddleBofinificationDuration: 12000,
+            fallingElementVelocity: 2,
+            bonificationShowTimer: 2,
+            bonificationVyVelocitiy: 0.5,
+        };
+    } else if (userAgent.indexOf(BROWSERS.FIREFOX) !== -1) {
+        return {
+            addBlocksLineTime: 10000,
+            ballVelocity: 5,
+            ballColisionVelocitiy: 0.02,
+            paddleVelocity: 6,
+            paddleBofinificationDuration: 12000,
+            fallingElementVelocity: 2,
+            bonificationShowTimer: 2,
+            bonificationVyVelocitiy: 0.5,
+        };
+    } else if (userAgent.indexOf(BROWSERS.SAFARI) !== -1) {
+        return "Safari";
+    } else if (userAgent.indexOf(BROWSERS.EXPLORER) !== -1 || userAgent.indexOf("Trident") !== -1) {
+        return "MSIE";
+    } else if (userAgent.indexOf(BROWSERS.EDGE) !== -1) {
+        return "Edge";
+    } else {
+        return "Unknown";
+    }
+}
+
+const { 
+    addBlocksLineTime,
+    ballVelocity,
+    ballColisionVelocitiy,
+    paddleVelocity,
+    paddleBofinificationDuration,
+    fallingElementVelocity,
+    bonificationShowTimer,
+    bonificationVyVelocitiy,
+} = detectBrowser()
+
 
 // CHANGE HERE THE INFORMATION OF THE BRANDS 
 // MAKE SHURE THAT THE NAME MATCH WITH THE SRC IMAGE
@@ -215,29 +270,29 @@ export const APP_DATA = {
 
             ],
             lives: 3,
-            addLinesBlockTimer: 10000, // En milisegundos -> Progresivo hasta 5 segundos
+            addLinesBlockTimer: addBlocksLineTime, // En milisegundos -> Progresivo hasta 5 segundos
             brickBonification: 10, // Bonificacion para ruptra de bloque standar
             brickStandardColor: '#CCCCCC',  // Color para bloques estándar
             brickBonusColor: '#FFA500',  // Color para bloques con bonificacion
-            fallingElementVelocity: 2, // velocidad al caer las bonificaciones marcas
+            fallingElementVelocity: fallingElementVelocity, // velocidad al caer las bonificaciones marcas
             arrowColor: 'black',
             paddleInformation: {
                 color: '#3498db',
                 width: 130, // largo del paddle
                 height: 20, // alto del paddle
                 borderRadius: 10, // Radio de las esquinas para hacerlo redondeado
-                speed: 6, // velocidad de movimiento  6 para deploy
-                bonificationDuration: 12000
+                speed: paddleVelocity, // velocidad de movimiento  6 para deploy
+                bonificationDuration: paddleBofinificationDuration
             },
             ballInformation:{
                 color: '#3498db',
                 size: 10, // Tamano
-                speed: 5, // velocidad   5 para deploy
-                ballVelocityToAdd: 0.02 // velocidad incremental de la bola al colisionar
+                speed: ballVelocity, // velocidad   5 para deploy
+                ballVelocityToAdd: ballColisionVelocitiy // velocidad incremental de la bola al colisionar
             },
             bonificationPointInfo:{
-                vy: 0.5, // velocidad de aparicion hacia arriba
-                timeToLive: 2, // tiempo de vida de la bonificacion
+                vy: bonificationVyVelocitiy, // velocidad de aparicion hacia arriba
+                timeToLive: bonificationShowTimer, // tiempo de vida de la bonificacion
                 color: '£FFA500', //color
                 shadowColor: 'rgba(255, 255, 0, 0.8)', //sombra
                 bonificationValue: 100, //puntuacion de bonificacion
