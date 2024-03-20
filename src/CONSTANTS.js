@@ -143,7 +143,7 @@ export const APP_DATA = {
         ]
     },
     APP_END:{
-        TITLE: 'FIN DE TESIS',
+        TITLE: '¡Bienvenido/a al Brick Breaker!',
         SUB_TITLE: 'RESULTADOS',
         RESTART_BUTTON: 'Atras'
     },
