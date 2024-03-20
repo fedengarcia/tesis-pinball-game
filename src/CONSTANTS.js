@@ -53,7 +53,16 @@ const detectBrowser = () => {
             bonificationVyVelocitiy: 0.5,
         };
     } else {
-        return "Unknown";
+        return {
+            addBlocksLineTime: 10000,
+            ballVelocity: 8,
+            ballColisionVelocitiy: 0.02,
+            paddleVelocity: 8,
+            paddleBofinificationDuration: 12000,
+            fallingElementVelocity: 2,
+            bonificationShowTimer: 2,
+            bonificationVyVelocitiy: 0.5,
+        };
     }
 }
 
