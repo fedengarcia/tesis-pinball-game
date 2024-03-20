@@ -17,6 +17,7 @@ export default function Game() {
   const [gameConfiguration, setGameConfiguration] = useState([])
   const [playingGame, setPlayingGame] = useState(false)
   const [gameStatus, setGameStatus] = useState('FIRST_TIME')
+  const [cantPlayAnymore, setCantPlayAnymore] = useState(false);
   const {popUp, modal} = useSweetAlert()
   
 
@@ -26,6 +27,7 @@ export default function Game() {
     if(userInfo?.gamesPlayed?.length === 0) setGameStatus('FIRST_TIME')
     if(userInfo?.gamesPlayed?.length === 1) setGameStatus('SECOND_TIME')
     if(userInfo?.gamesPlayed?.length >= 2) setGameStatus('GAME_FINISH')
+    if(userInfo?.gamesPlayed?.length === 5) setCantPlayAnymore(true)
   }, [userInfo]);
 
   useEffect(() => {
@@ -99,41 +101,48 @@ export default function Game() {
                         <>
                           <p style={{textAlign:'center', fontSize:'20px'}}>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE}</p>
                           <p style={{fontSize:'16px'}}>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE2}</p>
-                          {!userInfo?.firstForm?.isCompleted && 
+                          {gameStatus === 'GAME_FINISH' && !cantPlayAnymore &&
                           <>
                           <p><FontAwesomeIcon icon={faInfoCircle} style={{marginRight: '8px', color: '#c93a3a'}}/>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].ADVISE}</p>
                           <p><FontAwesomeIcon icon={faInfoCircle} style={{marginRight: '8px', color: '#c93a3a'}}/>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].ADVISE2}</p></>}
                           </>
                         }
+
+                        {/* SUBTITULO ANTES DEL BOTON */}
                        {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE3 &&
                         <p style={{fontSize:'16px'}}>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE3}</p>
                        }
-                        {gameStatus === "GAME_FINISH" && userInfo.finalForm.isCompleted &&
-                          <>
-                              {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].CANT_PLAY}
-                          </>
-                        
-                        }
 
-                      {!userInfo?.finalForm?.isCompleted && 
-                      <Button
-                        fullWidth
-                        variant='contained'
-                        // disabled={buttonDisabled}
-                        onClick={launchGameModal}
-                      >
-                        {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].BUTTON_TITLE}
-                      </Button>}
+
+                        {/* CUESTIONARIO FINAL SIN COMPLETAR Y LE QUEDAN PARTIDAS POR JUGAR*/}
+                      {!userInfo?.finalForm?.isCompleted && !cantPlayAnymore &&
+                        <Button
+                          fullWidth
+                          variant='contained'
+                          // disabled={buttonDisabled}
+                          onClick={launchGameModal}
+                        >
+                          {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].BUTTON_TITLE}
+                        </Button>
+                      }
+
+                      {/* JUGO DOS PARTIDAS Y TERMINO CUESTIONARIO */}
                       {gameStatus === "GAME_FINISH" && userInfo?.finalForm?.isCompleted &&
-                      <Button
-                        style={{margin: '15px 0'}}
-                        variant='contained'
-                        fullWidth
-                        // disabled={buttonDisabled}
-                        onClick={() => navigate('/final-form')}
-                      >
-                        {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].BUTTON_TITLE3}
-                      </Button>}
+                      <>
+                        {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].CANT_PLAY}
+                        <Button
+                          style={{margin: '15px 0'}}
+                          variant='contained'
+                          fullWidth
+                          // disabled={buttonDisabled}
+                          onClick={() => navigate('/final-form')}
+                        >
+                          {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].BUTTON_TITLE3}
+                        </Button>
+                      </>
+                      }
+
+                      {/* JUGO DOS PARTIDAS Y NO TERMINO EL CUESTIONARIO FINAL */}
                       {gameStatus === "GAME_FINISH" && !userInfo?.finalForm?.isCompleted &&
                       <Button
                         style={{margin: '15px 0'}}

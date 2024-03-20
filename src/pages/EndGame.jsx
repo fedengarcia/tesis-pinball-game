@@ -38,12 +38,12 @@ export default function EndGame() {
       <StyledAppLayout>
         <h1>{APP_DATA.APP_END.TITLE}</h1>
         <StyledLayoutContent style={{padding: 0, overflow:'hidden', justifyContent: 'space-between'}}>
-          <h2>{APP_DATA.APP_END.SUB_TITLE}</h2>
+          <h2 style={{marginBottom: '0', marginTop: '5px'}}>{APP_DATA.APP_END.SUB_TITLE}</h2>
           {loading 
           ? <CircularProgress/> 
           :<>
             {gamesRanking.length > 0 ? (
-              <StyledFlexCenter style={{flexGrow: 1, height: '100%', justifyContent:'flex-start'}}>
+              <StyledFlexCenter style={{flexGrow: 1, height: '100%', justifyContent:'flex-start', paddingTop: '0', paddingBottom: '0'}}>
                 <table className="table">
                   <thead>
                     <tr>
