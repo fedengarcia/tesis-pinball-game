@@ -97,14 +97,17 @@ export default function Game() {
                       <div>
                         {!userInfo?.finalForm?.isCompleted && 
                         <>
-                          <p>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE}</p>
-                          <p>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE2}</p>
+                          <p style={{textAlign:'center', fontSize:'20px'}}>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE}</p>
+                          <p style={{fontSize:'16px'}}>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE2}</p>
+                          {!userInfo?.firstForm?.isCompleted && 
+                          <>
                           <p><FontAwesomeIcon icon={faInfoCircle} style={{marginRight: '8px', color: '#c93a3a'}}/>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].ADVISE}</p>
-                          <p><FontAwesomeIcon icon={faInfoCircle} style={{marginRight: '8px', color: '#c93a3a'}}/>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].ADVISE2}</p>
+                          <p><FontAwesomeIcon icon={faInfoCircle} style={{marginRight: '8px', color: '#c93a3a'}}/>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].ADVISE2}</p></>}
                           </>
                         }
                        {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE3 &&
-                       <p>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE3}</p>}
+                        <p style={{fontSize:'16px'}}>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE3}</p>
+                       }
                         {gameStatus === "GAME_FINISH" && userInfo.finalForm.isCompleted &&
                           <>
                               {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].CANT_PLAY}
