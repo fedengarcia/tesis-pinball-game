@@ -762,7 +762,7 @@ class BricksClass {
         this.gameConfig.width *= scaleRatio.xRatio;
         this.gameConfig.height *= scaleRatio.yRatio;
         this.movePaddle();  
-        // this.moveBall()
+        this.moveBall()
         this.updateElementToFall()
         this.updateBrokenBrickEffect()
         this.updateShowPointsNotification()
