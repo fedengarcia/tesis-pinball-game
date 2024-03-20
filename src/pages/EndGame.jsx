@@ -14,7 +14,7 @@ export default function EndGame() {
     setLoading(true)
     const fetchData = async () => {
       const data = await getTopRanking();
-      setGamesRanking(data.slice(0, 10));
+      setGamesRanking(data.splice(0, 5));
       setLoading(false)
     };
 
@@ -38,12 +38,12 @@ export default function EndGame() {
       <StyledAppLayout>
         <h1>{APP_DATA.APP_END.TITLE}</h1>
         <StyledLayoutContent style={{padding: 0, overflow:'hidden', justifyContent: 'space-between'}}>
-          <h2 style={{marginBottom: '0', marginTop: '5px'}}>{APP_DATA.APP_END.SUB_TITLE}</h2>
+          <h2>{APP_DATA.APP_END.SUB_TITLE}</h2>
           {loading 
           ? <CircularProgress/> 
           :<>
             {gamesRanking.length > 0 ? (
-              <StyledFlexCenter style={{flexGrow: 1, height: '100%', justifyContent:'flex-start', paddingTop: '0', paddingBottom: '0'}}>
+              <StyledFlexCenter style={{flexGrow: 1, height: '100%', justifyContent:'flex-start'}}>
                 <table className="table">
                   <thead>
                     <tr>
