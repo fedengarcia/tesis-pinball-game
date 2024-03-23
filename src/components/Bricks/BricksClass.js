@@ -799,10 +799,10 @@ class BricksClass {
     checkBrickCollision () {
         const allBroken = this.bricks.every(column => column.every(brick => !brick.visible));
 
-
         if(allBroken) {
             this.showBonification('Avanzas de nivel', 2000, 'top')
             this.resetBallAndPaddle()
+            this.bricks = []
             this.createBricks()
             this.inGame = false
             this.actualLevel += 1
