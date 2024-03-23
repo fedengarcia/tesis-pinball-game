@@ -696,15 +696,14 @@ class BricksClass {
                         // Marca la bonificación como aplicada
                     } else if (elementFalling.element.bonification === "mediadora") {
                         const originalWidth = this.paddle.w;
-                        const targetWidth = this.paddle.w + 30 > 160 ? this.paddle.w : this.paddle.w + 30;
-                        const animationDuration = 100;
+                        const targetWidth = this.paddle.w + 50 > 180 ? this.paddle.w : this.paddle.w + 50;
+                        const animationDuration = 400;
                         const startTime = performance.now();
 
                         const animatePaddle = (currentTime) => {
                             const elapsedTime = currentTime - startTime;
                             const progress = Math.min(elapsedTime / animationDuration, 1);
                             this.paddle.w = originalWidth + progress * (targetWidth - originalWidth);
-
                             if (progress < 1) {
                                 requestAnimationFrame(animatePaddle);
                             } else {
@@ -743,15 +742,15 @@ class BricksClass {
     // SHRINK PADDLE
     shrinkPaddle() {
         const originalWidth = this.paddle.w;
-        const targetWidth = this.paddle.w - 30 < 130 ? this.paddle.w : this.paddle.w - 30;
-        const animationDuration = 100; // Puedes ajustar la duración según sea necesario
+        const targetWidth = 130;
+        const animationDuration = 400; // Puedes ajustar la duración según sea necesario
         const startTime = performance.now();
 
         const animatePaddleShrink = (currentTime) => {
             const elapsedTime = currentTime - startTime;
             const progress = Math.min(elapsedTime / animationDuration, 1);
             this.paddle.w = originalWidth + progress * (targetWidth - originalWidth);
-
+            
             if (progress < 1) {
                 requestAnimationFrame(animatePaddleShrink);
             }
@@ -883,7 +882,7 @@ class BricksClass {
     // CHECK BOTTOM COLLISION
     checkBottomCollision () {
         if (this.ball.y + this.ball.size > this.canvas.height) {
-           this.loseLife()
+        //    this.loseLife()
         }
     }
 

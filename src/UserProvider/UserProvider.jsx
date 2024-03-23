@@ -43,7 +43,6 @@ export const UserProvider = ({children}) => {
                 userInfoCopy.finalForm = {
                     isCompleted: false
                 }
-                console.log(userInfoCopy)
                 if(userInfoCopy.email) {
                     const res = await createUserDocument(userInfoCopy)
                     userInfoCopy.id = res.id
