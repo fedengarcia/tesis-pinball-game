@@ -219,7 +219,7 @@ class BricksClass {
             });
         });
 
-        if(this.bricks.length < 17){
+        if(this.bricks.length < 16){
             this.bricks.unshift(newRow);
         }else{
             this.loseLife()
