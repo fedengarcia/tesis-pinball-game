@@ -223,6 +223,8 @@ class BricksClass {
             this.bricks.unshift(newRow);
         }else{
             this.loseLife()
+            this.bricks = []
+            this.createBricks()
         }
     }
     
