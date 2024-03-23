@@ -43,6 +43,7 @@ export const UserProvider = ({children}) => {
                 userInfoCopy.finalForm = {
                     isCompleted: false
                 }
+                console.log(userInfoCopy)
                 if(userInfoCopy.email) {
                     const res = await createUserDocument(userInfoCopy)
                     userInfoCopy.id = res.id
@@ -50,7 +51,7 @@ export const UserProvider = ({children}) => {
             } catch (error) {
                 console.log(error)
                 setLoadingLogin(false)
-                // navigate("/")
+                window.location.reload()
             }
         }
         setCookie({
