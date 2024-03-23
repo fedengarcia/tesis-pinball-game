@@ -882,7 +882,7 @@ class BricksClass {
     // CHECK BOTTOM COLLISION
     checkBottomCollision () {
         if (this.ball.y + this.ball.size > this.canvas.height) {
-        //    this.loseLife()
+           this.loseLife()
         }
     }
 
