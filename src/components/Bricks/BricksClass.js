@@ -846,7 +846,7 @@ class BricksClass {
             this.ball.y + this.ball.size > this.paddle.y
         ) {
             // Cambiar la dirección en Y para simular un rebote
-            this.ball.dy = -this.ball.speed;
+            this.ball.dy = -this.ball.speed / 1.8;
     
             // Calcular el punto medio del paddle
             const paddleMidPoint = this.paddle.x + this.paddle.w / 2;
@@ -861,7 +861,7 @@ class BricksClass {
             // Ajustar la dirección en X de la pelota
             // Aquí ajustamos dx basándonos en el punto de impacto y algún factor de influencia
             this.ball.dx = this.ball.speed * angleChange;
-            this.ball.speed = 5
+            this.ball.speed = this.ball.speed
         }
     }
     
