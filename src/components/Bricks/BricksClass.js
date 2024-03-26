@@ -828,7 +828,6 @@ class BricksClass {
                             }
                             brick.visible = false;
                         }
-                        this.ball.speed += 0.005;
                         setTimeout(() => {
                             this.createParticlesBrokenEffect(brick, 100)
                         }, 50);
@@ -847,7 +846,7 @@ class BricksClass {
             this.ball.y + this.ball.size > this.paddle.y
         ) {
             // Cambiar la dirección en Y para simular un rebote
-            this.ball.dy = -this.ball.speed / 1.8;
+            this.ball.dy = -this.ball.speed / 1;
     
             // Calcular el punto medio del paddle
             const paddleMidPoint = this.paddle.x + this.paddle.w / 2;
