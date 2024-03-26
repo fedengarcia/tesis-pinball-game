@@ -506,8 +506,8 @@ class BricksClass {
 
     // DRAW FALLING ELEMENTS
     drawElementsToFall () {
-        this.canvasContext.beginPath();
         this.elementsToFall.forEach((elementToFall) => {
+            this.canvasContext.beginPath();
 
         // let elementImage = new Image();
 
@@ -551,8 +551,8 @@ class BricksClass {
             // Restaurar el estado del contexto
             this.canvasContext.restore();
         
+            this.canvasContext.closePath();
     });
-    this.canvasContext.closePath();
 
 
     }
