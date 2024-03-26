@@ -624,7 +624,7 @@ class BricksClass {
         this.drawBall();
         this.drawPaddle();
         this.drawBricks();
-        this.drawBrokenBrickParticles();
+        // this.drawBrokenBrickParticles();
         this.drawArrow(); // Dibujar la flecha
         this.drawBonificationPoints();
     }
