@@ -438,6 +438,7 @@ class BricksClass {
 
     // DRAW BRICKS 
     drawBricks() {
+        this.canvasContext.beginPath();
         this.bricks?.forEach(column => {
             column.forEach(brick => {
                 if (!brick.visible) {
@@ -463,7 +464,6 @@ class BricksClass {
                 this.drawStrokeWithGlow(x - 1, y - 1, w + 2, h + 2, 2.5, brick.visible ? 'black' : 'transparent');
 
                 // Borde del ladrillo
-                this.canvasContext.beginPath();
                 this.canvasContext.rect(x, y, w, h);
                 this.canvasContext.fillStyle = gradient;
 
@@ -472,12 +472,13 @@ class BricksClass {
                 this.canvasContext.lineWidth = 1;
                 this.canvasContext.fill();
                 this.canvasContext.stroke();
-                this.canvasContext.closePath();
 
                 // Sombra del ladrillo
                 this.drawShadowedRect(x, y, w, h, brick.brickColor, 8); // Aumentar la intensidad de la sombra
             });
         });
+        this.canvasContext.closePath();
+
     }
 
     // DRAW BRICK NEON BORDER
@@ -505,6 +506,7 @@ class BricksClass {
 
     // DRAW FALLING ELEMENTS
     drawElementsToFall () {
+        this.canvasContext.beginPath();
         this.elementsToFall.forEach((elementToFall) => {
 
         // let elementImage = new Image();
@@ -521,7 +523,6 @@ class BricksClass {
             this.canvasContext.shadowOffsetY = 8;
 
             // Dibujar burbuja alrededor de la imagen
-            this.canvasContext.beginPath();
             this.canvasContext.arc(
                 elementToFall.x + 35, // Centro x de la burbuja
                 elementToFall.y + 35, // Centro y de la burbuja
@@ -536,14 +537,12 @@ class BricksClass {
             bubbleGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
             this.canvasContext.fillStyle = bubbleGradient;
             this.canvasContext.fill();
-            this.canvasContext.closePath();
 
             // Aplicar estilos al círculo
             this.canvasContext.strokeStyle = this.bonusColor; // Color del borde del círculo
             this.canvasContext.lineWidth = 2; // Grosor del borde del círculo
 
             this.canvasContext.stroke();
-            this.canvasContext.closePath();
 
             // Reducir el tamaño de la imagen
             let imageSize = 50; // Tamaño deseado de la imagen dentro de la burbuja
@@ -553,13 +552,15 @@ class BricksClass {
             this.canvasContext.restore();
         
     });
+    this.canvasContext.closePath();
+
 
     }
 
     // DRAW PARTICLES EFFECTS
     drawBrokenBrickParticles() {
+        this.canvasContext.beginPath();
         this.particlesToDraw.forEach((particle) => {
-            this.canvasContext.beginPath();
             const gradient = this.canvasContext.createRadialGradient(
                 particle.x,
                 particle.y,
@@ -575,8 +576,8 @@ class BricksClass {
             this.canvasContext.fillStyle = gradient;
             this.canvasContext.arc(particle.x, particle.y, particle.timeToLive, 0, Math.PI * 2);
             this.canvasContext.fill();
-            this.canvasContext.closePath();
         });
+        this.canvasContext.closePath();
     }
 
     // DRAW BONIFICATION POINTS
