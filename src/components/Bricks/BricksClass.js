@@ -464,7 +464,7 @@ class BricksClass {
 
                 // Borde del ladrillo
                 this.canvasContext.beginPath();
-                this.canvasContext.fillRect(x, y, w, h);
+                this.canvasContext.rect(x, y, w, h);
                 this.canvasContext.fillStyle = gradient;
 
                 // Agregar borde negro
@@ -486,7 +486,7 @@ class BricksClass {
         this.canvasContext.beginPath();
         this.canvasContext.lineWidth = lineWidth;
         this.canvasContext.strokeStyle = strokeStyle;
-        this.canvasContext.fillRect(x, y, w, h);
+        this.canvasContext.rect(x, y, w, h);
         this.canvasContext.stroke();
         this.canvasContext.restore();
     }
@@ -495,7 +495,7 @@ class BricksClass {
     drawShadowedRect(x, y, w, h, fillStyle, shadowBlur) {
         this.canvasContext.save();
         this.canvasContext.beginPath();
-        this.canvasContext.fillRect(x, y, w, h);
+        this.canvasContext.rect(x, y, w, h);
         this.canvasContext.fillStyle = fillStyle;
         this.canvasContext.shadowColor = '#888';
         this.canvasContext.shadowBlur = shadowBlur;
