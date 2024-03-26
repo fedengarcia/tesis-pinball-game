@@ -559,8 +559,8 @@ class BricksClass {
 
     // DRAW PARTICLES EFFECTS
     drawBrokenBrickParticles() {
-        this.canvasContext.beginPath();
         this.particlesToDraw.forEach((particle) => {
+            this.canvasContext.beginPath();
             const gradient = this.canvasContext.createRadialGradient(
                 particle.x,
                 particle.y,
@@ -576,8 +576,8 @@ class BricksClass {
             this.canvasContext.fillStyle = gradient;
             this.canvasContext.arc(particle.x, particle.y, particle.timeToLive, 0, Math.PI * 2);
             this.canvasContext.fill();
+            this.canvasContext.closePath();
         });
-        this.canvasContext.closePath();
     }
 
     // DRAW BONIFICATION POINTS
