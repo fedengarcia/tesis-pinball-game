@@ -192,7 +192,8 @@ export const getTopRanking = async (withExtraData) => {
         }
       });
     });
-    return topRanking.sort((a,b) => a.score + b.score);
+
+    return topRanking.sort((a, b) => b.score - a.score);
   } catch (error) {
       console.error("Error al obtener todos los juegos jugados:", error.message);
       return [];

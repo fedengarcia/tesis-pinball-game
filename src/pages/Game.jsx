@@ -97,9 +97,9 @@ export default function Game() {
                       
                       
                       <div>
-                        {!userInfo?.finalForm?.isCompleted && 
+                        {!userInfo?.finalForm?.isCompleted &&
                         <>
-                          <p style={{textAlign:'center', fontSize:'20px'}}>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE}</p>
+                          <p style={{textAlign:'center', fontSize:'20px'}}>{cantPlayAnymore ? 'Ya has jugado 5 partidas. Rellena el cuestionario para participar' :APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE}</p>
                           <p style={{fontSize:'16px'}}>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE2}</p>
                           {gameStatus === 'GAME_FINISH' && !cantPlayAnymore &&
                           <>
