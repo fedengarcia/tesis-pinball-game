@@ -227,7 +227,8 @@ class BricksClass {
             this.createBricks()
         }
     }
-    
+
+
 
     createParticlesBrokenEffect(brick, count, isElementFall) {
         const centerX = brick.x + brick.w / 2;
@@ -832,9 +833,30 @@ class BricksClass {
                             this.createParticlesBrokenEffect(brick, 100)
                         }, 50);
                     }
+                }else{
+                    this.checkAndDeleteInvisibleRow()
                 }
             });
         });
+    }
+
+
+    checkAndDeleteInvisibleRow() {
+        for (let rowIndex = 0; rowIndex < this.bricks.length; rowIndex++) {
+            let rowVisible = false;
+            for (let columnIndex = 0; columnIndex < this.bricks[rowIndex].length; columnIndex++) {
+                if (this.bricks[rowIndex][columnIndex].visible) {
+                    rowVisible = true;
+                    break;
+                }
+            }
+            if (!rowVisible) {
+                // Eliminar la fila
+                this.bricks.splice(rowIndex, 1);
+                // Decrementar rowIndex para seguir revisando las filas que ahora están en su posición anterior
+                rowIndex--;
+            }
+        }
     }
 
     // CHECK PADDLE COLLISION
