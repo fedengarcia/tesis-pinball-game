@@ -11,7 +11,7 @@ const detectBrowser = () => {
     if (userAgent.indexOf(BROWSERS.CHROME) !== -1) { //FUNCIONA PERFECTO !!
         return {
             addBlocksLineTime: 10000,
-            ballVelocity: 1,
+            ballVelocity: 2,
             ballColisionVelocitiy: 0.02,
             paddleVelocity: 6,
             paddleBofinificationDuration: 12000,

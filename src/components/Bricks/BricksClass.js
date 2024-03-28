@@ -839,29 +839,23 @@ class BricksClass {
 
     // CHECK PADDLE COLLISION
     checkPaddleCollision() {
-        // Verificar colisión con el paddle
+           // Verificar colisión con el paddle
         if (
             this.ball.x + this.ball.size > this.paddle.x &&
             this.ball.x - this.ball.size < this.paddle.x + this.paddle.w &&
             this.ball.y + this.ball.size > this.paddle.y
         ) {
-            // Cambiar la dirección en Y para simular un rebote
-            this.ball.dy = -this.ball.speed / 1;
-    
-            // Calcular el punto medio del paddle
-            const paddleMidPoint = this.paddle.x + this.paddle.w / 2;
-    
-            // Determinar el punto de impacto
-            const impactPoint = this.ball.x - paddleMidPoint;
-    
-            // Calcular el cambio de ángulo en base al punto de impacto
-            // Este valor puede ajustarse para cambiar la "sensibilidad" del efecto
-            const angleChange = impactPoint / (this.paddle.w - 4 / 2); // Normalizado entre -1 y 1
-    
-            // Ajustar la dirección en X de la pelota
-            // Aquí ajustamos dx basándonos en el punto de impacto y algún factor de influencia
-            this.ball.dx = this.ball.speed * angleChange;
-            this.ball.speed = this.ball.speed
+            // Calcular el punto de impacto relativo al centro del paddle
+            const paddleCenter = this.paddle.x + this.paddle.w / 2;
+            const relativeImpact = (this.ball.x - paddleCenter) / (this.paddle.w / 2);
+
+            // Ajustar la velocidad horizontal de la pelota basándose en el punto de impacto
+            const maxAngle = Math.PI / 3; // Ángulo máximo permitido
+            const angle = relativeImpact * maxAngle;
+
+            // Calcular las nuevas velocidades dx y dy
+            this.ball.dx = this.ball.speed * Math.sin(angle);
+            this.ball.dy = -this.ball.speed * Math.cos(angle);
         }
     }
     
