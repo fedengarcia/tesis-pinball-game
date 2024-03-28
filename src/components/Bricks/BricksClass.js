@@ -693,7 +693,7 @@ class BricksClass {
 
                     if (elementFalling.element.bonification === "premio") {
                         this.score += this.bonificationPointInfo.bonificationValue
-                        this.createBonificationPoints(this.paddle.x, this.paddle.y)
+                        this.createBonificationPoints(this.paddle.w / 2, this.paddle.y)
                         this.setScore(this.score)
                         // Marca la bonificación como aplicada
                     } else if (elementFalling.element.bonification === "mediadora") {
