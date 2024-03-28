@@ -168,7 +168,7 @@ export const APP_DATA = {
             SECOND_TIME: {
                 TITLE: 'Partida terminada',
                 SUBTITLE: 'Para poder ganar necesitas jugar al menos dos partidas y rellenar el cuestionario.',
-                SUBTITLE2: 'Puedes jugar un máximo de 5 partidas.',
+                SUBTITLE2: 'Puedes jugar hoy u otro día. Si quieres jugar otro día, guarda el enlace y entra con el mismo correo que hoy.',
                 BUTTON_TITLE: 'JUGAR',
                 BUTTON_TITLE2: 'JUGAR OTRO DIA',
             },
