@@ -24,11 +24,11 @@ const detectBrowser = () => {
             addBlocksLineTime: 10000,
             ballVelocity: 10,
             ballColisionVelocitiy: 0.5,
-            paddleVelocity: 10,
+            paddleVelocity: 12,
             paddleBofinificationDuration: 12000,
-            fallingElementVelocity: 2,
+            fallingElementVelocity: 4,
             bonificationShowTimer: 2,
-            bonificationVyVelocitiy: 0.5,
+            bonificationVyVelocitiy: 0.6,
         };
     } else if (userAgent.indexOf(BROWSERS.SAFARI) !== -1) {
         return {
