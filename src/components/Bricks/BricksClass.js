@@ -584,8 +584,6 @@ class BricksClass {
     // DRAW BONIFICATION POINTS
     drawBonificationPoints(fontSize = this.bonificationPointInfo.fontSize, fontColor = this.bonificationPointInfo.color, fontFamily = 'Arial') {
         this.bonificationsPointsToDraw.forEach((bonification) => {
-            const halfCanvas = this.canvas.width / 2 - 65
-            const positionX = this.paddle.position <= halfCanvas ? halfCanvas - 200 : halfCanvas + 200
             // Dibujar el texto con sombra y brillo
             this.canvasContext.font = `${fontSize}px ${fontFamily}`;
             this.canvasContext.fillStyle = fontColor;
@@ -599,7 +597,7 @@ class BricksClass {
             this.canvasContext.shadowOffsetY = 2;
 
             // Dibujar el texto principal
-            this.canvasContext.fillText('+100', positionX, bonification.y);
+            this.canvasContext.fillText('+100', bonification.x, bonification.y);
 
             // Restablecer la sombra
             this.canvasContext.shadowColor = 'transparent';
@@ -609,7 +607,7 @@ class BricksClass {
 
             // Dibujar el texto con brillo
             this.canvasContext.fillStyle = fontColor;
-            this.canvasContext.fillText('+100', positionX + 1, bonification.y - 1);
+            this.canvasContext.fillText('+100', bonification.x + 1, bonification.y - 1);
 
         });
     }
@@ -695,7 +693,7 @@ class BricksClass {
 
                     if (elementFalling.element.bonification === "premio") {
                         this.score += this.bonificationPointInfo.bonificationValue
-                        this.createBonificationPoints(this.paddle.x, this.paddle.y)
+                        this.createBonificationPoints(elementFalling.x, elementFalling.y)
                         this.setScore(this.score)
                         // Marca la bonificación como aplicada
                     } else if (elementFalling.element.bonification === "mediadora") {
