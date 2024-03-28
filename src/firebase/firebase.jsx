@@ -174,12 +174,14 @@ export const getTopRanking = async (withExtraData) => {
           delete gameCopy.timePlayed;
         }
         if(index !== -1){
-          topRanking[index] = {
-            userEmail: userData.email,
-            userDate: userData.date,
-            userId: userData.id,
-            gameNumber: userData.tableAssigned[0].table,
-            ...game
+          if(topRanking[index].score < game.score){
+            topRanking[index] = {
+              userEmail: userData.email,
+              userDate: userData.date,
+              userId: userData.id,
+              gameNumber: userData.tableAssigned[0].table,
+              ...game
+            }
           }
         }else{
           topRanking.push({

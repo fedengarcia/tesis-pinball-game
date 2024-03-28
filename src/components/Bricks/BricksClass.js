@@ -778,12 +778,12 @@ class BricksClass {
         this.paddle.x += this.paddle.dx;
 
         // Wall detection
-        if (this.paddle.x + this.paddle.w > this.canvas.width) {
-            this.paddle.x = this.canvas.width - this.paddle.w;
+        if (this.paddle.x + this.paddle.w > this.canvas.width - 1) {
+            this.paddle.x = this.canvas.width - this.paddle.w -1;
         }
     
-        if (this.paddle.x < 0) {
-            this.paddle.x = 0;
+        if (this.paddle.x < 1) {
+            this.paddle.x = 1;
         }    
     }
 
