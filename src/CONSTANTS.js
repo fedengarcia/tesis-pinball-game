@@ -22,13 +22,13 @@ const detectBrowser = () => {
     } else if (userAgent.indexOf(BROWSERS.FIREFOX) !== -1) {
         return {
             addBlocksLineTime: 10000,
-            ballVelocity: 10,
+            ballVelocity: 12,
             ballColisionVelocitiy: 0.5,
-            paddleVelocity: 12,
+            paddleVelocity: 14,
             paddleBofinificationDuration: 12000,
-            fallingElementVelocity: 4,
+            fallingElementVelocity: 6,
             bonificationShowTimer: 2,
-            bonificationVyVelocitiy: 0.6,
+            bonificationVyVelocitiy: 0.5,
         };
     } else if (userAgent.indexOf(BROWSERS.SAFARI) !== -1) {
         return {
