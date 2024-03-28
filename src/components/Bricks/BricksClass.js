@@ -295,7 +295,7 @@ class BricksClass {
             // Lógica para disparar la pelota
             if (this.ball.readyToLunch) {
                 this.ball.dx = this.ball.speed * Math.cos(this.arrowAngle); // Velocidad en x basada en el ángulo
-                this.ball.dy = this.ball.speed * Math.sin(this.arrowAngle); // Velocidad en y basada en el ángulo
+                this.ball.dy = -this.ball.speed * Math.sin(this.arrowAngle); // Velocidad en y basada en el ángulo
                 this.ball.readyToLunch = false;
                 this.inGame = true
             }
