@@ -11,7 +11,7 @@ const detectBrowser = () => {
     if (userAgent.indexOf(BROWSERS.CHROME) !== -1) { //FUNCIONA PERFECTO !!
         return {
             addBlocksLineTime: 10000,
-            ballVelocity: 5,
+            ballVelocity: 4,
             ballColisionVelocitiy: 0.02,
             paddleVelocity: 6,
             paddleBofinificationDuration: 12000,
@@ -22,7 +22,7 @@ const detectBrowser = () => {
     } else if (userAgent.indexOf(BROWSERS.FIREFOX) !== -1) {
         return {
             addBlocksLineTime: 10000,
-            ballVelocity: 8,
+            ballVelocity: 10,
             ballColisionVelocitiy: 0.5,
             paddleVelocity: 10,
             paddleBofinificationDuration: 12000,
@@ -33,7 +33,7 @@ const detectBrowser = () => {
     } else if (userAgent.indexOf(BROWSERS.SAFARI) !== -1) {
         return {
             addBlocksLineTime: 10000,
-            ballVelocity: 5,
+            ballVelocity: 8,
             ballColisionVelocitiy: 0.02,
             paddleVelocity: 6,
             paddleBofinificationDuration: 12000,
