@@ -584,7 +584,8 @@ class BricksClass {
     // DRAW BONIFICATION POINTS
     drawBonificationPoints(fontSize = this.bonificationPointInfo.fontSize, fontColor = this.bonificationPointInfo.color, fontFamily = 'Arial') {
         this.bonificationsPointsToDraw.forEach((bonification) => {
-            const positionX = this.paddle.position <= this.canvas.width / 100 ? bonification.x + 30 : this.paddle.position >= this.canvas.width ? bonification.x - 30 : bonification.x
+            const halfCanvas = this.canvas.width / 2
+            const positionX = this.paddle.position <= halfCanvas ? halfCanvas / 2 : halfCanvas * 2
             // Dibujar el texto con sombra y brillo
             this.canvasContext.font = `${fontSize}px ${fontFamily}`;
             this.canvasContext.fillStyle = fontColor;
