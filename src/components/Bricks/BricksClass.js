@@ -584,6 +584,7 @@ class BricksClass {
     // DRAW BONIFICATION POINTS
     drawBonificationPoints(fontSize = this.bonificationPointInfo.fontSize, fontColor = this.bonificationPointInfo.color, fontFamily = 'Arial') {
         this.bonificationsPointsToDraw.forEach((bonification) => {
+            const positionX = this.paddle.position <= this.canvas.width / 100 ? bonification.x + 30 : this.paddle.position >= this.canvas.width ? bonification.x - 30 : bonification.x
             // Dibujar el texto con sombra y brillo
             this.canvasContext.font = `${fontSize}px ${fontFamily}`;
             this.canvasContext.fillStyle = fontColor;
@@ -597,7 +598,7 @@ class BricksClass {
             this.canvasContext.shadowOffsetY = 2;
 
             // Dibujar el texto principal
-            this.canvasContext.fillText('+100', bonification.x, bonification.y);
+            this.canvasContext.fillText('+100', positionX, bonification.y);
 
             // Restablecer la sombra
             this.canvasContext.shadowColor = 'transparent';
@@ -607,7 +608,7 @@ class BricksClass {
 
             // Dibujar el texto con brillo
             this.canvasContext.fillStyle = fontColor;
-            this.canvasContext.fillText('+100', bonification.x + 1, bonification.y - 1);
+            this.canvasContext.fillText('+100', positionX + 1, bonification.y - 1);
 
         });
     }
@@ -693,7 +694,7 @@ class BricksClass {
 
                     if (elementFalling.element.bonification === "premio") {
                         this.score += this.bonificationPointInfo.bonificationValue
-                        this.createBonificationPoints(this.paddle.w / 2, this.paddle.y)
+                        this.createBonificationPoints(this.paddle.x, this.paddle.y)
                         this.setScore(this.score)
                         // Marca la bonificación como aplicada
                     } else if (elementFalling.element.bonification === "mediadora") {
@@ -774,7 +775,7 @@ class BricksClass {
     // UPDATE PADDLE MOVEMENT
     movePaddle() {
         this.paddle.x += this.paddle.dx;
-    
+
         // Wall detection
         if (this.paddle.x + this.paddle.w > this.canvas.width) {
             this.paddle.x = this.canvas.width - this.paddle.w;
@@ -878,6 +879,7 @@ class BricksClass {
             // Calcular las nuevas velocidades dx y dy
             this.ball.dx = this.ball.speed * Math.sin(angle);
             this.ball.dy = -this.ball.speed * Math.cos(angle);
+            this.ball.speed = this.ball.speed + 0.1
         }
     }
     
