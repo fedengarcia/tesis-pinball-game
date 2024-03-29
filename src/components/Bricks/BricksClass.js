@@ -83,6 +83,7 @@ class BricksClass {
             y: this.paddle.y - 10, // Coloca la pelota justo encima del paddle
             size: gameConfig.ballInformation.size, // Tamano
             speed: gameConfig.ballInformation.speed, // velocidad
+            velocityExtra: gameConfig.ballInformation.velocityToBeAdd,
             dx: 0, // Inicialmente no hay movimiento en x
             dy: 0, // Inicialmente no hay movimiento en y
             visible: true, // Indica si la pelota está lista visible o no
@@ -878,7 +879,7 @@ class BricksClass {
             // Calcular las nuevas velocidades dx y dy
             this.ball.dx = this.ball.speed * Math.sin(angle);
             this.ball.dy = -this.ball.speed * Math.cos(angle);
-            this.ball.speed = this.ball.speed + 0.04
+            this.ball.speed = this.ball.speed + this.ball.velocityExtra
         }
     }
     
