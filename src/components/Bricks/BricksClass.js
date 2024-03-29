@@ -878,7 +878,7 @@ class BricksClass {
             // Calcular las nuevas velocidades dx y dy
             this.ball.dx = this.ball.speed * Math.sin(angle);
             this.ball.dy = -this.ball.speed * Math.cos(angle);
-            this.ball.speed = this.ball.speed + 0.1
+            this.ball.speed = this.ball.speed + 0.04
         }
     }
     
