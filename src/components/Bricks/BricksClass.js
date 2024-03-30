@@ -83,7 +83,7 @@ class BricksClass {
             y: this.paddle.y - 10, // Coloca la pelota justo encima del paddle
             size: gameConfig.ballInformation.size, // Tamano
             speed: gameConfig.ballInformation.speed, // velocidad
-            velocityExtra: gameConfig.ballInformation.velocityToBeAdd,
+            velocityExtra: gameConfig.ballInformation.ballVelocityToAdd,
             dx: 0, // Inicialmente no hay movimiento en x
             dy: 0, // Inicialmente no hay movimiento en y
             visible: true, // Indica si la pelota está lista visible o no
