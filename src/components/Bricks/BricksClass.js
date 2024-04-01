@@ -220,7 +220,7 @@ class BricksClass {
             });
         });
 
-        if(this.bricks.length < 16){
+        if(this.bricks.length < 17){
             this.bricks.unshift(newRow);
         }else{
             this.loseLife()
@@ -887,23 +887,14 @@ class BricksClass {
     // CHECK CANVAS BORDER COLLISION
     checkBorderCanvasCollision () {
         // Wall collision (right/left)
-        if (this.ball.x + this.ball.size >= this.canvas.width || this.ball.x - this.ball.size <= 0) {
+         if (this.ball.x + this.ball.size > this.canvas.width || this.ball.x - this.ball.size < 0) {
             this.ball.dx *= -1; // ball.dx = ball.dx * -1
         }
-    
-        // Wall collision (top)
-        if (this.ball.y - this.ball.size <= 0) {
+  
+        // Wall collision (top/bottom)
+        if (this.ball.y + this.ball.size > this.canvas.height || this.ball.y - this.ball.size < 0) {
             this.ball.dy *= -1;
         }
-    
-        // Collision with paddle
-        if (this.ball.y + this.ball.size >= this.canvas.height - this.paddle.height && 
-            this.ball.x >= this.paddle.x && 
-            this.ball.x <= this.paddle.x + this.paddle.width) {
-            this.ball.dy *= -1;
-        }
-    
-
     }
 
     // CHECK BOTTOM COLLISION
