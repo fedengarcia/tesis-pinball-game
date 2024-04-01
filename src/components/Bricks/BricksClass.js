@@ -712,11 +712,9 @@ class BricksClass {
                             if (progress < 1) {
                                 requestAnimationFrame(animatePaddle);
                             } else {
-                                this.paddleBonusFlag += 1
                                 // La animación ha terminado, puedes realizar acciones adicionales aquí
                                 this.showBonification('AGRANDAS PADDLE !', this.paddle.bonificationDuration)
                                 setTimeout(() => {
-                                    this.paddleBonusFlag -= 1
                                     // Inicia la animación para achicar la barra después de un tiempo de espera
                                     if(!this.ball.readyToLunch) this.shrinkPaddle();
                                 }, this.paddle.bonificationDuration); // Espera x segundo antes de achicar la barra
@@ -748,7 +746,6 @@ class BricksClass {
 
     // SHRINK PADDLE
     shrinkPaddle(startTime) {
-        if(this.paddleBonusFlag === 0){
             const originalWidth = this.paddle.w;
             const targetWidth = 130;
             const animationDuration = 400; // Puedes ajustar la duración según sea necesario
@@ -763,7 +760,6 @@ class BricksClass {
                 }
             };
             animatePaddleShrink(startTime);
-        }
     }
 
      updateStatus(scaleRatio, deltaTime) {
