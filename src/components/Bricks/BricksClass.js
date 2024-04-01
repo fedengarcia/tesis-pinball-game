@@ -23,6 +23,7 @@ class BricksClass {
     bonificationsPointsToDraw = []
     levels = 3
     actualLevel = 0
+    paddleBonusFlag = 0
 
     // Bonifications colors bricks
     standardColor = '#CCCCCC';  // Color estándar para bloques
@@ -62,7 +63,6 @@ class BricksClass {
         this.lives = gameConfig.lives
         this.standardColor = gameConfig.brickStandardColor;  // Color estándar para bloques
         this.bonusColor = gameConfig.brickBonusColor;  // Color para bonificación nula
-
         // PADDLE
         this.paddle = {
             x: this.canvas.width / 2 - 65,
@@ -698,28 +698,12 @@ class BricksClass {
                         this.setScore(this.score)
                         // Marca la bonificación como aplicada
                     } else if (elementFalling.element.bonification === "mediadora") {
-                        const originalWidth = this.paddle.w;
-                        const targetWidth = this.paddle.w + 50 > 180 ? this.paddle.w : this.paddle.w + 50;
-                        const animationDuration = 400;
+
                         const startTime = performance.now();
 
-                        const animatePaddle = (currentTime) => {
-                            const elapsedTime = currentTime - startTime;
-                            const progress = Math.min(elapsedTime / animationDuration, 1);
-                            this.paddle.w = originalWidth + progress * (targetWidth - originalWidth);
-                            if (progress < 1) {
-                                requestAnimationFrame(animatePaddle);
-                            } else {
-                                // La animación ha terminado, puedes realizar acciones adicionales aquí
-                                this.showBonification('AGRANDAS PADDLE !', this.paddle.bonificationDuration)
-                                setTimeout(() => {
-                                    // Inicia la animación para achicar la barra después de un tiempo de espera
-                                    if(!this.ball.readyToLunch) this.shrinkPaddle();
-                                }, this.paddle.bonificationDuration); // Espera x segundo antes de achicar la barra
-                            }
-                        };
 
-                        animatePaddle(startTime);
+
+                        this.animatePaddle(startTime);
                         // Marca la bonificación como aplicada
                     } 
                     elementFalling.appliedBonification = true;
@@ -742,24 +726,47 @@ class BricksClass {
         });
     }
 
+    animatePaddle(currentTime) {
+        const originalWidth = this.paddle.w;
+        const targetWidth = this.paddle.w + 50 > 180 ? this.paddle.w : this.paddle.w + 50;
+        const animationDuration = 400;
+
+        const elapsedTime = currentTime - startTime;
+        const progress = Math.min(elapsedTime / animationDuration, 1);
+        this.paddle.w = originalWidth + progress * (targetWidth - originalWidth);
+        if (progress < 1) {
+            requestAnimationFrame(animatePaddle);
+        } else {
+            // La animación ha terminado, puedes realizar acciones adicionales aquí
+            this.showBonification('AGRANDAS PADDLE !', this.paddle.bonificationDuration)
+            this.paddleBonusFlag += 1
+            setTimeout(() => {
+                this.paddleBonusFlag -= 1
+                // Inicia la animación para achicar la barra después de un tiempo de espera
+                if(!this.ball.readyToLunch) this.shrinkPaddle();
+            }, this.paddle.bonificationDuration); // Espera x segundo antes de achicar la barra
+        }
+    };
+
     // SHRINK PADDLE
     shrinkPaddle() {
-        const originalWidth = this.paddle.w;
-        const targetWidth = 130;
-        const animationDuration = 400; // Puedes ajustar la duración según sea necesario
-        const startTime = performance.now();
-
-        const animatePaddleShrink = (currentTime) => {
-            const elapsedTime = currentTime - startTime;
-            const progress = Math.min(elapsedTime / animationDuration, 1);
-            this.paddle.w = originalWidth + progress * (targetWidth - originalWidth);
-            
-            if (progress < 1) {
-                requestAnimationFrame(animatePaddleShrink);
-            }
-        };
-
-        animatePaddleShrink(startTime);
+        if(this.paddleBonusFlag === 0){
+            const originalWidth = this.paddle.w;
+            const targetWidth = 130;
+            const animationDuration = 400; // Puedes ajustar la duración según sea necesario
+            const startTime = performance.now();
+    
+            const animatePaddleShrink = (currentTime) => {
+                const elapsedTime = currentTime - startTime;
+                const progress = Math.min(elapsedTime / animationDuration, 1);
+                this.paddle.w = originalWidth + progress * (targetWidth - originalWidth);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animatePaddleShrink);
+                }
+            };
+            animatePaddleShrink(startTime);
+        }
     }
 
      updateStatus(scaleRatio, deltaTime) {
