@@ -730,6 +730,8 @@ class BricksClass {
         const originalWidth = this.paddle.w;
         const targetWidth = this.paddle.w + 50 > 180 ? this.paddle.w : this.paddle.w + 50;
         const animationDuration = 400;
+        const startTime = performance.now();
+
 
         const elapsedTime = currentTime - startTime;
         const progress = Math.min(elapsedTime / animationDuration, 1);
@@ -743,18 +745,17 @@ class BricksClass {
             setTimeout(() => {
                 this.paddleBonusFlag -= 1
                 // Inicia la animación para achicar la barra después de un tiempo de espera
-                if(!this.ball.readyToLunch) this.shrinkPaddle();
+                if(!this.ball.readyToLunch) this.shrinkPaddle(startTime);
             }, this.paddle.bonificationDuration); // Espera x segundo antes de achicar la barra
         }
     };
 
     // SHRINK PADDLE
-    shrinkPaddle() {
+    shrinkPaddle(startTime) {
         if(this.paddleBonusFlag === 0){
             const originalWidth = this.paddle.w;
             const targetWidth = 130;
             const animationDuration = 400; // Puedes ajustar la duración según sea necesario
-            const startTime = performance.now();
     
             const animatePaddleShrink = (currentTime) => {
                 const elapsedTime = currentTime - startTime;
