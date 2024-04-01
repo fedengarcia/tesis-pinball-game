@@ -698,12 +698,32 @@ class BricksClass {
                         this.setScore(this.score)
                         // Marca la bonificación como aplicada
                     } else if (elementFalling.element.bonification === "mediadora") {
+                        const originalWidth = this.paddle.w;
+                        const targetWidth = this.paddle.w + 50 > 180 ? this.paddle.w : this.paddle.w + 50;
+                        const animationDuration = 400;
 
                         const startTime = performance.now();
 
+                        const animatePaddle = (currentTime) => {
+                            const elapsedTime = currentTime - startTime;
+                            const progress = Math.min(elapsedTime / animationDuration, 1);
+                            this.paddle.w = originalWidth + progress * (targetWidth - originalWidth);
 
+                            if (progress < 1) {
+                                requestAnimationFrame(animatePaddle);
+                            } else {
+                                this.paddleBonusFlag += 1
+                                // La animación ha terminado, puedes realizar acciones adicionales aquí
+                                this.showBonification('AGRANDAS PADDLE !', this.paddle.bonificationDuration)
+                                setTimeout(() => {
+                                    this.paddleBonusFlag -= 1
+                                    // Inicia la animación para achicar la barra después de un tiempo de espera
+                                    if(!this.ball.readyToLunch) this.shrinkPaddle();
+                                }, this.paddle.bonificationDuration); // Espera x segundo antes de achicar la barra
+                            }
+                        };
 
-                        this.animatePaddle(startTime);
+                        animatePaddle(startTime);
                         // Marca la bonificación como aplicada
                     } 
                     elementFalling.appliedBonification = true;
@@ -725,30 +745,6 @@ class BricksClass {
             return true;
         });
     }
-
-    animatePaddle(currentTime) {
-        const originalWidth = this.paddle.w;
-        const targetWidth = this.paddle.w + 50 > 180 ? this.paddle.w : this.paddle.w + 50;
-        const animationDuration = 400;
-        const startTime = performance.now();
-
-
-        const elapsedTime = currentTime - startTime;
-        const progress = Math.min(elapsedTime / animationDuration, 1);
-        this.paddle.w = originalWidth + progress * (targetWidth - originalWidth);
-        if (progress < 1) {
-            requestAnimationFrame(animatePaddle);
-        } else {
-            // La animación ha terminado, puedes realizar acciones adicionales aquí
-            this.showBonification('AGRANDAS PADDLE !', this.paddle.bonificationDuration)
-            this.paddleBonusFlag += 1
-            setTimeout(() => {
-                this.paddleBonusFlag -= 1
-                // Inicia la animación para achicar la barra después de un tiempo de espera
-                if(!this.ball.readyToLunch) this.shrinkPaddle(startTime);
-            }, this.paddle.bonificationDuration); // Espera x segundo antes de achicar la barra
-        }
-    };
 
     // SHRINK PADDLE
     shrinkPaddle(startTime) {
