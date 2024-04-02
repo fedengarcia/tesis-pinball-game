@@ -63,6 +63,7 @@ class BricksClass {
         this.lives = gameConfig.lives
         this.standardColor = gameConfig.brickStandardColor;  // Color estándar para bloques
         this.bonusColor = gameConfig.brickBonusColor;  // Color para bonificación nula
+        this.lastUpgradePaddle = 0
         // PADDLE
         this.paddle = {
             x: this.canvas.width / 2 - 65,
@@ -76,7 +77,10 @@ class BricksClass {
             dx: 0,
             visible: true  
         }
-
+        this.lastBallPosition = { x: 0, y: 0 };
+        this.lastPositionChangeTime = Date.now();
+        this.positionStuckThreshold = 2000; // Tiempo en milisegundos, p. ej., 3 segundos
+        
         // BALL
         this.ball = {
             x: this.canvas.width / 2,
@@ -714,6 +718,7 @@ class BricksClass {
                             } else {
                                 // La animación ha terminado, puedes realizar acciones adicionales aquí
                                 this.showBonification('AGRANDAS PADDLE !', this.paddle.bonificationDuration)
+                                this.lastUpgradePaddle = Date.now()
                                 setTimeout(() => {
                                     // Inicia la animación para achicar la barra después de un tiempo de espera
                                     if(!this.ball.readyToLunch) this.shrinkPaddle();
@@ -746,6 +751,7 @@ class BricksClass {
 
     // SHRINK PADDLE
     shrinkPaddle(startTime) {
+        if(this.lastUpgradePaddle + this.paddle.bonificationDuration < Date.now()){            
             const originalWidth = this.paddle.w;
             const targetWidth = 130;
             const animationDuration = 400; // Puedes ajustar la duración según sea necesario
@@ -760,6 +766,7 @@ class BricksClass {
                 }
             };
             animatePaddleShrink(startTime);
+        }
     }
 
      updateStatus(scaleRatio, deltaTime) {
@@ -788,13 +795,37 @@ class BricksClass {
 
     // UPDATE BALL MOVEMENT
     moveBall() {
+        // Mover la pelota
         this.ball.x += this.ball.dx;
         this.ball.y += this.ball.dy;
         
-        this.checkBottomCollision()
-        this.checkBorderCanvasCollision()
-        this.checkPaddleCollision()
-        this.checkBrickCollision()
+        // Verificar colisiones con el fondo, los bordes del canvas, el paddle y los ladrillos
+        this.checkBottomCollision();
+        this.checkBorderCanvasCollision();
+        this.checkPaddleCollision();
+        this.checkBrickCollision();
+    
+        // Verificar si la pelota se ha quedado atascada
+        this.checkStuckBall();
+    }
+    
+    checkStuckBall() {
+        // Si la pelota se mueve principalmente en horizontal o vertical y no ha cambiado mucho de dirección
+        if (Math.abs(this.ball.dx) > Math.abs(this.ball.dy)) {
+            // Pelota moviéndose principalmente en horizontal
+            if (this.stuckCounterX > 30) {  // Ajusta este valor según sea necesario
+                this.ball.dy = -this.ball.dy; // Cambia la dirección vertical
+                this.stuckCounterX = 0; // Restablece el contador
+            }
+            this.stuckCounterX++;
+        } else {
+            // Pelota moviéndose principalmente en vertical
+            if (this.stuckCounterY > 30) {  // Ajusta este valor según sea necesario
+                this.ball.dx = -this.ball.dx; // Cambia la dirección horizontal
+                this.stuckCounterY = 0; // Restablece el contador
+            }
+            this.stuckCounterY++;
+        }
     }
 
     // CHECK BRICK COLLISION
