@@ -721,7 +721,7 @@ class BricksClass {
                                 this.lastUpgradePaddle = Date.now()
                                 setTimeout(() => {
                                     // Inicia la animación para achicar la barra después de un tiempo de espera
-                                    if(!this.ball.readyToLunch) this.shrinkPaddle();
+                                    if(!this.ball.readyToLunch) this.shrinkPaddle(startTime);
                                 }, this.paddle.bonificationDuration); // Espera x segundo antes de achicar la barra
                             }
                         };
