@@ -806,7 +806,7 @@ class BricksClass {
         this.checkBrickCollision();
     
         // Verificar si la pelota se ha quedado atascada
-        this.checkStuckBall();
+        // this.checkStuckBall();
     }
     
     checkStuckBall() {
@@ -916,17 +916,32 @@ class BricksClass {
     
 
     // CHECK CANVAS BORDER COLLISION
-    checkBorderCanvasCollision () {
+    checkBorderCanvasCollision() {
         // Wall collision (right/left)
-         if (this.ball.x + this.ball.size > this.canvas.width || this.ball.x - this.ball.size < 0) {
-            this.ball.dx *= -1; // ball.dx = ball.dx * -1
+        if (this.ball.x + this.ball.size >= this.canvas.width || this.ball.x - this.ball.size <= 0) {
+            this.ball.dx *= -1; // Cambia la dirección horizontal
+    
+            // Ajusta la posición de la pelota para que no quede atascada
+            if (this.ball.x + this.ball.size >= this.canvas.width) {
+                this.ball.x = this.canvas.width - this.ball.size;
+            } else {
+                this.ball.x = this.ball.size;
+            }
         }
-  
+    
         // Wall collision (top/bottom)
-        if (this.ball.y + this.ball.size > this.canvas.height || this.ball.y - this.ball.size < 0) {
-            this.ball.dy *= -1;
+        if (this.ball.y + this.ball.size >= this.canvas.height || this.ball.y - this.ball.size <= 0) {
+            this.ball.dy *= -1; // Cambia la dirección vertical
+    
+            // Ajusta la posición de la pelota para que no quede atascada
+            if (this.ball.y + this.ball.size >= this.canvas.height) {
+                this.ball.y = this.canvas.height - this.ball.size;
+            } else {
+                this.ball.y = this.ball.size;
+            }
         }
     }
+    
 
     // CHECK BOTTOM COLLISION
     checkBottomCollision () {
