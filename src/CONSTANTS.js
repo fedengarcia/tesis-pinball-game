@@ -179,15 +179,6 @@ export const APP_DATA = {
             hasScale:true,
             POSSIBLE_ANSWERS_IMAGES:[azul,rojo,verde],
             scaleText:['nada en absoluto', 'muchisimo'],
-            POSSIBLE_ANSWERS: [
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-              ]
         },
         {
             QUESTION: "Las marcas son propiedad de organizaciones que se dedican a un sector productivo. No sabes con certeza a qué se dedica cada marca, pero trata de adivinarlo intuitivamente. Pueden dedicarse a lo mismo, o no.",
@@ -198,30 +189,12 @@ export const APP_DATA = {
         {
             QUESTION: "¿Cómo valorarías una marca que te diera puntos, siendo el objetivo del juego ganar el mayor número de puntos posible? Valora de 1 a 7  siendo 1 = “totalmente en contra” y 7 = totalmente a favor",
             hasScale: true,
-            scaleText:['totalmente en contra', 'totalmente a favor'],
-            POSSIBLE_ANSWERS: [
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-              ]
+            scaleText:['totalmente en contra', 'totalmente a favor']
         },
         {
             QUESTION: "¿Cómo valorarías una marca que te ayudara facilitándote el juego y pudiendo por ello ganar más puntos? Valora de 1 a 7  siendo 1 = “totalmente en contra” y 7 = totalmente a favor",
             hasScale: true,
             scaleText:['totalmente en contra', 'totalmente a favor'],
-            POSSIBLE_ANSWERS: [
-                "1",
-                "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-              ]
         },
         // You can add here all the questions that you need
         ]
@@ -233,10 +206,11 @@ export const APP_DATA = {
         QUESTIONS:[
         {
             QUESTION: "Edad",
+            hasInput: true,
             POSSIBLE_ANSWERS: ['10','75']
         },
         {
-            QUESTION: `Genero"`,
+            QUESTION: `Genero`,
             POSSIBLE_ANSWERS: [
                 "Varón",
                 "Mujer",
