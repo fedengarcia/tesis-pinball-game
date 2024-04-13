@@ -77,7 +77,6 @@ export default function SecondForm() {
             ...radioButtonCopy,
             [indexSubOption === 0 ? 'azul' : indexSubOption === 1 ? 'rojo' : 'verde']: e
         };
-        console.log(radioButtonCopy);
         setRadioButton(radioButtonCopy)
         answersCopy[index].answer_selected = JSON.stringify(radioButtonCopy);
     }else if(type === 'slider'){
@@ -91,9 +90,7 @@ export default function SecondForm() {
         setInputAnswers(inputAnswersCopy)
         answersCopy[index].answer_selected = JSON.stringify(inputAnswersCopy)
     }
-    console.log(answersCopy);
-        setAnswers(answersCopy)
-    
+    setAnswers(answersCopy)
   }
 
   const getMarks = (scaleText) => {
