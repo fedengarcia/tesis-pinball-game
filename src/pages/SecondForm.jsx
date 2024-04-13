@@ -19,7 +19,11 @@ export default function SecondForm() {
     })
     return answerArray;
   })
-  const [radioButton, setRadioButton] = useState(null)
+  const [radioButton, setRadioButton] = useState({
+    azul: '',
+    verde: '',
+    rojo: ''
+  })
   const [inputAnswers, setInputAnswers] = useState({
     azul: '',
     verde: '',
@@ -63,12 +67,19 @@ export default function SecondForm() {
   }
   
   const handleAnswers = (type, index, e, indexSubOption) => {
+    console.log(indexSubOption);
     let answersCopy = [...answers]
     console.log(e?.target?.value ?? e);
 
     if(type === 'radio'){
-        setRadioButton(e)
-        answersCopy[index].answer_selected = e;
+        let radioButtonCopy = {...radioButton}
+        radioButtonCopy = {
+            ...radioButtonCopy,
+            [indexSubOption === 0 ? 'azul' : indexSubOption === 1 ? 'rojo' : 'verde']: e
+        };
+        console.log(radioButtonCopy);
+        setRadioButton(radioButtonCopy)
+        answersCopy[index].answer_selected = JSON.stringify(radioButtonCopy);
     }else if(type === 'slider'){
         answersCopy[index].answer_selected = e.target.value;
     }else if(type === 'input'){
@@ -142,28 +153,35 @@ export default function SecondForm() {
               {indexOption === 0 ? 
                 <StyledFlexCenter  style={{justifyContent:'flex-start'}} direction={"row"}>
                     <>
-                {question.POSSIBLE_ANSWERS.map((answerOption, indexSubOption) => 
-                        <StyledFlexCenter key={indexSubOption} style={{width:'30%',padding: 0, margin: '5px', justifyContent:'flex-start', alignItems:'center'}} direction="row">
+                {question.POSSIBLE_ANSWERS_IMAGES.map((answerOption, indexSubOption) => 
+                        <StyledFlexCenter key={indexSubOption} style={{width:'30%',padding: 0, margin: '5px', justifyContent:'flex-start', alignItems:'center'}} direction="column">
                         <img  style={{width:'40px',}}src={question.POSSIBLE_ANSWERS_IMAGES[indexSubOption]}/>
-                        <input type='radio' style={{marginRight:'10px'}} checked={radioButton === answerOption} onChange={(e) => handleAnswers('radio',indexOption,answerOption)}/>
-                        <label onClick={(e) => handleAnswers('radio',indexOption, answerOption)}> {answerOption} </label>
+                        <StyledFlexCenter direction="row" style={{alignItems:'center'}}>
+                            <input type='radio' style={{marginRight:'10px'}} checked={radioButton[indexSubOption === 0 ? 'azul' : indexSubOption === 1 ? 'rojo' : 'verde'] === 'si'} onChange={(e) => handleAnswers('radio',indexOption,'si', indexSubOption)}/>
+                            <label onClick={(e) => handleAnswers('radio',indexOption, 'si')}> si </label>
+                            <input type='radio' style={{marginRight:'10px'}} checked={radioButton[indexSubOption === 0 ? 'azul' : indexSubOption === 1 ? 'rojo' : 'verde'] === 'no'} onChange={(e) => handleAnswers('radio',indexOption,'no', indexSubOption)}/>
+                            <label onClick={(e) => handleAnswers('radio',indexOption, 'no')}> no </label>
+                        </StyledFlexCenter>
                     </StyledFlexCenter>
                 )}
                 </>
                 </StyledFlexCenter>
               :
               question.hasScale ?
-                <Slider
-                aria-label="Custom marks"
-                defaultValue={5}
-                value={parseInt(answers[indexOption].answer_selected)}
-                onChange={e => handleAnswers('slider', indexOption, e)}
-                getAriaValueText={valuetext}
-                marks={getMarks(question?.scaleText)}
-                shiftStep={1}
-                min={1}
-                max={7} 
-                />
+                <StyledFlexCenter style={{alignItems:'center'}}>
+                    <Slider
+                    aria-label="Custom marks"
+                    defaultValue={5}
+                    value={parseInt(answers[indexOption].answer_selected)}
+                    onChange={e => handleAnswers('slider', indexOption, e)}
+                    getAriaValueText={valuetext}
+                    marks={getMarks(question?.scaleText)}
+                    shiftStep={1}
+                    min={1}
+                    max={7} 
+                    style={{ width: '700px' }} // Aquí ajustas el ancho del slider
+                    />
+                </StyledFlexCenter>
               :
               question.POSSIBLE_ANSWERS.map((answerOption, indexSubOption) => 
               <StyledFlexCenter key={indexSubOption} style={{padding: 0, margin: '5px', justifyContent:'flex-start', alignItems:'center'}} direction="column">
