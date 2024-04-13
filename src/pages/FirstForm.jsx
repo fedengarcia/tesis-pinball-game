@@ -24,7 +24,7 @@ export default function FirstForm() {
 
   useEffect(() => {
     if(!userInfo?.email) navigate('/')
-    if(userInfo?.firstForm?.isCompleted) navigate('/game')
+    if(userInfo?.firstForm?.isCompleted) navigate('/second-form')
   }, [userInfo]);
 
   useEffect(() => {
