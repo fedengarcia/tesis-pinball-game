@@ -26,8 +26,9 @@ export default function Game() {
     if(!userInfo.email) navigate('/')
     if(userInfo?.gamesPlayed?.length === 0) setGameStatus('FIRST_TIME')
     if(userInfo?.gamesPlayed?.length === 1) setGameStatus('SECOND_TIME')
-    if(userInfo?.gamesPlayed?.length >= 2) setGameStatus('GAME_FINISH')
-    if(userInfo?.gamesPlayed?.length >= 4) setCantPlayAnymore(true)
+    if(userInfo?.gamesPlayed?.length === 2) setGameStatus('THIRD_TIME')
+    if(userInfo?.gamesPlayed?.length >= 3) setGameStatus('GAME_FINISH')
+    if(userInfo?.gamesPlayed?.length > 4) setCantPlayAnymore(true)
   }, [userInfo]);
 
   useEffect(() => {
@@ -77,9 +78,9 @@ export default function Game() {
               : 
                     <StyledFlexCenter direction="column" style={{height: '100%', alignItems:'center', justifyContent:'center', width: '100%'}}>
 
-                      {!userInfo?.finalForm?.isCompleted && gameStatus === "FIRST_TIME" && !cantPlayAnymore ?
+                      {!userInfo?.finalForm1?.isCompleted && gameStatus === "FIRST_TIME" && !cantPlayAnymore ?
                         <>
-                          <h2>¿Cómo se juega?</h2>
+                          <h2 style={{marginTop: '5em'}}>¿Cómo se juega?</h2>
                           <p>Te recuerdo cómo se juega:</p>
                           <p>Usa las teclas de flechas de dirección para mover la “raqueta”. La raqueta te sirve para golpear la bola y romper cuantos más ladrillos puedas. Cada ladrillo te da puntos y hay que conseguir la puntuación máxima. Algunos de los ladrillos se transforman en marcas y esas marcas te dan muchos puntos o alargan la raqueta, lo que permite golpear la pelota con más facilidad.</p>
                           <p>Tienes tres vidas en cada partida. Tienes que jugar como mínimo tres partidas pero puedes jugar un máximo de cinco partidas, si lo deseas. Los puntos de cada partida se guardan. No juegues más de dos partidas en el mismo día.</p>
@@ -95,7 +96,7 @@ export default function Game() {
                             ¡Jugar!
                           </Button>
                         </>  
-                    :  !userInfo?.finalForm?.isCompleted && gameStatus === "SECOND_TIME" && !cantPlayAnymore ?
+                    :  !userInfo?.finalForm1?.isCompleted && (gameStatus === "SECOND_TIME" || gameStatus === "THIRD_TIME") && !cantPlayAnymore ?
                         <>
                         <h2>Partida terminada</h2>
                           <p>Para que tu puntuación quede registrada necesitas jugar al menos tres partidas y rellenar el cuestionario final. </p>
@@ -109,7 +110,7 @@ export default function Game() {
                             ¡Jugar!
                           </Button>
                         </>
-                    : !userInfo?.finalForm?.isCompleted && gameStatus === "GAME_FINISH" && !cantPlayAnymore ?
+                    : !userInfo?.finalForm1?.isCompleted && gameStatus === "GAME_FINISH" && !cantPlayAnymore ?
                         <>
                           <h2>Partida terminada</h2>
                           <p>Ya has jugado tres partidas.</p>
@@ -133,10 +134,11 @@ export default function Game() {
                     :
                         <>
                             <h2>Partida terminada</h2>
-                            <p>Ya has jugado todas las partidas posibles. Tu máxima puntuación quedará registrada una vez que respondas el cuestionario final.</p>
+                            <p>Ya has jugado todas las partidas posibles.</p>
+                            <p>Tu máxima puntuación quedará registrada una vez que respondas el cuestionario final.</p>
                             <Button
                               variant='contained'
-                              onClick={() => navigate('/final-form')}
+                              onClick={() => !userInfo?.finalForm1?.isCompleted ? navigate('/final-form') : navigate('/final-form-2')}
                               style={{marginBottom: '2em'}}
                             >
                               Ir al cuestionario final.
