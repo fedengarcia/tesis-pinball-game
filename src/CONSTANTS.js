@@ -1,4 +1,9 @@
 import bricksgame from './assets/bricksgame.png'
+import rojo from './assets/rojo.png'
+import azul from './assets/azul.png'
+import verde from './assets/verde.png'
+
+
 
 const BROWSERS = {
     CHROME: "Chrome",
@@ -108,6 +113,7 @@ export const APP_DATA = {
     APP_BUTTON_PLAY: 'Continuar',
     APP_BUTTON_END: 'Responder y ver resultados',
     APP_FIRST_FORM: {
+        BUTTON:'Continuar',
         TITLE: 'Primer cuestionario',
         SUBTITLE: 'Sección 1 de 3: comportamiento de juego.',
         QUESTIONS:[
@@ -155,6 +161,113 @@ export const APP_DATA = {
         // You can add here all the questions that you need
         ]
     },
+    APP_SECOND_FORM: {
+        BUTTON:'Continuar',
+        TITLE: 'Primer cuestionario',
+        SUBTITLE: 'Sección 2 de 3: marcas y publicidad in-game.',
+        QUESTIONS:[
+        {
+            QUESTION: "Indica si reconoces alguna de las marcas",
+            POSSIBLE_ANSWERS_IMAGES:[azul,rojo,verde],
+            POSSIBLE_ANSWERS: [
+                'si',
+                'no',
+              ]
+        },
+        {
+            QUESTION: `Evalúa en qué grado te gusta cada uno de los logos. Valora de 1 a 7  siendo 1 = “nada en absoluto” y 7 = “muchísimo"`,
+            hasScale:true,
+            POSSIBLE_ANSWERS_IMAGES:[azul,rojo,verde],
+            scaleText:['nada en absoluto', 'muchisimo'],
+            POSSIBLE_ANSWERS: [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+              ]
+        },
+        {
+            QUESTION: "Las marcas son propiedad de organizaciones que se dedican a un sector productivo. No sabes con certeza a qué se dedica cada marca, pero trata de adivinarlo intuitivamente. Pueden dedicarse a lo mismo, o no.",
+            hasInput: true,
+            POSSIBLE_ANSWERS_IMAGES:[azul,rojo,verde],
+            POSSIBLE_ANSWERS: ['','','']
+        },
+        {
+            QUESTION: "¿Cómo valorarías una marca que te diera puntos, siendo el objetivo del juego ganar el mayor número de puntos posible? Valora de 1 a 7  siendo 1 = “totalmente en contra” y 7 = totalmente a favor",
+            hasScale: true,
+            scaleText:['totalmente en contra', 'totalmente a favor'],
+            POSSIBLE_ANSWERS: [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+              ]
+        },
+        {
+            QUESTION: "¿Cómo valorarías una marca que te ayudara facilitándote el juego y pudiendo por ello ganar más puntos? Valora de 1 a 7  siendo 1 = “totalmente en contra” y 7 = totalmente a favor",
+            hasScale: true,
+            scaleText:['totalmente en contra', 'totalmente a favor'],
+            POSSIBLE_ANSWERS: [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+              ]
+        },
+        // You can add here all the questions that you need
+        ]
+    },
+    APP_THIRD_FORM: {
+        BUTTON:'Finalizar',
+        TITLE: 'Primer cuestionario',
+        SUBTITLE: 'Primer cuestionario. Sección 3 de 3: datos sociodemográficos.',
+        QUESTIONS:[
+        {
+            QUESTION: "Edad",
+            POSSIBLE_ANSWERS: ['10','75']
+        },
+        {
+            QUESTION: `Genero"`,
+            POSSIBLE_ANSWERS: [
+                "Varón",
+                "Mujer",
+                "Otro",
+                "Prefiero no decirlo"
+              ],
+        },
+        {
+            QUESTION: "Lugar de residencia",
+            hasInput: true
+        },
+        {
+            QUESTION: "Nivel educativo",
+            POSSIBLE_ANSWERS:[
+                "Estudio la ESO",
+                "Tengo la ESO (Educación Secundaria Obligatoria)",
+                "Estudio Bachillerato",
+                "Tengo Bachillerato",
+                "Estudio Formación Profesional",
+                "Tengo estudios de Formación Profesional",
+                "Estudio un grado universitario",
+                "Soy graduado o graduada",
+                "Estudio un máster",
+                "Tengo un máster",
+                "Estoy haciendo un doctorado",
+                "Tengo un doctorado"
+              ]
+        },
+        // You can add here all the questions that you need
+        ]
+    },
     APP_LAST_FORM:{
         TITLE: 'Titulo del ultimo formulario',
         SUBTITLE: 'Subtitlo de ultimo formulario',
@@ -182,7 +295,7 @@ export const APP_DATA = {
     APP_GAME: {
         TITLE: '¡Bienvenid@ al videojuego “rompeladrillos”!',
         CONTROLS: {
-            TITLE: 'CONTROLES',
+            TITLE: 'Te recuerdo cómo se juega:',
             SUBTITLE: 'Pulsa los CURSORES DE DIRECCIÓN del teclado para mover la flecha hacia donde lanzar la bola.',
             SUBTITLE2: 'Pulsa BARRA ESPACIADORA para lanzarla.',
             SUBTITLE3: 'Mueve tu barra con los CURSORES de DIRECCIÓN del teclado para golpear la bola.',
