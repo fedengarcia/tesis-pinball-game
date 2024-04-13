@@ -46,7 +46,10 @@ export const UserProvider = ({children}) => {
                 userInfoCopy.thirdForm = {
                     isCompleted: false
                 }
-                userInfoCopy.finalForm = {
+                userInfoCopy.finalForm1 = {
+                    isCompleted: false
+                }
+                userInfoCopy.finalForm2 = {
                     isCompleted: false
                 }
                 if(userInfoCopy.email) {
