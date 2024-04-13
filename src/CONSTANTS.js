@@ -2,6 +2,12 @@ import bricksgame from './assets/bricksgame.png'
 import rojo from './assets/rojo.png'
 import azul from './assets/azul.png'
 import verde from './assets/verde.png'
+import logo1 from './assets/Logo2.png'
+import logo2 from './assets/logo8.png'
+import logo3 from './assets/logo10.png'
+import logo4 from './assets/logo11.png'
+import logo5 from './assets/logo12.png'
+import logo6 from './assets/logo13.png'
 
 
 
@@ -175,7 +181,7 @@ export const APP_DATA = {
               ]
         },
         {
-            QUESTION: `Evalúa en qué grado te gusta cada uno de los logos. Valora de 1 a 7  siendo 1 = “nada en absoluto” y 7 = “muchísimo"`,
+            QUESTION: `Evalúa en qué grado te gusta cada uno de los logos.`,
             hasScale:true,
             POSSIBLE_ANSWERS_IMAGES:[azul,rojo,verde],
             scaleText:['nada en absoluto', 'muchisimo'],
@@ -187,12 +193,12 @@ export const APP_DATA = {
             POSSIBLE_ANSWERS: ['','','']
         },
         {
-            QUESTION: "¿Cómo valorarías una marca que te diera puntos, siendo el objetivo del juego ganar el mayor número de puntos posible? Valora de 1 a 7  siendo 1 = “totalmente en contra” y 7 = totalmente a favor",
+            QUESTION: "¿Cómo valorarías una marca que te diera puntos, siendo el objetivo del juego ganar el mayor número de puntos posible?",
             hasScale: true,
             scaleText:['totalmente en contra', 'totalmente a favor']
         },
         {
-            QUESTION: "¿Cómo valorarías una marca que te ayudara facilitándote el juego y pudiendo por ello ganar más puntos? Valora de 1 a 7  siendo 1 = “totalmente en contra” y 7 = totalmente a favor",
+            QUESTION: "¿Cómo valorarías una marca que te ayudara facilitándote el juego y pudiendo por ello ganar más puntos?",
             hasScale: true,
             scaleText:['totalmente en contra', 'totalmente a favor'],
         },
@@ -242,23 +248,43 @@ export const APP_DATA = {
         // You can add here all the questions that you need
         ]
     },
-    APP_LAST_FORM:{
-        TITLE: 'Titulo del ultimo formulario',
-        SUBTITLE: 'Subtitlo de ultimo formulario',
+    APP_LAST_FORM_1:{
+        TITLE: 'Cuestionario final.',
+        SUBTITLE: 'Sección 1 de 2: actitudes generales hacia la publicidad. Valora según tu opinión. Si no tienes claro qué valoración dar, déjate llevar por la intuición.',
         QUESTIONS:[
-        {
-            QUESTION: "Ejemplo de pregunta 1 - ultimo formulario",
-            POSSIBLE_ANSWERS: ['Option 1', 'Option 2', 'Option 3']
-        },
-        {
-            QUESTION: "Ejemplo de pregunta 2 - ultimo formulario",
-            POSSIBLE_ANSWERS: ['Option 1', 'Option 2', 'Option 3']
-        },
-        {
-            QUESTION: "Ejemplo de pregunta 3 - ultimo formulario",
-            POSSIBLE_ANSWERS: ['Option 1', 'Option 2', 'Option 3']
-        },
-        // You can add here all the questions that you need
+            {
+                QUESTION: "¿Qué sientes sobre la publicidad?",
+                hasScale: true,
+                scaleText:['odio la publicidad', 'amo la publicidad']
+            },
+            {
+                QUESTION: "¿Cuál es tu opinión sobre la publicidad?",
+                hasScale: true,
+                scaleText:['totalmente innecesaria', 'totalmente necesaria']
+            },
+            {
+                QUESTION: "¿Sabías que existe publicidad dentro de los videojuegos?",
+                QUESTION2: "La publicidad dentro de los videojuegos se llama IGA. En general, ¿cuál es tu actitud hacia la IGA?",
+                hasScale: true,
+                hasRadio: true,
+                hasHiddenQuestion: true,
+                scaleText:['totalmente negativa', 'totalmente positiva'],
+                POSSIBLE_ANSWERS: [
+                    'si',
+                    'no',
+                  ]
+            },
+            {
+                QUESTION: `¿Te ha parecido divertido el juego?`,
+                hasScale:true,
+                scaleText:['nada divertido', 'totalmente divertido'],
+            },
+            {
+                hasRadio: true,
+                QUESTION: "¿Cuál de estas marcas estaban en el juego?",
+                POSSIBLE_ANSWERS_IMAGES:[logo1, rojo, logo2, verde, logo3, logo4, logo5, azul, logo6],
+                POSSIBLE_ANSWERS: ['si', 'no']
+            },
         ]
     },
     APP_END:{
