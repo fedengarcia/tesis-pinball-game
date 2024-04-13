@@ -16,7 +16,7 @@ export default function Game() {
   const {userInfo, setUserInfo, loadingLogin, setLoadingLogin} = useContext(UserContext)
   const [gameConfiguration, setGameConfiguration] = useState([])
   const [playingGame, setPlayingGame] = useState(false)
-  const [gameStatus, setGameStatus] = useState('FIRST_TIME')
+  const [gameStatus, setGameStatus] = useState('FIRST_TIME');
   const [cantPlayAnymore, setCantPlayAnymore] = useState(false);
   const {popUp, modal} = useSweetAlert()
   
@@ -27,7 +27,7 @@ export default function Game() {
     if(userInfo?.gamesPlayed?.length === 0) setGameStatus('FIRST_TIME')
     if(userInfo?.gamesPlayed?.length === 1) setGameStatus('SECOND_TIME')
     if(userInfo?.gamesPlayed?.length >= 2) setGameStatus('GAME_FINISH')
-    if(userInfo?.gamesPlayed?.length === 5) setCantPlayAnymore(true)
+    if(userInfo?.gamesPlayed?.length >= 4) setCantPlayAnymore(true)
   }, [userInfo]);
 
   useEffect(() => {
@@ -59,101 +59,90 @@ export default function Game() {
     })
   }
 
-  const launchGameModal = () => {
-    modal(
-      APP_DATA.APP_GAME.CONTROLS.TITLE, 
-      `
-      <p>${APP_DATA.APP_GAME.CONTROLS.SUBTITLE}</p>
-      <p>${APP_DATA.APP_GAME.CONTROLS.SUBTITLE2}</p>
-      <p>${APP_DATA.APP_GAME.CONTROLS.SUBTITLE3}</p>
-      <p>${APP_DATA.APP_GAME.CONTROLS.SUBTITLE4}</p>
-      `,
-      () => setPlayingGame(true),
-      APP_DATA.APP_GAME.CONTROLS.BUTTON
-      )
-  }
-
 
   return (
     <StyledAppLayout>
       <h1>{APP_DATA.APP_GAME.TITLE}</h1>
-          <StyledLayoutContent style={{padding: 0, overflow:'hidden'}}>
+          <StyledLayoutContent style={{padding: 0, overflowY:'scroll'}}>
             {loadingLogin ? <CircularProgress/> 
             :
               <>
-                {playingGame && 
+                {playingGame ?
                     <Bricks
                       saveGameResults={saveGameResults}
                       gameConfiguration={gameConfiguration}
                       showBonification={showBonification}
                       endGameModal = {modal}
                     />
-                  }
-                  {!playingGame && 
-                    <StyledFlexCenter direction="column" style={{height: '100%', alignItems:'center', width: '50%'}}>
-                      <div>
-                        {<h1>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].TITLE}</h1>}
-                      </div>
-                      
-                      
-                      <div>
-                        {!userInfo?.finalForm?.isCompleted &&
+              : 
+                    <StyledFlexCenter direction="column" style={{height: '100%', alignItems:'center', justifyContent:'center', width: '100%'}}>
+
+                      {!userInfo?.finalForm?.isCompleted && gameStatus === "FIRST_TIME" && !cantPlayAnymore ?
                         <>
-                          <p style={{textAlign:'center', fontSize:'20px'}}>{cantPlayAnymore ? 'Ya has jugado 5 partidas. Rellena el cuestionario para participar' :APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE}</p>
-                          <p style={{fontSize:'16px'}}>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE2}</p>
-                          {gameStatus === 'GAME_FINISH' && !cantPlayAnymore &&
-                          <>
-                          <p><FontAwesomeIcon icon={faInfoCircle} style={{marginRight: '8px', color: '#c93a3a'}}/>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].ADVISE}</p>
-                          <p><FontAwesomeIcon icon={faInfoCircle} style={{marginRight: '8px', color: '#c93a3a'}}/>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].ADVISE2}</p></>}
-                          </>
-                        }
-
-                        {/* SUBTITULO ANTES DEL BOTON */}
-                       {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE3 &&
-                        <p style={{fontSize:'16px'}}>{APP_DATA.APP_GAME.GAME_STATUS[gameStatus].SUBTITLE3}</p>
-                       }
-
-
-                        {/* CUESTIONARIO FINAL SIN COMPLETAR Y LE QUEDAN PARTIDAS POR JUGAR*/}
-                      {!userInfo?.finalForm?.isCompleted && !cantPlayAnymore &&
-                        <Button
-                          fullWidth
-                          variant='contained'
-                          // disabled={buttonDisabled}
-                          onClick={launchGameModal}
-                        >
-                          {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].BUTTON_TITLE}
-                        </Button>
+                          <h2>¿Cómo se juega?</h2>
+                          <p>Te recuerdo cómo se juega:</p>
+                          <p>Usa las teclas de flechas de dirección para mover la “raqueta”. La raqueta te sirve para golpear la bola y romper cuantos más ladrillos puedas. Cada ladrillo te da puntos y hay que conseguir la puntuación máxima. Algunos de los ladrillos se transforman en marcas y esas marcas te dan muchos puntos o alargan la raqueta, lo que permite golpear la pelota con más facilidad.</p>
+                          <p>Tienes tres vidas en cada partida. Tienes que jugar como mínimo tres partidas pero puedes jugar un máximo de cinco partidas, si lo deseas. Los puntos de cada partida se guardan. No juegues más de dos partidas en el mismo día.</p>
+                          <p>Recuerda que tienes que jugar con tu ordenador de sobremesa o portátil, no con el móvil.</p>
+                          <p style={{color: 'green'}}><strong>Objetivo:</strong> conseguir los mayores puntos posibles para aparecer en el ranking en primera posición.</p>
+                          <p>El jugador o la jugadora que gane más puntos obtendrá una tarjeta regalo de 30€ de Amazon. También se sorteará una tarjeta de 30€ de Amazon entre todas aquellas personas que jueguen las cinco partidas (se eliminarán del sorteo los jugadores que se dejen perder o hagan trampas).</p>
+                          <p>¿Preparado para jugar?</p>
+                          <Button
+                            variant='contained'
+                            onClick={() => setPlayingGame(true)}
+                            style={{marginBottom: '3em'}}
+                          >
+                            ¡Jugar!
+                          </Button>
+                        </>  
+                    :  !userInfo?.finalForm?.isCompleted && gameStatus === "SECOND_TIME" && !cantPlayAnymore ?
+                        <>
+                        <h2>Partida terminada</h2>
+                          <p>Para que tu puntuación quede registrada necesitas jugar al menos tres partidas y rellenar el cuestionario final. </p>
+                          <p>Si lo deseas y para conseguir más puntos, puedes jugar un máximo de cinco partidas antes de contestar al cuestionario final.</p>
+                          <p>Puedes jugar hoy u otro día.</p>
+                          <Button
+                            variant='contained'
+                            onClick={() => setPlayingGame(true)}
+                            style={{marginBottom: '3em'}}
+                          >
+                            ¡Jugar!
+                          </Button>
+                        </>
+                    : !userInfo?.finalForm?.isCompleted && gameStatus === "GAME_FINISH" && !cantPlayAnymore ?
+                        <>
+                          <h2>Partida terminada</h2>
+                          <p>Ya has jugado tres partidas.</p>
+                          <p>Si lo deseas y para conseguir más puntos, puedes jugar un máximo de cinco partidas antes de contestar al cuestionario final.</p>                        
+                          <p>También tienes la opción de rellenar el cuestionario final, pero te recordamos que una vez lo hagas no podrás volver a jugar.</p>
+                          <Button
+                            variant='contained'
+                            onClick={() => setPlayingGame(true)}
+                            style={{marginBottom: '2em'}}
+                          >
+                            ¡Jugar!
+                          </Button>
+                          <Button
+                            variant='contained'
+                            onClick={() => navigate('/final-form')}
+                            style={{marginBottom: '2em'}}
+                          >
+                            Ir al cuestionario final.
+                          </Button>
+                        </>
+                    :
+                        <>
+                            <h2>Partida terminada</h2>
+                            <p>Ya has jugado todas las partidas posibles. Tu máxima puntuación quedará registrada una vez que respondas el cuestionario final.</p>
+                            <Button
+                              variant='contained'
+                              onClick={() => navigate('/final-form')}
+                              style={{marginBottom: '2em'}}
+                            >
+                              Ir al cuestionario final.
+                            </Button>
+                        </>
                       }
-
-                      {/* JUGO DOS PARTIDAS Y TERMINO CUESTIONARIO */}
-                      {gameStatus === "GAME_FINISH" && userInfo?.finalForm?.isCompleted &&
-                      <>
-                        {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].CANT_PLAY}
-                        <Button
-                          style={{margin: '15px 0'}}
-                          variant='contained'
-                          fullWidth
-                          // disabled={buttonDisabled}
-                          onClick={() => navigate('/final-form')}
-                        >
-                          {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].BUTTON_TITLE3}
-                        </Button>
-                      </>
-                      }
-
-                      {/* JUGO DOS PARTIDAS Y NO TERMINO EL CUESTIONARIO FINAL */}
-                      {gameStatus === "GAME_FINISH" && !userInfo?.finalForm?.isCompleted &&
-                      <Button
-                        style={{margin: '15px 0'}}
-                        variant='contained'
-                        fullWidth
-                        // disabled={buttonDisabled}
-                        onClick={() => navigate('/final-form')}
-                      >
-                        {APP_DATA.APP_GAME.GAME_STATUS[gameStatus].BUTTON_TITLE2}
-                      </Button>}
-                      </div>
                     </StyledFlexCenter>
                   }
               </>
