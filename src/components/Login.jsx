@@ -23,6 +23,7 @@ export default function Login() {
           :
             <>
               <p>{APP_DATA.APP_LOGIN_SUBTITLE}</p>
+              <p>{APP_DATA.APP_LOGIN_SUBTITLE2}</p>
               <Box sx={{ display: 'flex', alignItems: 'flex-end', marginBottom: '1em' }}>
                 <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
                 <TextField id="input-with-sx" label={userInfo.email === '' && APP_DATA.APP_EMAIL_LABEL} variant="standard" value={userInfo.name} onChange={handleEmailInput}/>
