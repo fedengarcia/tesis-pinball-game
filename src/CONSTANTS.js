@@ -250,7 +250,8 @@ export const APP_DATA = {
     },
     APP_LAST_FORM_1:{
         TITLE: 'Cuestionario final.',
-        SUBTITLE: 'Sección 1 de 2: actitudes generales hacia la publicidad. Valora según tu opinión. Si no tienes claro qué valoración dar, déjate llevar por la intuición.',
+        SUBTITLE: 'Sección 1 de 2: actitudes generales hacia la publicidad.',
+        BUTTON: 'CONTINUAR',
         QUESTIONS:[
             {
                 QUESTION: "¿Qué sientes sobre la publicidad?",
