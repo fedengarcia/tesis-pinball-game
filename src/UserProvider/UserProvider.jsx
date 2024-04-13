@@ -40,6 +40,12 @@ export const UserProvider = ({children}) => {
                 userInfoCopy.firstForm = {
                     isCompleted: false
                 }
+                userInfoCopy.secondForm = {
+                    isCompleted: false
+                }
+                userInfoCopy.thirdForm = {
+                    isCompleted: false
+                }
                 userInfoCopy.finalForm = {
                     isCompleted: false
                 }

@@ -116,7 +116,7 @@ export default function FirstForm() {
       disabled={buttonDisabled}
       style={{marginBottom: '2em'}}
     >
-      {APP_DATA.APP_BUTTON_PLAY}
+      {APP_DATA.APP_FIRST_FORM.BUTTON}
     </Button>
     </StyledLayoutContent>
   }
