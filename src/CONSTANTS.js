@@ -1,3 +1,5 @@
+import bricksgame from './assets/bricksgame.png'
+
 const BROWSERS = {
     CHROME: "Chrome",
     FIREFOX: "Firefox",
@@ -99,26 +101,56 @@ const BRANDS = [
 ]
 
 export const APP_DATA = {
-    APP_TITLE: "¡Bienvenido/a al Brick Breaker!",
-    APP_LOGIN_SUBTITLE: "Es importante que dejes tu correo para que podamos contactarte si eres el ganador o ganadora.",
+    APP_TITLE: "¡Bienvenid@ al videojuego “rompeladrillos”!",
+    APP_LOGIN_SUBTITLE: "Tienes que jugar con tu ordenador de sobremesa o portátil. No se puede jugar con el móvil.",
+    APP_LOGIN_SUBTITLE2: "Es importante que dejes tu correo verdadero para que podamos contactarte si eres el ganador o ganadora.",
     APP_EMAIL_LABEL: "Email",
-    APP_BUTTON_PLAY: 'Responder y a jugar !',
+    APP_BUTTON_PLAY: 'Continuar',
     APP_BUTTON_END: 'Responder y ver resultados',
     APP_FIRST_FORM: {
-        TITLE: 'Titulo del primer formulario',
-        SUBTITLE: 'Subtitlo de primer formulario',
+        TITLE: 'Primer cuestionario',
+        SUBTITLE: 'Sección 1 de 3: comportamiento de juego.',
         QUESTIONS:[
         {
-            QUESTION: "Ejemplo de pregunta 1 - primer formulario",
-            POSSIBLE_ANSWERS: ['Option 1', 'Option 2', 'Option 3']
+            QUESTION: "¿Cuánto tiempo llevas jugando videojuegos (considera cualquier videojuego, también para móvil)?",
+            POSSIBLE_ANSWERS: [
+                "Menos de 1 año",
+                "De 1 a 2 años",
+                "De 3 a 5 años",
+                "De 6 a 8 años",
+                "9 años o más"
+              ]
         },
         {
-            QUESTION: "Ejemplo de pregunta 2 - primer formulario",
-            POSSIBLE_ANSWERS: ['Option 1', 'Option 2', 'Option 3']
+            QUESTION: "¿Con qué frecuencia juegas videojuegos?",
+            POSSIBLE_ANSWERS: [
+                "Nunca",
+                "De 1 a 10 veces al año",
+                "Al menos una vez al mes",
+                "Al menos una vez a la semana",
+                "Diariamente"
+              ]
         },
         {
-            QUESTION: "Ejemplo de pregunta 3 - primer formulario",
-            POSSIBLE_ANSWERS: ['Option 1', 'Option 2', 'Option 3']
+            QUESTION: "¿Cuánto dura en promedio tu sesión de juego?",
+            POSSIBLE_ANSWERS: [
+                "Menos de media hora",
+                "Entre media hora y una hora",
+                "Entre 1 y 2 horas",
+                "Más de 2 horas y menos de 4",
+                "Más de 4 horas y menos de 6",
+                "Más de 6 horas"
+              ]
+        },
+        {
+            QUESTION: "¿Has jugado anteriormente a un juego estilo “rompeladrillos” o “brick breaker”?",
+            imgsrc: bricksgame,
+            POSSIBLE_ANSWERS:[
+                "Nunca",
+                "Alguna vez",
+                "Varias veces",
+                "Muchas veces"
+              ]
         },
         // You can add here all the questions that you need
         ]
@@ -143,12 +175,12 @@ export const APP_DATA = {
         ]
     },
     APP_END:{
-        TITLE: '¡Bienvenido/a al Brick Breaker!',
+        TITLE: '¡Bienvenid@ al videojuego “rompeladrillos”!',
         SUB_TITLE: 'RESULTADOS',
         RESTART_BUTTON: 'Atras'
     },
     APP_GAME: {
-        TITLE: '¡Bienvenido/a al Brick Breaker!',
+        TITLE: '¡Bienvenid@ al videojuego “rompeladrillos”!',
         CONTROLS: {
             TITLE: 'CONTROLES',
             SUBTITLE: 'Pulsa los CURSORES DE DIRECCIÓN del teclado para mover la flecha hacia donde lanzar la bola.',
