@@ -46,6 +46,9 @@ export const StyledAppLayout = styled('div')`
 
 
 export const StyledFlexCenter = styled('div')`
+    p{
+        text-align:center;
+    }
       width: 100%;
       height: 100%;
       box-sizing: border-box;

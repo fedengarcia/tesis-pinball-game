@@ -1,6 +1,6 @@
-import appleSVG from '../../assets/apple-logo.svg'
-import samsungSVG from '../../assets/samsung-logo.svg'
-import xiaomiSVG from '../../assets/xiaomi-logo.svg'
+import verde from '../../assets/verde.png'
+import azul from '../../assets/azul.png'
+import rojo from '../../assets/rojo.png'
 
 class BricksClass {
     canvas;
@@ -134,9 +134,9 @@ class BricksClass {
             [gameConfig.elementsNames[2]]:new Image()
         }
         
-        this.elementsImages[gameConfig.elementsNames[0]].src = samsungSVG
-        this.elementsImages[gameConfig.elementsNames[1]].src = appleSVG
-        this.elementsImages[gameConfig.elementsNames[2]].src = xiaomiSVG
+        this.elementsImages[gameConfig.elementsNames[0]].src = verde
+        this.elementsImages[gameConfig.elementsNames[1]].src = azul
+        this.elementsImages[gameConfig.elementsNames[2]].src = rojo
 
         this.inGame = false
         this.arrowAngle = Math.PI / 4; // Angulo inicial de la flecha (45 grados)
