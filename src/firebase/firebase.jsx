@@ -201,3 +201,32 @@ export const getTopRanking = async (withExtraData) => {
       return [];
   }
 }
+
+
+export const getAllInformation = async () => {
+  const usersCollection = collection(firebaseDB, "usuarios");
+  
+  try {
+    const querySnapshot = await getDocs(usersCollection);
+    let allinformation = [];
+    
+    querySnapshot.forEach((doc) => {
+      const userData = doc.data();
+
+      allinformation.push({
+          userEmail: userData.email,
+          userDate: userData.date,
+          userId: userData.id,
+          firstForm: userData.firstForm,
+          secondForm: userData.secondForm,
+          thirdForm: userData.thirdForm,
+          finalForm1: userData.finalForm1,
+          finalForm2: userData.finalForm2,
+        });
+    });
+    return allinformation;
+  } catch (error) {
+      console.error("Error al obtener la informacion:", error.message);
+      return [];
+  }
+}

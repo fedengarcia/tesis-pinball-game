@@ -95,13 +95,13 @@ const {
 // MAKE SHURE THAT THE NAME MATCH WITH THE SRC IMAGE
 const BRANDS_INFO = {
     BRAND_1: {
-        name: "Samsung",
+        name: "Verde",
     },
     BRAND_2: {
-        name: "Apple",
+        name: "Azul",
     },
     BRAND_3: {
-        name: "Xiaomi",
+        name: "Rojo",
     }
 }
 

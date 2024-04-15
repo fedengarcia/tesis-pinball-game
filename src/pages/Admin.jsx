@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllGamesPlayed, getTopRanking } from "../firebase/firebase";
+import { getAllGamesPlayed, getAllInformation, getTopRanking } from "../firebase/firebase";
 import { APP_DATA } from "../CONSTANTS";
 import * as XLSX from 'xlsx';
 import { StyledFlexCenter } from "../styled-components/containers";
@@ -51,6 +51,26 @@ function Admin() {
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "GamesData");
     XLSX.writeFile(wb, fileName + ".xlsx");
+  }
+
+
+  const downloadAllInformation = async () => {
+    const data = await getAllInformation();
+    console.log(data);
+    const ws = XLSX.utils.json_to_sheet(data.map(user => ({
+        "Participante": user.userEmail,
+        "Tablero asignado": user.gameNumber,
+        "Fecha": formatDate(user.userDate.seconds * 1000 + user.userDate.nanoseconds / 1000),
+        "Primer formulario": JSON.stringify(user.firstForm.answers),
+        "Segundo formulario": JSON.stringify(user.secondForm.answers),
+        "Tercer formulario": JSON.stringify(user.thirdForm.answers),
+        "Cuarto formulario": JSON.stringify(user.finalForm1.answers),
+        "quinto formulario": JSON.stringify(user.finalForm2.answers),
+    })));
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Users Answers");
+    XLSX.writeFile(wb, 'BD - Information - Users answers' + ".xlsx");
   }
 
   return (
@@ -116,7 +136,14 @@ function Admin() {
             variant='contained'
             onClick={() => exportToExcel(games, "games_data")}
           >
-            EXPORTAR A EXCEL       
+            EXPORTAR RANKING A EXCEL       
+          </Button>
+          <Button
+            style={{margin: '10px'}}
+            variant='contained'
+            onClick={() => downloadAllInformation()}
+          >
+            DESCARGAR BASE DE DATOS
           </Button>
         </StyledFlexCenter>
       ) : (
