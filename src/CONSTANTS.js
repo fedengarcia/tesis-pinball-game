@@ -176,15 +176,15 @@ export const APP_DATA = {
             QUESTION: "Indica si reconoces alguna de las marcas",
             POSSIBLE_ANSWERS_IMAGES:[azul,rojo,verde],
             POSSIBLE_ANSWERS: [
-                'si',
-                'no',
+                'Si',
+                'No',
               ]
         },
         {
             QUESTION: `Evalúa en qué grado te gusta cada uno de los logos.`,
             hasScale:true,
             POSSIBLE_ANSWERS_IMAGES:[azul,rojo,verde],
-            scaleText:['nada en absoluto', 'muchisimo'],
+            scaleText:['Nada en absoluto', 'Muchisimo'],
         },
         {
             QUESTION: "Las marcas son propiedad de organizaciones que se dedican a un sector productivo. No sabes con certeza a qué se dedica cada marca, pero trata de adivinarlo intuitivamente. Pueden dedicarse a lo mismo, o no.",
@@ -195,12 +195,12 @@ export const APP_DATA = {
         {
             QUESTION: "¿Cómo valorarías una marca que te diera puntos, siendo el objetivo del juego ganar el mayor número de puntos posible?",
             hasScale: true,
-            scaleText:['totalmente en contra', 'totalmente a favor']
+            scaleText:['Totalmente en contra', 'Totalmente a favor']
         },
         {
             QUESTION: "¿Cómo valorarías una marca que te ayudara facilitándote el juego y pudiendo por ello ganar más puntos?",
             hasScale: true,
-            scaleText:['totalmente en contra', 'totalmente a favor'],
+            scaleText:['Totalmente en contra', 'Totalmente a favor'],
         },
         // You can add here all the questions that you need
         ]
@@ -256,12 +256,12 @@ export const APP_DATA = {
             {
                 QUESTION: "¿Qué sientes sobre la publicidad?",
                 hasScale: true,
-                scaleText:['odio la publicidad', 'amo la publicidad']
+                scaleText:['Odio la publicidad', 'Amo la publicidad']
             },
             {
                 QUESTION: "¿Cuál es tu opinión sobre la publicidad?",
                 hasScale: true,
-                scaleText:['totalmente innecesaria', 'totalmente necesaria']
+                scaleText:['Totalmente innecesaria', 'Totalmente necesaria']
             },
             {
                 QUESTION: "¿Sabías que existe publicidad dentro de los videojuegos?",
@@ -269,22 +269,63 @@ export const APP_DATA = {
                 hasScale: true,
                 hasRadio: true,
                 hasHiddenQuestion: true,
-                scaleText:['totalmente negativa', 'totalmente positiva'],
+                scaleText:['Totalmente negativa', 'Totalmente positiva'],
                 POSSIBLE_ANSWERS: [
-                    'si',
-                    'no',
+                    'Si',
+                    'No',
                   ]
             },
             {
                 QUESTION: `¿Te ha parecido divertido el juego?`,
                 hasScale:true,
-                scaleText:['nada divertido', 'totalmente divertido'],
+                scaleText:['Nada divertido', 'Totalmente divertido'],
             },
             {
                 hasRadio: true,
                 QUESTION: "¿Cuál de estas marcas estaban en el juego?",
                 POSSIBLE_ANSWERS_IMAGES:[logo1, rojo, logo2, verde, logo3, logo4, logo5, azul, logo6],
-                POSSIBLE_ANSWERS: ['si', 'no']
+                POSSIBLE_ANSWERS: ['Si', 'No']
+            },
+        ]
+    },
+    APP_LAST_FORM_2:{
+        TITLE: 'Cuestionario final.',
+        SUBTITLE: 'Sección 2 de 2: actitudes generales hacia las marcas',
+        BUTTON: 'FINALIZAR',
+        QUESTIONS:[
+            {
+                QUESTION: "Valora de 1 a 7 cada uno de los logos:",
+                hasScale: true,
+                POSSIBLE_ANSWERS_IMAGES:[rojo, verde, azul],
+                scaleText:['No me gusta nada', 'Me gusta muchísimo']
+            },
+            {
+                QUESTION: "Valora de 1 a 7 el grado en el que aconsejarías cada una de las marcas:",
+                hasScale: true,
+                POSSIBLE_ANSWERS_IMAGES:[rojo, verde, azul],
+                scaleText:['Nada recomendable', 'Totalmente recomendable']
+            },
+            {
+                QUESTION: "Las marcas son propiedad de organizaciones que se dedican a un sector productivo. No sabes con certeza a qué se dedica cada marca, pero trata de adivinralo intuitivamente. Pueden dedicarse a lo mismo, o no.",
+                hasInput: true,
+            },
+            {
+                QUESTION: `Valora de 1 a 7 el grado de congruencia de cada marca con el juego:`,
+                hasScale: true,
+                POSSIBLE_ANSWERS_IMAGES:[rojo, verde, azul],
+                scaleText:['Totalmente incogruente', 'Totalmente congruente'],
+            },
+            {
+                QUESTION: "¿Cómo afectó la presencia de cada uno de los logos a tu experiencia de juego?",
+                hasScale: true,
+                POSSIBLE_ANSWERS_IMAGES:[rojo, verde, azul],
+                scaleText:['La empeoró completamente', 'La mejoró completamente'],
+            },
+            {
+                QUESTION: " ¿Encontraste la inserción de estos logos dentro del juego intrusiva o molesta",
+                hasScale: true,
+                POSSIBLE_ANSWERS_IMAGES:[rojo, verde, azul],
+                scaleText:['Nada molesto', 'Totalmente molesto'],
             },
         ]
     },
