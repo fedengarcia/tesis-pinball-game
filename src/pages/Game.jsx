@@ -135,13 +135,14 @@ export default function Game() {
                         <>
                             <h2>Partida terminada</h2>
                             <p>Ya has jugado todas las partidas posibles.</p>
-                            <p>Tu máxima puntuación quedará registrada una vez que respondas el cuestionario final.</p>
+                            {(!userInfo.finalForm1?.isCompleted || !userInfo.finalForm2?.isCompleted) &&
+                            <p>Tu máxima puntuación quedará registrada una vez que respondas el cuestionario final.</p>}
                             <Button
                               variant='contained'
                               onClick={() => !userInfo?.finalForm1?.isCompleted ? navigate('/final-form') : navigate('/final-form-2')}
                               style={{marginBottom: '2em'}}
                             >
-                              Ir al cuestionario final.
+                              {!userInfo.finalForm1?.isCompleted ? 'Ir al cuestionario final.' : !userInfo.finalForm2?.isCompleted ? 'Finalizar cuestionario final' : 'Ver puntuacion'}
                             </Button>
                         </>
                       }

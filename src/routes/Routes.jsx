@@ -23,7 +23,7 @@ export default function Routes () {
             <Route exact path={'/final-form'} element={<LastForm/>} />
             <Route exact path={'/final-form-2'} element={<LastForm2/>} />
             <Route exact path={'/game'} element={<Game/>} />
-            <Route exact path={'/end-game'} element={<EndGame/>} />
+            <Route exact path={'/end'} element={<EndGame/>} />
         </ReactRoutes>
     )
 };

@@ -38,6 +38,7 @@ export default function LastForm() {
 
 
   useEffect(() => {
+    if(!userInfo?.email) navigate('/')
     if(userInfo?.finalForm1.isCompleted) navigate('/final-form-2')
   }, [userInfo]);
 
@@ -138,7 +139,7 @@ export default function LastForm() {
     const userUpdated = await editUser(userInfoCopy.id, userInfoCopy)
     if(userUpdated){
       setUserInfo(userInfoCopy)
-      navigate('/final-form2')
+      navigate('/final-form-2')
     }else{
       alert("Error, try again")
     }

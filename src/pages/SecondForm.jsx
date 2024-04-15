@@ -182,8 +182,10 @@ export default function SecondForm() {
               :
               question.POSSIBLE_ANSWERS.map((answerOption, indexSubOption) => 
               <StyledFlexCenter key={indexSubOption} style={{padding: 0, margin: '5px', justifyContent:'flex-start', alignItems:'center'}} direction="column">
-                    <img  style={{width:'40px',}}src={question.POSSIBLE_ANSWERS_IMAGES[indexSubOption]}/>
-                    <TextField onChange={(e) => handleAnswers('input',indexOption,e, indexSubOption)} value={inputAnswers[indexSubOption === 0 ? 'azul' : indexSubOption === 1 ? 'rojo' : 'verde']}/>
+                    <img  style={{width:'40px', margin: '20px'}}src={question.POSSIBLE_ANSWERS_IMAGES[indexSubOption]}/>
+                    <TextField 
+                    fullWidth
+                    onChange={(e) => handleAnswers('input',indexOption,e, indexSubOption)} value={inputAnswers[indexSubOption === 0 ? 'azul' : indexSubOption === 1 ? 'rojo' : 'verde']}/>
               </StyledFlexCenter>
             )
             }

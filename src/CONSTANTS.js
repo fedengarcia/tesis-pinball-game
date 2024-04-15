@@ -306,10 +306,6 @@ export const APP_DATA = {
                 scaleText:['Nada recomendable', 'Totalmente recomendable']
             },
             {
-                QUESTION: "Las marcas son propiedad de organizaciones que se dedican a un sector productivo. No sabes con certeza a qué se dedica cada marca, pero trata de adivinralo intuitivamente. Pueden dedicarse a lo mismo, o no.",
-                hasInput: true,
-            },
-            {
                 QUESTION: `Valora de 1 a 7 el grado de congruencia de cada marca con el juego:`,
                 hasScale: true,
                 POSSIBLE_ANSWERS_IMAGES:[rojo, verde, azul],
