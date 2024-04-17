@@ -22,7 +22,6 @@ export default function Game() {
   
 
   useEffect(() => {
-    console.log(userInfo)
     if(!userInfo.email) navigate('/')
     if(userInfo?.gamesPlayed?.length === 0) setGameStatus('FIRST_TIME')
     if(userInfo?.gamesPlayed?.length === 1) setGameStatus('SECOND_TIME')
@@ -61,6 +60,13 @@ export default function Game() {
   }
 
 
+  const checkGameAvailable = () => {
+    const gamesPlayedToday = userInfo?.gamesPlayed.filter(game => game.date.split(",")[0] === new Date().toLocaleString().split(",")[0])
+    if(gamesPlayedToday.length >= 2) return true
+    return false
+  }
+
+
   return (
     <StyledAppLayout>
       <h1>{APP_DATA.APP_GAME.TITLE}</h1>
@@ -96,13 +102,17 @@ export default function Game() {
                             ¡Jugar!
                           </Button>
                         </>  
-                    :  !userInfo?.finalForm1?.isCompleted && (gameStatus === "SECOND_TIME" || gameStatus === "THIRD_TIME") && !cantPlayAnymore ?
+                    :  !userInfo?.finalForm1?.isCompleted && (gameStatus === "SECOND_TIME") && !cantPlayAnymore ?
                         <>
-                        <h2>Partida terminada</h2>
+                          <h2>Partida terminada</h2>
                           <p>Para que tu puntuación quede registrada necesitas jugar al menos tres partidas y rellenar el cuestionario final. </p>
                           <p>Si lo deseas y para conseguir más puntos, puedes jugar un máximo de cinco partidas antes de contestar al cuestionario final.</p>
-                          <p>Puedes jugar hoy u otro día.</p>
+                          <p>Recuerda que no puedes jugar más de dos partidas al día.</p>
+                          <p>Te recomendamos que juegues dos partidas hoy. </p>
+                          <p>Para jugar tu tercera partida, guarda el link y vuelve a entrar otro día.</p>
+
                           <Button
+                            disabled={checkGameAvailable()}
                             variant='contained'
                             onClick={() => setPlayingGame(true)}
                             style={{marginBottom: '3em'}}
@@ -110,13 +120,34 @@ export default function Game() {
                             ¡Jugar!
                           </Button>
                         </>
+                    : !userInfo?.finalForm1?.isCompleted && (gameStatus === "THIRD_TIME") && !cantPlayAnymore ?
+                    <>
+                      <h2>Partida terminada</h2>
+                      <p>Para que tu puntuación quede registrada necesitas jugar al menos tres partidas y rellenar el cuestionario final. </p>
+                      <p>Si lo deseas y para conseguir más puntos, puedes jugar un máximo de cinco partidas antes de contestar al cuestionario final.</p>
+                      <p>Recuerda que no puedes jugar más de dos partidas al día. Si esta es tu segunda partida hoy, guarda el link y vuelve a entrar otro día. Recuerda hacerlo con el mismo correo electrónico que has usado hoy.</p>
+                      <p>Te recomendamos ponerte un recordatorio para jugar mañana.</p>
+                      <p>Si no es tu tercera partida del día, puedes seguir jugando.</p>
+
+                      <Button
+                        disabled={checkGameAvailable()}
+                        variant='contained'
+                        onClick={() => setPlayingGame(true)}
+                        style={{marginBottom: '3em'}}
+                      >
+                        ¡Jugar!
+                      </Button>
+                    </>
                     : !userInfo?.finalForm1?.isCompleted && gameStatus === "GAME_FINISH" && !cantPlayAnymore ?
                         <>
                           <h2>Partida terminada</h2>
                           <p>Ya has jugado tres partidas.</p>
                           <p>Si lo deseas y para conseguir más puntos, puedes jugar un máximo de cinco partidas antes de contestar al cuestionario final.</p>                        
+                          <p>Recuerda que no puedes jugar más de dos partidas al día. Si esta es tu segunda partida hoy, guarda el link y vuelve a entrar otro día. Recuerda hacerlo con el mismo correo electrónico que has usado hoy.</p>
+                          <p>Si no es tu tercera partida del día, puedes seguir jugando.</p>
                           <p>También tienes la opción de rellenar el cuestionario final, pero te recordamos que una vez lo hagas no podrás volver a jugar.</p>
                           <Button
+                            disabled={checkGameAvailable()}
                             variant='contained'
                             onClick={() => setPlayingGame(true)}
                             style={{marginBottom: '2em'}}

@@ -18,9 +18,27 @@ export default function LastForm2() {
     })
     return answerArray;
   })
+  const sliderAnswerTemplate = {
+    azul: '',
+    verde: '',
+    rojo: ''
+  }
+  const [slidersAnswers,setSlidersAnswers] = useState({
+    "slider0": sliderAnswerTemplate,
+    "slider1": sliderAnswerTemplate,
+    "slider3": sliderAnswerTemplate,
+    "slider4": sliderAnswerTemplate,
+    "slider5": sliderAnswerTemplate
+  })
+
+
   const navigate = useNavigate()  
   const {userInfo, setUserInfo, loadingLogin, setLoadingLogin} = useContext(UserContext)
-  const [inputValue, setInputValue] = useState('')
+  const [inputAnswers, setInputAnswers] = useState({
+    azul: '',
+    rojo: '' ,
+    verde: ''
+  })
 
   useEffect(() => {
     if(!userInfo?.email) navigate('/')
@@ -40,11 +58,27 @@ export default function LastForm2() {
   const handleAnswers = (type, index, e, indexSubOption) => {
     let answersCopy = [...answers]
     if(type === 'input'){
-      setInputValue(e.target.value)
-      answersCopy[index].answer_selected = e.target.value
+      let inputAnswersCopy = {...inputAnswers}
+      inputAnswersCopy = {
+          ...inputAnswersCopy,
+          [indexSubOption === 0 ? 'azul' : indexSubOption === 1 ? 'rojo' : 'verde']: e.target.value
+      }
+      setInputAnswers(inputAnswersCopy)
+      answersCopy[index].answer_selected = JSON.stringify(inputAnswersCopy)
     }else if(type === 'slider'){
-        answersCopy[index].answer_selected = e.target.value;
+        let slidersAnswersCopy = {...slidersAnswers}
+        slidersAnswersCopy = {
+            ...slidersAnswersCopy,
+            [`slider${index}`]: {
+              ...slidersAnswersCopy[`slider${index}`],
+              [indexSubOption === 0 ? 'azul' : indexSubOption === 1 ? 'rojo' : 'verde']: e.target.value
+            }
+        }
+        console.log(slidersAnswersCopy);
+        setSlidersAnswers(slidersAnswersCopy)
+        answersCopy[index].answer_selected = JSON.stringify(slidersAnswersCopy[`slider${index}`])
     }
+    console.log(answersCopy);
     setAnswers(answersCopy)
 }
   
@@ -115,20 +149,44 @@ export default function LastForm2() {
       {APP_DATA.APP_LAST_FORM_2.QUESTIONS.map((question, indexOption) => 
             <StyledFlexCenter key={indexOption}>
               <h3>{question.QUESTION}</h3>
-              <StyledFlexCenter style={{alignItems:'center'}}>
-                    <Slider
-                    aria-label="Custom marks"
-                    defaultValue={5}
-                    value={parseInt(answers[indexOption].answer_selected)}
-                    onChange={e => handleAnswers('slider', indexOption, e)}
-                    getAriaValueText={valuetext}
-                    marks={getMarks(question?.scaleText)}
-                    shiftStep={1}
-                    min={1}
-                    max={7} 
-                    style={{ width: '700px' }} // Aquí ajustas el ancho del slider
-                    />
-                </StyledFlexCenter>
+              {
+                question.hasInput ? 
+                <>
+                    {question.POSSIBLE_ANSWERS.map((answerOption, indexSubOption) => 
+                      <StyledFlexCenter key={indexSubOption} style={{padding: 0, margin: '5px', justifyContent:'flex-start', alignItems:'center'}} direction="column">
+                            <img  style={{width:'40px', margin: '20px'}}src={question.POSSIBLE_ANSWERS_IMAGES[indexSubOption]}/>
+                            <TextField 
+                            fullWidth
+                            onChange={(e) => handleAnswers('input',indexOption,e, indexSubOption)}
+                            value={inputAnswers[indexSubOption === 0 ? 'azul' : indexSubOption === 1 ? 'rojo' : 'verde']}/>
+                      </StyledFlexCenter>
+                    )}
+                </>
+                :
+                <>
+                  {question.POSSIBLE_ANSWERS_IMAGES.map((answerOption, indexSubOption) => 
+                      <StyledFlexCenter key={indexSubOption} style={{padding: 0, margin: '5px', justifyContent:'flex-start', alignItems:'center'}} direction="column">
+                      <img  style={{width:'40px',}}src={question.POSSIBLE_ANSWERS_IMAGES[indexSubOption]}/>
+                      <StyledFlexCenter style={{alignItems:'center'}}>
+                        <Slider
+                        aria-label="Custom marks"
+                        defaultValue={5}
+                        value={slidersAnswers[`slider${indexOption}`][indexSubOption === 0 ? 'azul' : indexSubOption === 1 ? 'rojo' : 'verde']}
+                        onChange={e => handleAnswers('slider',indexOption,e, indexSubOption)}
+                        getAriaValueText={valuetext}
+                        marks={getMarks(question?.scaleText)}
+                        shiftStep={1}
+                        min={1}
+                        max={7} 
+                        style={{ width: '700px' }} // Aquí ajustas el ancho del slider
+                        />
+                    </StyledFlexCenter>
+                  </StyledFlexCenter>
+                  )}
+                
+                </>
+              }
+             
             </StyledFlexCenter>
           )}
 

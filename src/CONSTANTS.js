@@ -114,7 +114,8 @@ const BRANDS = [
 export const APP_DATA = {
     APP_TITLE: "¡Bienvenid@ al videojuego “rompeladrillos”!",
     APP_LOGIN_SUBTITLE: "Tienes que jugar con tu ordenador de sobremesa o portátil. No se puede jugar con el móvil.",
-    APP_LOGIN_SUBTITLE2: "Es importante que dejes tu correo verdadero para que podamos contactarte si eres el ganador o ganadora.",
+    APP_LOGIN_SUBTITLE2: "El explorador tiene que ser Chrome, Edge, Opera o Brave. ",
+    APP_LOGIN_SUBTITLE3: "Es importante que dejes tu correo verdadero para que podamos contactarte si eres el ganador o ganadora.",
     APP_EMAIL_LABEL: "Email",
     APP_BUTTON_PLAY: 'Continuar',
     APP_BUTTON_END: 'Responder y ver resultados',
@@ -187,7 +188,7 @@ export const APP_DATA = {
             scaleText:['Nada en absoluto', 'Muchisimo'],
         },
         {
-            QUESTION: "Las marcas son propiedad de organizaciones que se dedican a un sector productivo. No sabes con certeza a qué se dedica cada marca, pero trata de adivinarlo intuitivamente. Pueden dedicarse a lo mismo, o no.",
+            QUESTION: "Intenta adivinar a qué industria pertenece cada marca. Considera el tipo de productos o servicios que podrían ofrecer. Las marcas pueden estar relacionadas con la misma industria o con industrias diferentes.",
             hasInput: true,
             POSSIBLE_ANSWERS_IMAGES:[azul,rojo,verde],
             POSSIBLE_ANSWERS: ['','','']
@@ -296,31 +297,37 @@ export const APP_DATA = {
             {
                 QUESTION: "Valora de 1 a 7 cada uno de los logos:",
                 hasScale: true,
-                POSSIBLE_ANSWERS_IMAGES:[rojo, verde, azul],
+                POSSIBLE_ANSWERS_IMAGES:[azul, rojo, verde],
                 scaleText:['No me gusta nada', 'Me gusta muchísimo']
             },
             {
                 QUESTION: "Valora de 1 a 7 el grado en el que aconsejarías cada una de las marcas:",
                 hasScale: true,
-                POSSIBLE_ANSWERS_IMAGES:[rojo, verde, azul],
+                POSSIBLE_ANSWERS_IMAGES:[azul, rojo, verde],
                 scaleText:['Nada recomendable', 'Totalmente recomendable']
+            },
+            {
+                QUESTION: "Intenta adivinar a qué industria pertenece cada marca. Considera el tipo de productos o servicios que podrían ofrecer. Las marcas pueden estar relacionadas con la misma industria o con industrias diferentes.",
+                hasInput: true,
+                POSSIBLE_ANSWERS_IMAGES:[azul, rojo, verde],
+                POSSIBLE_ANSWERS: ['','','']
             },
             {
                 QUESTION: `Valora de 1 a 7 el grado de congruencia de cada marca con el juego:`,
                 hasScale: true,
-                POSSIBLE_ANSWERS_IMAGES:[rojo, verde, azul],
+                POSSIBLE_ANSWERS_IMAGES:[azul, rojo, verde],
                 scaleText:['Totalmente incogruente', 'Totalmente congruente'],
             },
             {
                 QUESTION: "¿Cómo afectó la presencia de cada uno de los logos a tu experiencia de juego?",
                 hasScale: true,
-                POSSIBLE_ANSWERS_IMAGES:[rojo, verde, azul],
+                POSSIBLE_ANSWERS_IMAGES:[azul, rojo, verde],
                 scaleText:['La empeoró completamente', 'La mejoró completamente'],
             },
             {
                 QUESTION: " ¿Encontraste la inserción de estos logos dentro del juego intrusiva o molesta",
                 hasScale: true,
-                POSSIBLE_ANSWERS_IMAGES:[rojo, verde, azul],
+                POSSIBLE_ANSWERS_IMAGES:[azul, rojo, verde],
                 scaleText:['Nada molesto', 'Totalmente molesto'],
             },
         ]

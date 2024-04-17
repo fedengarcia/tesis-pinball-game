@@ -21,13 +21,18 @@ export default function SecondForm() {
   })
   const [radioButton, setRadioButton] = useState({
     azul: '',
+    rojo: '',
     verde: '',
-    rojo: ''
   })
   const [inputAnswers, setInputAnswers] = useState({
     azul: '',
+    rojo: '',
     verde: '',
-    rojo: ''
+  })
+  const [sliderAnswers, setSlidersAnswers] = useState({
+    azul: '',
+    rojo: '',
+    verde: '',
   })
   const {userInfo, setUserInfo, loadingLogin, setLoadingLogin} = useContext(UserContext)
 
@@ -69,7 +74,6 @@ export default function SecondForm() {
   const handleAnswers = (type, index, e, indexSubOption) => {
     console.log(indexSubOption);
     let answersCopy = [...answers]
-    console.log(e?.target?.value ?? e);
 
     if(type === 'radio'){
         let radioButtonCopy = {...radioButton}
@@ -89,7 +93,16 @@ export default function SecondForm() {
         }
         setInputAnswers(inputAnswersCopy)
         answersCopy[index].answer_selected = JSON.stringify(inputAnswersCopy)
+    }else if(type === 'multiple_slider'){
+      let sliderAnswerCopy = {...sliderAnswers}
+      sliderAnswerCopy = {
+          ...sliderAnswerCopy,
+          [indexSubOption === 0 ? 'azul' : indexSubOption === 1 ? 'rojo' : 'verde']: e.target.value
+      }
+      setSlidersAnswers(sliderAnswerCopy)
+      answersCopy[index].answer_selected = JSON.stringify(sliderAnswerCopy)
     }
+    console.log(answersCopy);
     setAnswers(answersCopy)
   }
 
@@ -163,8 +176,30 @@ export default function SecondForm() {
                 )}
                 </>
                 </StyledFlexCenter>
-              :
-              question.hasScale ?
+              :indexOption === 1 ? 
+                <>
+                  {question.POSSIBLE_ANSWERS_IMAGES.map((answerOption, indexSubOption) => 
+                          <StyledFlexCenter key={indexSubOption} style={{padding: 0, margin: '5px', justifyContent:'flex-start', alignItems:'center'}} direction="column">
+                          <img  style={{width:'40px',}}src={question.POSSIBLE_ANSWERS_IMAGES[indexSubOption]}/>
+                          <StyledFlexCenter style={{alignItems:'center'}}>
+                            <Slider
+                            aria-label="Custom marks"
+                            defaultValue={5}
+                            value={parseInt(sliderAnswers[indexSubOption === 0 ? 'azul' : indexSubOption === 1 ? 'rojo' : 'verde'])}
+                            onChange={e => handleAnswers('multiple_slider',indexOption,e, indexSubOption)}
+                            getAriaValueText={valuetext}
+                            marks={getMarks(question?.scaleText)}
+                            shiftStep={1}
+                            min={1}
+                            max={7} 
+                            style={{ width: '700px' }} // Aquí ajustas el ancho del slider
+                            />
+                        </StyledFlexCenter>
+                      </StyledFlexCenter>
+                  )}
+                </>
+
+              : question.hasScale ?
                 <StyledFlexCenter style={{alignItems:'center'}}>
                     <Slider
                     aria-label="Custom marks"
@@ -185,7 +220,8 @@ export default function SecondForm() {
                     <img  style={{width:'40px', margin: '20px'}}src={question.POSSIBLE_ANSWERS_IMAGES[indexSubOption]}/>
                     <TextField 
                     fullWidth
-                    onChange={(e) => handleAnswers('input',indexOption,e, indexSubOption)} value={inputAnswers[indexSubOption === 0 ? 'azul' : indexSubOption === 1 ? 'rojo' : 'verde']}/>
+                    onChange={(e) => handleAnswers('input',indexOption,e, indexSubOption)}
+                     value={inputAnswers[indexSubOption === 0 ? 'azul' : indexSubOption === 1 ? 'rojo' : 'verde']}/>
               </StyledFlexCenter>
             )
             }

@@ -85,9 +85,11 @@ export default function LastForm() {
           radioSelected: e
         }
       }
+      console.log(radioButton2Copy);
       setRadioButton2(radioButton2Copy)
       answersCopy[index].answer_selected = JSON.stringify(radioButton2Copy);
     }
+    console.log(answersCopy);
     setAnswers(answersCopy)
 }
   
@@ -146,6 +148,7 @@ export default function LastForm() {
     setLoadingLogin(false)
   }
   
+
   return (
     <StyledAppLayout>
       <h1>{APP_DATA.APP_TITLE}</h1>
@@ -221,7 +224,7 @@ export default function LastForm() {
                         <label onClick={() => handleAnswers('radioButton2',indexOption,answerOption)}> {answerOption} </label>
                     </StyledFlexCenter>
                   )}
-                  {radioButton2.radioSelected === 'si' &&
+                  {radioButton2.radioSelected === 'Si' &&
                     <>
                       <h4>{question.QUESTION2}</h4>
                       <StyledFlexCenter style={{alignItems:'center'}}>
