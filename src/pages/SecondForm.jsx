@@ -60,7 +60,6 @@ export default function SecondForm() {
     let userInfoCopy = {...userInfo}  
     userInfoCopy.secondForm.isCompleted = true
     userInfoCopy.secondForm.answers = [...answers]
-    console.log(userInfoCopy);
     const userUpdated = await editUser(userInfoCopy.id, userInfoCopy)
     if(userUpdated){
       setUserInfo(userInfoCopy)
@@ -72,7 +71,6 @@ export default function SecondForm() {
   }
   
   const handleAnswers = (type, index, e, indexSubOption) => {
-    console.log(indexSubOption);
     let answersCopy = [...answers]
 
     if(type === 'radio'){
@@ -102,7 +100,6 @@ export default function SecondForm() {
       setSlidersAnswers(sliderAnswerCopy)
       answersCopy[index].answer_selected = JSON.stringify(sliderAnswerCopy)
     }
-    console.log(answersCopy);
     setAnswers(answersCopy)
   }
 

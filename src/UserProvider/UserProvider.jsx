@@ -57,7 +57,6 @@ export const UserProvider = ({children}) => {
                     userInfoCopy.id = res.id
                 }
             } catch (error) {
-                console.log(error)
                 setLoadingLogin(false)
                 window.location.reload()
             }

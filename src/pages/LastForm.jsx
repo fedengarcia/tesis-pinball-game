@@ -85,11 +85,9 @@ export default function LastForm() {
           radioSelected: e
         }
       }
-      console.log(radioButton2Copy);
       setRadioButton2(radioButton2Copy)
       answersCopy[index].answer_selected = JSON.stringify(radioButton2Copy);
     }
-    console.log(answersCopy);
     setAnswers(answersCopy)
 }
   

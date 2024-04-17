@@ -74,11 +74,9 @@ export default function LastForm2() {
               [indexSubOption === 0 ? 'azul' : indexSubOption === 1 ? 'rojo' : 'verde']: e.target.value
             }
         }
-        console.log(slidersAnswersCopy);
         setSlidersAnswers(slidersAnswersCopy)
         answersCopy[index].answer_selected = JSON.stringify(slidersAnswersCopy[`slider${index}`])
     }
-    console.log(answersCopy);
     setAnswers(answersCopy)
 }
   

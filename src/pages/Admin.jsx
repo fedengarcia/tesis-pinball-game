@@ -56,7 +56,6 @@ function Admin() {
 
   const downloadAllInformation = async () => {
     const data = await getAllInformation();
-    console.log(data);
     const ws = XLSX.utils.json_to_sheet(data.map(user => ({
         "Participante": user.userEmail,
         "Tablero asignado": user.gameNumber,
