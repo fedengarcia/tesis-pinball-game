@@ -62,7 +62,7 @@ export default function Game() {
 
   const checkGameAvailable = () => {
     const gamesPlayedToday = userInfo?.gamesPlayed.filter(game => game.date.split(",")[0] === new Date().toLocaleString().split(",")[0])
-    if(gamesPlayedToday.length >= 2) return true
+    // if(gamesPlayedToday.length >= 2) return true
     return false
   }
 
