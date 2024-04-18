@@ -53,18 +53,31 @@ function Admin() {
     XLSX.writeFile(wb, fileName + ".xlsx");
   }
 
+  const desectructureForm = (columnName, answers) => {
+    let columns = {}
+    answers?.forEach(answer => {
+      columns = {
+        ...columns,
+        [columnName + '-' + answer.question]: answer.answer_selected
+      }
+    })
+
+    return columns
+
+  }
 
   const downloadAllInformation = async () => {
     const data = await getAllInformation();
+    console.log(data);
     const ws = XLSX.utils.json_to_sheet(data.map(user => ({
         "Participante": user.userEmail,
         "Tablero asignado": user.gameNumber,
         "Fecha": formatDate(user.userDate.seconds * 1000 + user.userDate.nanoseconds / 1000),
-        "Primer formulario": JSON.stringify(user.firstForm.answers),
-        "Segundo formulario": JSON.stringify(user.secondForm.answers),
-        "Tercer formulario": JSON.stringify(user.thirdForm.answers),
-        "Cuarto formulario": JSON.stringify(user.finalForm1.answers),
-        "quinto formulario": JSON.stringify(user.finalForm2.answers),
+        ...desectructureForm('Primer Formulario', user.firstForm.answers),
+        ...desectructureForm('Segundo Formulario', user.secondForm.answers),
+        ...desectructureForm('Tercer Forumlario', user.thirdForm.answers),
+        ...desectructureForm('Cuarto Formulario', user.finalForm1.answers),
+        ...desectructureForm('Quinto Formulario', user.finalForm2.answers),
     })));
 
     const wb = XLSX.utils.book_new();
