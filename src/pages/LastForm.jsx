@@ -45,9 +45,10 @@ export default function LastForm() {
   useEffect(() => {
     let isCompleted = false
     answers?.forEach((answer, index) => {
-      if(answer.answer_selected === ''){
-        isCompleted = true
-      }
+      if(answer.answer_selected === '') isCompleted = true
+      if(radioButton.logo1 === "" || radioButton.logo2 === "" ||  radioButton.logo3 === "" ||  radioButton.logo4 === "" ||
+        radioButton.logo5 === "" ||  radioButton.logo6 === "" || radioButton.rojo === "" ||  radioButton.verde === "" ||
+        radioButton.azul === "") isCompleted = true
     })
     setButtonDisabled(isCompleted)
   }, [answers]);

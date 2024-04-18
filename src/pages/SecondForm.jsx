@@ -41,12 +41,16 @@ export default function SecondForm() {
     if(userInfo?.secondForm?.isCompleted) navigate('/third-form')
   }, [userInfo]);
 
+  
   useEffect(() => {
     let isCompleted = false
     answers.forEach(answer => {
       if(answer.answer_selected === ''){
         isCompleted = true
       }
+      if(radioButton.azul === '' || radioButton.verde === '' || radioButton.rojo === '') isCompleted = true
+      if(inputAnswers.azul === '' || inputAnswers.verde === '' || inputAnswers.rojo === '') isCompleted = true
+      if(sliderAnswers.azul === '' || sliderAnswers.verde === '' || sliderAnswers.rojo === '') isCompleted = true
     })
     setButtonDisabled(isCompleted)
   }, [answers]);

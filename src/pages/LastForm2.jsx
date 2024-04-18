@@ -48,9 +48,14 @@ export default function LastForm2() {
   useEffect(() => {
     let isCompleted = false
     answers?.forEach((answer, index) => {
-      if(answer.answer_selected === ''){
-        isCompleted = true
-      }
+      if(answer.answer_selected === '') isCompleted = true
+      if(inputAnswers.azul === '' || inputAnswers.verde === '' || inputAnswers.rojo === '') isCompleted = true
+      if(slidersAnswers.slider0.azul === '' || slidersAnswers.slider0.verde === '' || slidersAnswers.slider0.rojo === ''
+        || slidersAnswers.slider1.azul === '' || slidersAnswers.slider1.verde === '' || slidersAnswers.slider1.rojo === ''
+        || slidersAnswers.slider3.azul === '' || slidersAnswers.slider3.verde === '' || slidersAnswers.slider3.rojo === ''
+        || slidersAnswers.slider4.azul === '' || slidersAnswers.slider4.verde === '' || slidersAnswers.slider4.rojo === ''
+        || slidersAnswers.slider5.azul === '' || slidersAnswers.slider5.verde === '' || slidersAnswers.slider5.rojo === '') isCompleted = true
+      
     })
     setButtonDisabled(isCompleted)
   }, [answers]);
