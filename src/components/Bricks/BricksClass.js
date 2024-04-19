@@ -717,7 +717,7 @@ class BricksClass {
                                 requestAnimationFrame(animatePaddle);
                             } else {
                                 // La animación ha terminado, puedes realizar acciones adicionales aquí
-                                this.showBonification('AGRANDAS PADDLE !', this.paddle.bonificationDuration)
+                                this.showBonification('AGRANDAS RAQUETA !', this.paddle.bonificationDuration)
                                 this.lastUpgradePaddle = Date.now()
                                 setTimeout(() => {
                                     // Inicia la animación para achicar la barra después de un tiempo de espera
